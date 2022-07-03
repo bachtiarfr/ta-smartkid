@@ -22,7 +22,7 @@
                 </select>
 
                 <label> Nomer Induk Kependudukan </label>
-                <input type="text" name="nik" class="form-control">
+                <input type="text" name="nik" class="form-control" required>
 
                 <label> Pendidikan Terakhir </label>
                 <select name="pendidikan" class="form-control">

@@ -7,15 +7,16 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Str;
 
 class OrangTuaController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:ortu-list|ortu-create|ortu-edit|ortu-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:ortu-create', ['only' => ['create','store']]);
-         $this->middleware('permission:ortu-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:ortu-delete', ['only' => ['destroy']]);
+        //  $this->middleware('permission:ortu-list|ortu-create|ortu-edit|ortu-delete', ['only' => ['index','show']]);
+        //  $this->middleware('permission:ortu-create', ['only' => ['create','store']]);
+        //  $this->middleware('permission:ortu-edit', ['only' => ['edit','update']]);
+        //  $this->middleware('permission:ortu-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -57,21 +58,14 @@ class OrangTuaController extends Controller
      */
     public function store(Request $request)
     {
-        // validasi data
-        request()->validate([
-            'user_id' => 'required',
-            'nik' => 'required',
-        ]);
-
         // simpan data user ortu
         $user = User::create([
             "name" => $request->nama,
-            "email" => $request->nama . "@gmail.com",
+            "email" => Str::lower($request->nama . "@gmail.com"),
             "password" => bcrypt("rahasia123")
         ]);
 
         // simpan data ortu
-
         $ortu = OrangTua::create([
             "user_id" => $user->id,
             "status" => $request->status,
@@ -81,9 +75,7 @@ class OrangTuaController extends Controller
         ]);
     
         // OrangTua::create( $request->all() );
-    
-        return redirect()->route('orangtua.index')
-                        ->with('success','berhasil simpan data orangtua');
+        return redirect()->route('orangtua.index')->with('success','berhasil simpan data orangtua');
 
     }
 
