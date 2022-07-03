@@ -217,7 +217,6 @@ class SiswaController extends Controller
      */
     public function update(Request $request, Siswa $siswa)
     {
-
         $berkas = $siswa->berkas_prestasi;
 
         // cek user apakah mengubah file?
@@ -330,10 +329,7 @@ class SiswaController extends Controller
             }
 
         } else {
-
-        if ( $request->hasFile('berkas_prestasi') ) {
             // hapus file lama
-                    
             // 1. simpan ke tabel user 
             $user = User::where('id' , '=' , $siswa->user_id)->first();
             $user->name = $request->nama;
@@ -341,7 +337,7 @@ class SiswaController extends Controller
             $user->save();
 
             // 2. simpan ke tabel siswa
-            $siswa->admin_id = Auth::id();
+            // $siswa->admin_id = Auth::id();
             $siswa->user_id = $user->id;
             $siswa->nisn = $request->nisn;
             $siswa->jk = $request->jk;
@@ -355,17 +351,14 @@ class SiswaController extends Controller
 
             if ( $request->cnt_text > 0 ) {
                 $jumlah = $request->cnt_text ;
-    
-                for ($i=0; $i < $jumlah - 1 ; $i++) { 
-                    if ( $i == 0 ) {
-                        
+                for ($i=0; $i < $jumlah ; $i++) { 
+                    if ( $i == 0 ) {                        
                         $sw_pres = Siswa_Prestasi::create([
                             "siswa_id" => $siswa->id,
                             "prestasi" => $request->prestasi
                         ]);
     
                     } elseif ( $i == 1 ) {
-    
                         $sw_pres = Siswa_Prestasi::create([
                             "siswa_id" => $siswa->id,
                             "prestasi" => $request->prestasi1
@@ -430,11 +423,9 @@ class SiswaController extends Controller
                     }
                 }
             }
-            
         }
-    }
-        return redirect()->route('siswa.index')
-                        ->with('success' , 'berhasil simpan data siswa' );
+
+        return redirect()->route('siswa.index')->with('success' , 'berhasil simpan data siswa' );
     }
 
     /**

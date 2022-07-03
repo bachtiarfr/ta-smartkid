@@ -42,16 +42,16 @@
         <hr>
 
         <div id="group_prestasi">
+            <input type="hidden" name="list_of_prestasi" value="">
 
             <Label> Prestasi </Label>
-
+            <div class="col-md-9 mb-3 form-inline">
+                <a href="#" id="btnplus" class="btn btn-success btnPlus">Masukan prestasi + </a>
+            </div>
             @for ($i = 0; $i < count ($sw['prestasi'] ) ; $i++)
-                <div class="col-md-9 form-inline" id="dv_prestasi">
+                <div class="col-md-9 form-inline dv_prestasi">
                     <div class="form-group mb-3">
-                        <input type="text" name="prestasi{{ $i == 0 ? '' : $i }}" id="prestasi{{ $i == 0 ? '' : $i }}" class="form-control" value="{{ $sw['prestasi'][$i] }}">
-                    </div>
-                    <div class="form-group mx-sm-3 mb-2">
-                        <button id="btnplus" class="btn btn-success"> + </button>
+                        <input type="text" class="prestasiName" name="prestasi{{ $i == 0 ? '' : $i }}" id="prestasi{{ $i == 0 ? '' : $i }}" class="form-control" value="{{ $sw['prestasi'][$i] }}" required>
                     </div>
                 </div> 
             @endfor
@@ -83,16 +83,22 @@
         $(function () {
             // membuat parameter
             let isi = '';
-            let no = $('#dv_prestasi input').length;
-            let jml_text = $('#dv_prestasi input').length;
+            let no = $('.dv_prestasi input').length;
+            let jml_text = $('.dv_prestasi input').length;
+            let btnPlus = ".btnPlus";
+            let prestasiList = $(".dv_prestasi");
+            let prestasi = [];
+
+            $.each(prestasiList, function() {
+                let val = $(this).find("input").val();
+                prestasi.push(val)
+            });
 
             $('#cnt_text').val( jml_text );
 
             let rows = $('#cnt_text').val();
 
-            // kondisi jika diklik dengan jquery click
-            $('#btnplus').click(function (e) { 
-                e.preventDefault();
+            $(document).on("click", btnPlus, function() {
                 // $('#dv_prestasi').clone().insertAfter('#dv_prestasi');
 
                 // ambil form bagian input prestasi kemudian dicloning
@@ -106,13 +112,11 @@
                 `;
 
                 no++;
-
                 rows++;
 
                 $('#cnt_text').val( rows );
-
                 $('#group_prestasi').append( isi );
-            });
+            })
         });
     </script>
 @stop

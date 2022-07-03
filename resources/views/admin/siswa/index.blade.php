@@ -41,13 +41,13 @@
                         <img style="width:150px; height:100px;" src="{{ asset('images/' . $sw['berkas_prestasi']) }}">
                     </td>
                     <td>
+                        <a class="btn btn-warning"  href=" {{ URL::to('admin/siswa/' . $sw['id'] . '/edit') }} "> EDIT </a>
                         @can('ortu-edit')
-                            <a class="btn btn-warning"  href=" {{ URL::to('admin/siswa/' . $sw['id'] . '/edit') }} "> EDIT </a>
                         @endcan
                         {{-- <i class="fa fa-pencil" style="font-size:24px"></i> --}}
                         @method('DELETE')
+                        <a data-id="{{ $sw['id'] }}" id="btndelete" class="btn btn-danger" href="#"> DELETE </i></a>
                         @can('ortu-delete')
-                            <a data-id="{{ $sw['id'] }}" id="btndelete" class="btn btn-danger" href="#"> DELETE </i></a>
                             {{-- <a href="{{ URL::to('admin/hapussiswa/' . $sw['id'] ) }}"> <i class="fa fa-trash-o" style="font-size:24px"> </i></a> --}}
                         @endcan
                     </td>
