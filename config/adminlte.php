@@ -398,20 +398,20 @@ return [
             ],
         ],
 
-        [
-            'text'    => 'Ternak Detail',
-            'icon'    => 'fas fa-paw',
-            'submenu' => [
-                [
-                    'text' => 'Tampil',
-                    'url'  => 'admin/ternak',
-                ],
-                [
-                    'text'    => 'Tambah',
-                    'url'     => 'admin/ternak/create',
-                ],
-            ],
-        ],
+        // [
+        //     'text'    => 'Ternak Detail',
+        //     'icon'    => 'fas fa-paw',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Tampil',
+        //             'url'  => 'admin/ternak',
+        //         ],
+        //         [
+        //             'text'    => 'Tambah',
+        //             'url'     => 'admin/ternak/create',
+        //         ],
+        //     ],
+        // ],
 
         [
             'text'    => 'Rumah Detail',

@@ -90,30 +90,6 @@
             </div>
         </div>
     </div>
-    
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header alert-success">
-                  Hewan Ternak
-                </div>
-                <div class="card-body" id="dvternak">
-                  <div id="row_ternak" class="row">
-                    @foreach ( $ternak as $trk )
-                        <div class="col-md-3">
-                            <label>{{ $trk->nama }}</label>
-                            <select name="ternak_id" id="ternak_id" class="form-control">
-                                @foreach ( $trk->ternakdetail as $tdet)
-                                    <option value="{{ $trk->id }}" data-id="{{ $tdet->value }}"> {{ $tdet->key }} </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    @endforeach
-                  </div>
-                </div>
-              </div>
-        </div>
-    </div>
 
     <input type="submit" value="simpan" class="btn btn-primary" name="simpan" id="btnsimpan">
 {{-- </form> --}}
