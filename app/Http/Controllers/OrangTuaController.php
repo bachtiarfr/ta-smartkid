@@ -13,10 +13,10 @@ class OrangTuaController extends Controller
 {
     function __construct()
     {
-        //  $this->middleware('permission:ortu-list|ortu-create|ortu-edit|ortu-delete', ['only' => ['index','show']]);
-        //  $this->middleware('permission:ortu-create', ['only' => ['create','store']]);
-        //  $this->middleware('permission:ortu-edit', ['only' => ['edit','update']]);
-        //  $this->middleware('permission:ortu-delete', ['only' => ['destroy']]);
+         $this->middleware('permission:ortu-list|ortu-create|ortu-edit|ortu-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:ortu-create', ['only' => ['create','store']]);
+         $this->middleware('permission:ortu-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:ortu-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
