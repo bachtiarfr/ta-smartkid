@@ -103,6 +103,8 @@ class PenilaianController extends Controller
      */
     public function store(Request $request)
     {
+
+        var_dump($request);
         $penilaian = Penilaian::create([
             "siswa_id" => $request->siswa_id,
             "penghasilan_id" => $request->penghasilan_id,

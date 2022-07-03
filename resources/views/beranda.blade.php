@@ -64,7 +64,9 @@
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
             </div>
-            <a href="{{ URL::to('/login') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Login<i class="fa fa-arrow-right ms-3"></i></a>
+            
+            <a href="{{ URL::to('/login') }}" class="btn btn-primary btn-login">Login</i></a>
+            <a href="{{ URL::to('/register') }}" class="btn btn-primary btn-register">Register</i></a>
         </div>
     </nav>
     <!-- Navbar End -->

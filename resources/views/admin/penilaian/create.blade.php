@@ -161,74 +161,62 @@
             let c5 = tanggungan_bobot.selectedOptions[0].getAttribute("data-id");
             let c6 = asuransi_bobot.selectedOptions[0].getAttribute("data-id");
 
-            // 
-
             let count_row_rumah = $('#dvasset > #row_rumah').find('option:selected').each(function () {
-                // console.log(this.value);
-
-                console.log( $(this).data("id") );
                 c2 += $(this).data("id") ;
             });
 
             c2 = parseFloat( c2 / count_row_rumah.length ).toFixed(2) ;
 
-            console.log( c2 );
-
             //get data asset - row_asset
-
             let c3 = 0;
             let jml_c3 = 0;
-           
             let count_row_asset = $('#dvasset > #row_asset').find('option:selected').each(function () {
-                // console.log(this.value);
-
-                console.log( $(this).data("id") );
                 c3 += $(this).data("id");
             });
 
             c3 = parseFloat( c3 / count_row_asset.length ).toFixed(2) ;
 
-            console.log( c3 );
-
             //get data ternak - row_ternak 
-
             let c4 = 0;
             let jml_c4 = 0;
-            
             let count_row_ternak = $('#dvternak > #row_ternak').find('option:selected').each(function () {
-                // console.log(this.value);
-
-                console.log( $(this).data("id") );
                 c4 += $(this).data("id");
             });
 
             c4 = parseFloat( c4 / count_row_ternak.length ).toFixed(2) ;
 
-            console.log( c4 );
-
-            // let rumah_data = $(this).data("id");
+            let rumah_data = $(this).data("id");
 
             
+            let data = {
+                "gaji" : c1,
+                "luas rumah" : c2,
+                "aset" : c3,
+                "hewat ternak" : c4,
+                "tanggungan orang tua" : c5,
+                "asuransi" : c6
+            }
+            console.log('data :', data);
+
             //simpan ke tabel penilaian
-            $.ajax({
-                type: "POST",
-                url: "/admin/penilaian",
-                data: {
-                    siswa_id : siswa_id,
-                    penghasilan_id : penghasilan_id,
-                    tanggungan_id : tanggungan_id,
-                    asuransi_id : asuransi_id,
-                    c1 : c1,
-                    c2 : c2,
-                    c3 : c3,
-                    c4 : c4,
-                    c5 : c5,
-                    c6 : c6
-                },
-                success: function (response) {
-                    console.log( response );
-                }
-            });
+            // $.ajax({
+            //     type: "POST",
+            //     url: "/admin/penilaian",
+            //     data: {
+            //         siswa_id : siswa_id,
+            //         penghasilan_id : penghasilan_id,
+            //         tanggungan_id : tanggungan_id,
+            //         asuransi_id : asuransi_id,
+            //         c1 : c1,
+            //         c2 : c2,
+            //         c3 : c3,
+            //         c5 : c5,
+            //         c6 : c6
+            //     },
+            //     success: function (response) {
+            //         console.log( response );
+            //     }
+            // });
             
         });
       });

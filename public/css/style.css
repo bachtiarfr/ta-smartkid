@@ -432,3 +432,25 @@
     padding-right: 0;
     border-right: none;
 }
+
+/* custom css */
+.btn-login, .btn-register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px !important;
+    margin-right: 10px;
+    width: 85px;
+}
+
+.btn-register {
+    background-color: transparent;
+    border: 1px solid #06BBCC;
+    color: #06BBCC !important;
+}
+
+.btn-register:hover {
+    background-color: transparent;
+    border: 1px solid #06BBCC;
+    color: #06BBCC !important;
+}
