@@ -75,7 +75,7 @@ class SiswaController extends Controller
         // //2. simpan ke tabel siswa
 
         $siswa = Siswa::create([
-            "user_id" => 1,
+            "user_id" => $user->id,
             "ortu_id" => $request->ortu_id,
             "nisn" => $request->nisn,
             "jk" => $request->jk,

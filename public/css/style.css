@@ -434,7 +434,9 @@
 }
 
 /* custom css */
-.btn-login, .btn-register {
+.btn-login, 
+.btn-register, 
+.btn-dashboard {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -443,13 +445,21 @@
     width: 85px;
 }
 
-.btn-register {
+.btn-dashboard {
+    width: 105px;
+}
+
+.btn-register, 
+.btn-dashboard {
     background-color: transparent;
     border: 1px solid #06BBCC;
     color: #06BBCC !important;
 }
 
-.btn-register:hover {
+.btn-register:hover, 
+.btn-register:focus, 
+.btn-dashboard:hover, 
+.btn-dashboard:focus {
     background-color: transparent;
     border: 1px solid #06BBCC;
     color: #06BBCC !important;
