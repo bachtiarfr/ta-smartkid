@@ -440,6 +440,10 @@ return [
                     'text'    => 'Tambah',
                     'url'     => 'admin/penilaian/create',
                 ],
+                [
+                    'text'    => 'Perhitungan',
+                    'url'     => 'admin/hitungpenilaian',
+                ],
             ],
         ],
 

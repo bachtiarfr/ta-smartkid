@@ -33,21 +33,20 @@ class PenilaianController extends Controller
 
         $siswa = DB::table('siswas AS sw')
                 ->join('users AS us' , 'sw.user_id' , '=' , 'us.id')
-                ->select( 'us.name')
+                ->select( 'us.nama_depan', 'us.nama_belakang')
                 ->get();
 
-        // $data = DB::table('penilaian_details AS pnd')
-        //         ->join('penilaians AS pn' , 'pnd.penilaian_id ' , '=' , 'pn.id')
-        //         ->select('pn.id' , 'pn.c1' , 'pn.c2' , 'pn.c3' , 'pn.c4' , 'pn.c5' , 'pn.c6')
-        //         ->get();
+        $data = DB::table('penilaians AS pn')
+                ->select('pn.id' , 'pn.c1' , 'pn.c2' , 'pn.c3' , 'pn.c4' , 'pn.c5' , 'pn.c6')
+                ->get();
 
 
         // datatable
         if ($request->ajax()) {
 
-            $data = Penilaian::all();
+            // $data = Penilaian::all();
 
-            return Datatables::of($data , $siswa)
+            return Datatables::of( $data )
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
      
@@ -61,6 +60,26 @@ class PenilaianController extends Controller
         
         return view('admin.penilaian.index');
         // return response()->json($data);
+    }
+
+    public function hitungpenilaian (  )
+    {
+        $penilaian = DB::table('penilaians AS pnl')
+                ->join('users AS us' , 'pnl.siswa_id' , '=' , 'us.id')
+                ->select('pnl.id' , 'us.nama_depan', 'us.nama_belakang' , 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5' , 'pnl.c6')
+                ->get();
+
+        return view('admin.penilaian.hitung' , compact('penilaian'));
+    }
+
+    public function getpenilaian(  )
+    {
+        $penilaian = DB::table('penilaians AS pnl')
+                ->join('users AS us' , 'pnl.siswa_id' , '=' , 'us.id')
+                ->select('pnl.id' , 'us.nama_depan', 'us.nama_belakang' , 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5' , 'pnl.c6')
+                ->get();
+
+        return response()->json($penilaian);
     }
 
     /**
@@ -103,8 +122,6 @@ class PenilaianController extends Controller
      */
     public function store(Request $request)
     {
-
-        var_dump($request);
         $penilaian = Penilaian::create([
             "siswa_id" => $request->siswa_id,
             "penghasilan_id" => $request->penghasilan_id,
