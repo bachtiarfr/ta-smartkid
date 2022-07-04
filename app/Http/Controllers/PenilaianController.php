@@ -95,6 +95,7 @@ class PenilaianController extends Controller
                 ->select('sw.id' , 'us.nama_depan', 'us.nama_belakang')
                 ->groupBy('sw.id')
                 ->groupBy('us.nama_depan')
+                ->groupBy('us.nama_belakang')
                 ->orderBy('us.nama_depan')
                 ->get();
         
