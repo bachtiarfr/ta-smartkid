@@ -432,10 +432,10 @@ return [
             'text'    => 'Penilaian',
             'icon'    => 'fas fa-score',
             'submenu' => [
-                [
-                    'text' => 'Tampil',
-                    'url'  => 'admin/penilaian',
-                ],
+                // [
+                //     'text' => 'Tampil',
+                //     'url'  => 'admin/penilaian',
+                // ],
                 [
                     'text'    => 'Tambah',
                     'url'     => 'admin/penilaian/create',
