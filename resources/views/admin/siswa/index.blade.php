@@ -33,7 +33,7 @@
                     {{-- <td>{{ $sw['id'] }}</td> --}}
                     <td>{{ ++$i }}</td>
                     <td>{{ $sw['nisn'] }}</td>
-                    <td>{{ $sw['name'] }}</td>
+                    <td>{{ $sw['nama_depan'] . ' ' . $sw['nama_belakang'] }}</td>
                     <td>{{ $sw['jk'] }}</td>
                     <td>{{ $sw['kelas'] }}</td>
                     <td>{{ filterFileName( $sw['prestasi'] ) }}</td>

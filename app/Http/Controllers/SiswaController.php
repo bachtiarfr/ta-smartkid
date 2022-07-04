@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Str;
 
 class SiswaController extends Controller
 {
@@ -20,7 +21,7 @@ class SiswaController extends Controller
     {
         //ambil data dari model
         $sw = Siswa::join('users as us' , 'siswas.user_id' , '=' , 'us.id')
-            ->select('siswas.id' , 'us.name' , 'siswas.nisn' , 'siswas.jk' , 'siswas.berkas_prestasi' , DB::raw("CONCAT(siswas.kelas , '-' , siswas.jurusan) AS kelas"))
+            ->select('siswas.id' , 'us.nama_depan', 'us.nama_belakang' , 'siswas.nisn' , 'siswas.jk' , 'siswas.berkas_prestasi' , DB::raw("CONCAT(siswas.kelas , '-' , siswas.jurusan) AS kelas"))
             ->get();
 
         $sp = Siswa_Prestasi::all();
@@ -46,7 +47,7 @@ class SiswaController extends Controller
     {
         $ortu = DB::table('orang_tuas AS or')
         ->join('users AS us' , 'or.user_id' , '=' , 'us.id')
-        ->select('or.id' , 'us.name' )
+        ->select('or.id' , 'us.nama_depan' )
         ->get();
 
         return view('admin.siswa.create' , compact('ortu'));
@@ -65,10 +66,10 @@ class SiswaController extends Controller
         $request->berkas_prestasi->move(public_path('images') , $namaBerkas);
 
         // //1. simpan ke tabel user
-
         $user = User::create([
-            "name" => $request->nama,
-            "email" => $request->nama . "@gmail.com",
+            "nama_depan" => $request->nama_depan,
+            "nama_belakang" => $request->nama_belakang,
+            "email" => Str::lower($request->nama_depan . "@gmail.com"),
             "password" => bcrypt("rahasia123")
         ]);
 
@@ -192,7 +193,7 @@ class SiswaController extends Controller
         //ambil data dari model
         $sw = Siswa::join('users as us' , 'siswas.user_id' , '=' , 'us.id')
             ->where('siswas.id' , '=' , $id )
-            ->select('siswas.id' , 'us.name' , 'siswas.nisn' , 'siswas.jk' , 'siswas.berkas_prestasi' , 'siswas.kelas' , 'siswas.jurusan' )
+            ->select('siswas.id' , 'us.nama_depan', 'us.nama_belakang' , 'siswas.nisn' , 'siswas.jk' , 'siswas.berkas_prestasi' , 'siswas.kelas' , 'siswas.jurusan' )
             ->get();
 
         $sp = Siswa_Prestasi::all();
@@ -232,8 +233,9 @@ class SiswaController extends Controller
            
             // 1. simpan ke tabel user 
             $user = User::where('id' , '=' , $siswa->user_id)->first();
-            $user->name = $request->nama;
-            $user->email = $request->nama . "@gmail.com";
+            $user->nama_depan = $request->nama_depan;
+            $user->nama_belakang = $request->nama_belakang;
+            $user->email = $request->nama_depan . "@gmail.com";
             $user->save();
 
             // 2. simpan ke tabel siswa
@@ -332,8 +334,9 @@ class SiswaController extends Controller
             // hapus file lama
             // 1. simpan ke tabel user 
             $user = User::where('id' , '=' , $siswa->user_id)->first();
-            $user->name = $request->nama;
-            $user->email = $request->nama . "@gmail.com";
+            $user->nama_depan = $request->nama_depan;
+            $user->nama_belakang = $request->nama_belakang;
+            $user->email = $request->nama_depan . "@gmail.com";
             $user->save();
 
             // 2. simpan ke tabel siswa

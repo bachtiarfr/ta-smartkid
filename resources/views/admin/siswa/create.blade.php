@@ -13,13 +13,16 @@
     <Label> Nomer Induk Siswa Nasional </Label>
     <input type="text" name="nisn" class="form-control">
 
-    <Label> Nama Siswa </Label>
-    <input type="text" name="nama" class="form-control">
+    <Label> Nama Depan </Label>
+    <input type="text" name="nama_depan" class="form-control">
+
+    <Label> Nama Belakang </Label>
+    <input type="text" name="nama_belakang" class="form-control">
 
     <label> Orang Tua / Wali </label>
     <select name="ortu_id" class="form-control">
         @foreach ( $ortu as $or)
-            <option value="{{ $or->id }}"> {{ $or->name }} </option>
+            <option value="{{ $or->id }}"> {{ $or->nama_depan }} </option>
         @endforeach
     </select>
 

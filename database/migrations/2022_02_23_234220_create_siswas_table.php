@@ -21,7 +21,7 @@ class CreateSiswasTable extends Migration
             $table->enum('jk' , ['L' , 'P']);
             $table->enum('jurusan' , ['Teknik Kendaraan Ringan' , 'Teknik Permesinan' , 'Teknik Komputer Jaringan' , 'Teknik Kimia Industri' ]);
             $table->enum('kelas' , ['X' , 'XI' , 'XII']);
-            $table->string('berkas_prestasi' , 255 );
+            $table->string('berkas_prestasi' , 255 )->nullable(true);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -18,7 +18,8 @@ class OrangTuaSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            "name" => "ryan",
+            "nama_depan" => "ryan",
+            "nama_belakang" => "jaya",
             "email" => "ryan@gmail.com",
             "password" => bcrypt('rahasia123')
         ]);
@@ -35,34 +36,6 @@ class OrangTuaSeeder extends Seeder
             "user_id" => $user->id,
             "status" => "ayah",
             "nik" => "234354645645",
-            "pendidikan" => "sma/k",
-            "pekerjaan" => "guru"
-        ]);
-
-        $user = User::create([
-            "name" => "tyas",
-            "email" => "tyas@gmail.com",
-            "password" => bcrypt('rahasia123')
-        ]);
-
-        $ortu = OrangTua::create([
-            "user_id" => $user->id,
-            "status" => "ibu",
-            "nik" => "2343546453434",
-            "pendidikan" => "s1",
-            "pekerjaan" => "wirasuasta"
-        ]);
-
-        $user = User::create([
-            "name" => "rokhim",
-            "email" => "rokhim@gmail.com",
-            "password" => bcrypt('rahasia123')
-        ]);
-
-        $ortu = OrangTua::create([
-            "user_id" => $user->id,
-            "status" => "wali",
-            "nik" => "234354645222",
             "pendidikan" => "sma/k",
             "pekerjaan" => "guru"
         ]);
