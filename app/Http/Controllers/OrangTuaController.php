@@ -13,10 +13,10 @@ class OrangTuaController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:ortu-list|ortu-create|ortu-edit|ortu-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:ortu-create', ['only' => ['create','store']]);
-         $this->middleware('permission:ortu-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:ortu-delete', ['only' => ['destroy']]);
+        //  $this->middleware('permission:ortu-list|ortu-create|ortu-edit|ortu-delete', ['only' => ['index','show']]);
+        //  $this->middleware('permission:ortu-create', ['only' => ['create','store']]);
+        //  $this->middleware('permission:ortu-edit', ['only' => ['edit','update']]);
+        //  $this->middleware('permission:ortu-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class OrangTuaController extends Controller
         // $ortu = OrangTua::latest()->paginate(5);
         $ortu = DB::table('orang_tuas AS or')
                 ->join('users AS us' , 'or.user_id' , '=' , 'us.id')
-                ->select('or.id' , 'us.name' , 'or.nik' , 'or.status' , 'or.pendidikan' , 'or.pekerjaan' )
+                ->select('or.id' , 'us.nama_depan', 'us.nama_belakang' , 'or.nik' , 'or.status' , 'or.pendidikan' , 'or.pekerjaan' )
                 ->paginate(10);
 
         // return response()->json( $ortu );
@@ -60,8 +60,9 @@ class OrangTuaController extends Controller
     {
         // simpan data user ortu
         $user = User::create([
-            "name" => $request->nama,
-            "email" => Str::lower($request->nama . "@gmail.com"),
+            "nama_depan" => $request->nama_depan,
+            "nama_belakang" => $request->nama_belakang,
+            "email" => Str::lower($request->nama_depan . "@gmail.com"),
             "password" => bcrypt("rahasia123")
         ]);
 

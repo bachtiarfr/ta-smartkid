@@ -293,48 +293,48 @@ return [
             ],
         ],
 
-        [
-            'text'    => 'Jenis Beasiswa',
-            'icon'    => 'fa fa-graduation-cap',
-            'submenu' => [
-                [
-                    'text' => 'Tampil',
-                    'url'  => 'admin/beasiswa',
-                ],
-            ],
+        // [
+        //     'text'    => 'Jenis Beasiswa',
+        //     'icon'    => 'fa fa-graduation-cap',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Tampil',
+        //             'url'  => 'admin/beasiswa',
+        //         ],
+        //     ],
 
             
-        ],
+        // ],
 
-        [
-            'text'    => 'Periode Beasiswa',
-            'icon'    => 'fas fa-hourglass-half',
-            'submenu' => [
-                [
-                    'text' => 'Tampil',
-                    'url'  => 'admin/periode',
-                ],
-                [
-                    'text'    => 'Tambah',
-                    'url'     => 'admin/periode/create',
-                ],
-            ],
-        ],
+        // [
+        //     'text'    => 'Periode Beasiswa',
+        //     'icon'    => 'fas fa-hourglass-half',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Tampil',
+        //             'url'  => 'admin/periode',
+        //         ],
+        //         [
+        //             'text'    => 'Tambah',
+        //             'url'     => 'admin/periode/create',
+        //         ],
+        //     ],
+        // ],
 
-        [
-            'text'    => 'Pendaftaran',
-            'icon'    => 'fa fa-tasks',
-            'submenu' => [
-                [
-                    'text' => 'Tampil',
-                    'url'  => 'admin/pendaftar',
-                ],
-                [
-                    'text'    => 'Tambah',
-                    'url'     => 'admin/pendaftar/create',
-                ],
-            ],
-        ],
+        // [
+        //     'text'    => 'Pendaftaran',
+        //     'icon'    => 'fa fa-tasks',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Tampil',
+        //             'url'  => 'admin/pendaftar',
+        //         ],
+        //         [
+        //             'text'    => 'Tambah',
+        //             'url'     => 'admin/pendaftar/create',
+        //         ],
+        //     ],
+        // ],
 
         [
             'text'    => 'Penghasilan',
@@ -432,10 +432,10 @@ return [
             'text'    => 'Penilaian',
             'icon'    => 'fas fa-score',
             'submenu' => [
-                [
-                    'text' => 'Tampil',
-                    'url'  => 'admin/penilaian',
-                ],
+                // [
+                //     'text' => 'Tampil',
+                //     'url'  => 'admin/penilaian',
+                // ],
                 [
                     'text'    => 'Tambah',
                     'url'     => 'admin/penilaian/create',

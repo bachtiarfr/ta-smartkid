@@ -73,10 +73,10 @@ class PenilaianController extends Controller
         // query builder
         $siswa = DB::table('siswas AS sw')
                 ->join('users AS us' , 'sw.user_id' , '=' , 'us.id')
-                ->select('sw.id' , 'us.name')
+                ->select('sw.id' , 'us.nama_depan', 'us.nama_belakang')
                 ->groupBy('sw.id')
-                ->groupBy('us.name')
-                ->orderBy('us.name')
+                ->groupBy('us.nama_depan')
+                ->orderBy('us.nama_depan')
                 ->get();
         
         // elequent with => menciptakan nested array

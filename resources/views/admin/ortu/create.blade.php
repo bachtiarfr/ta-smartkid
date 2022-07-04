@@ -12,7 +12,9 @@
             <form action="{{ URL::to('admin/orangtua') }}" method="post">
                 @csrf
                 <label> Nama Orang Tua</label>
-                <input type="text" name="nama" class="form-control">
+                <input type="text" name="nama_depan" class="form-control" placeholder="nama depan">
+                <br>
+                <input type="text" name="nama_belakang" class="form-control" placeholder="nama belakang">
 
                 <label> Status </label>
                 <select name="status" class="form-control">

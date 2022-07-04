@@ -21,7 +21,7 @@
                         <Label> Nama Siswa </Label>
                         <select id="siswa_id" name="siswa_id" class="form-control">
                             @foreach ( $siswa as $sw )
-                            <option value="{{ $sw->id  }}"> {{ $sw->name }} </option>
+                            <option value="{{ $sw->id  }}"> {{ $sw->nama_depan . ' ' . $sw->nama_belakang }} </option>
                             @endforeach
                         </select>
                     </div>
@@ -48,7 +48,7 @@
                                 <option data-id="{{ $asr->nilai }}" value="{{ $asr->id  }}"> {{ $asr->nama }} </option>
                             @endforeach
                         </select>
-                    </div>    
+                    </div>      
                    </div> 
                 </div>
             </div>
@@ -86,6 +86,19 @@
                         </div>
                     @endforeach
                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header alert-success">
+                  Upload Berkas
+                </div>
+                <div class="card-body">
+                  <input type="file" name="file_berkas" id="file_berkas">
                 </div>
             </div>
         </div>

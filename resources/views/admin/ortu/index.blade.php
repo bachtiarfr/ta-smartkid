@@ -28,8 +28,8 @@
     <tr>
         <td>{{ ++$i }}</td>
         <td>{{ $ort->nik }}</td>
-        <td>{{ $ort->name }}</td>
-        <td>{{ $ort->status }}</td>
+        <td>{{ $ort->nama_depan . " " . $ort->nama_belakang }}</td>
+        <td>{{ $ort->status }}</td> 
         <td>{{ $ort->pendidikan }}</td>
         <td>{{ $ort->pekerjaan }}</td>
         <td>
