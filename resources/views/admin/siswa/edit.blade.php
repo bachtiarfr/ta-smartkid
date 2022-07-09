@@ -52,11 +52,16 @@
                 <a href="#" id="btnplus" class="btn btn-success btnPlus">Masukan prestasi + </a>
             </div>
             @for ($i = 0; $i < count ($sw['prestasi'] ) ; $i++)
+                @if ($sw['prestasi'][$i] != null)
                 <div class="col-md-9 form-inline dv_prestasi">
                     <div class="form-group mb-3">
-                        <input type="text" class="prestasiName" name="prestasi{{ $i == 0 ? '' : $i }}" id="prestasi{{ $i == 0 ? '' : $i }}" class="form-control" value="{{ $sw['prestasi'][$i] }}" required>
+                        <input type="text" class="form-control prestasiName" name="prestasi{{ $i == 0 ? '' : $i }}" id="prestasi{{ $i == 0 ? '' : $i }}" class="form-control" value="{{ $sw['prestasi'][$i] }}" required>
+                        <div class="btn btn-danger ml-2 btnDelete">
+                            <i class="fas fa-times"></i>
+                        </div>
                     </div>
                 </div> 
+                @endif
             @endfor
 
         </div>
@@ -109,6 +114,9 @@
                     <div class="col-md-9 form-inline" id="dv_prestasi">
                         <div class="form-group mb-3">
                             <input type="text" name="prestasi${no}" id="prestasi${no}" class="form-control">
+                            <div class="btn btn-danger ml-2 btnDelete">
+                                <i class="fas fa-times"></i>
+                            </div>
                         </div>
                         
                     </div>
@@ -119,6 +127,11 @@
 
                 $('#cnt_text').val( rows );
                 $('#group_prestasi').append( isi );
+            })
+            
+            $(document).on("click", ".btnDelete", function(e) {
+                e.preventDefault();
+                $(this).parent().parent().remove();
             })
         });
     </script>

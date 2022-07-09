@@ -25,7 +25,6 @@
                                     <td> C2 </td>
                                     <td> C3 </td>
                                     <td> C4 </td>
-                                    <td> C6 </td>
                                     <td> C7 </td>
                                 </tr>
                             </thead>
@@ -33,13 +32,12 @@
                                 @foreach ($penilaian as $pnl)
                                     <tr>
                                         <td> {{ $pnl->id }} </td>
-                                        <td> {{ $pnl->name }} </td>
+                                        <td> {{ $pnl->nama_depan . ' ' . $pnl->nama_belakang }} </td>
                                         <td> {{ $pnl->c1 }} </td>
                                         <td> {{ $pnl->c2 }} </td>
                                         <td> {{ $pnl->c3 }} </td>
                                         <td> {{ $pnl->c4 }} </td>
                                         <td> {{ $pnl->c5 }} </td>
-                                        <td> {{ $pnl->c6 }} </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -156,9 +154,6 @@
                             const rc15 = Math.max( ...res.map( r => r.c5 )) / res[i]["c5"] ;
                             // console.log( rc15 );
 
-                            // Nilai terendah C6 / nilai sekarang
-                            const rc16 = Math.min( ...res.map( r => r.c6 )) / res[i]["c6"] ;
-                            // console.log( rc16 ); 
                             
                             //array push
                             r.push({
@@ -167,7 +162,6 @@
                                 "c3" : rc13,
                                 "c4" : rc14,
                                 "c5" : rc15,
-                                "c6" : rc16
                             })
                         }
                          
@@ -179,7 +173,6 @@
                                     <td> ${rn.c3} </td>
                                     <td> ${rn.c4} </td>
                                     <td> ${rn.c5} </td>
-                                    <td> ${rn.c6} </td>
                                 </tr>
                             `;
                         } )
@@ -225,9 +218,6 @@
                             const rc15 = Math.max( ...res.map( r => r.c5 )) / res[i]["c5"] * 0.30 ;
                             console.log( rc15 );
 
-                            // Nilai terendah C6 asuransi / nilai sekarang
-                            const rc16 = Math.min( ...res.map( r => r.c6 )) / res[i]["c6"] * 0.10 ;
-                            console.log( rc16 ); 
                             
                             //array push
                             r.push({
@@ -236,7 +226,6 @@
                                 "c3" : rc13,
                                 "c4" : rc14,
                                 "c5" : rc15,
-                                "c6" : rc16
                             })
                         }
 
@@ -248,7 +237,6 @@
                                     <td> ${rv.c3} </td>
                                     <td> ${rv.c4} </td>
                                     <td> ${rv.c5} </td>
-                                    <td> ${rv.c6} </td>
                                 </tr>
                             `;
                         } )

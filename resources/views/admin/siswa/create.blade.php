@@ -49,14 +49,14 @@
 
     <hr>
 
+    <div class="form-group mb-2">
+        <Label> Prestasi </Label>
+        <button id="btnplus" class="btn btn-success"> Tambah prestasi </button>
+    </div>
     <div id="group_prestasi">
-        <div class="col-md-9 form-inline" id="dv_prestasi">
+        <div class="col-md-9 form-inline p-0" id="dv_prestasi">
             <div class="form-group mb-3">
-                <Label> Prestasi </Label>
                 <input type="text" name="prestasi" id="prestasi" class="form-control">
-            </div>
-            <div class="form-group mx-sm-3 mb-2">
-                <button id="btnplus" class="btn btn-success"> + </button>
             </div>
         </div>
     </div>
@@ -64,8 +64,7 @@
     <hr>
 
     <label> Bukti Prestasi </label>
-    <input type="file" name="berkas_prestasi" class="form-control">
-
+    <input type="file" name="berkas_prestasi" class="form-control mb-5">
     <input type="submit" value="simpan" name="simpan" class="btn btn-success">
 
     </form>
@@ -89,12 +88,13 @@
 
                 // ambil form bagian input prestasi kemudia dicloning
                 isi = `
-                    <div class="col-md-9 form-inline" id="dv_prestasi">
+                    <div class="col-md-9 form-inline p-0" id="dv_prestasi">
                         <div class="form-group mb-3">
-                            <Label> Prestasi </Label>
                             <input type="text" name="prestasi${no}" id="prestasi${no}" class="form-control">
+                            <div class="btn btn-danger ml-2 btnDelete">
+                                <i class="fas fa-times"></i>
+                            </div>
                         </div>
-                        
                     </div>
                 `;
 
@@ -102,6 +102,12 @@
 
                 $('#group_prestasi').append( isi );
             });
+
+            $(document).on("click", ".btnDelete", function(e) {
+                e.preventDefault();
+                $(this).parent().parent().remove();
+            })
+
         });
     </script>
 @stop

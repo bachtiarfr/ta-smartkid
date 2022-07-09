@@ -37,7 +37,7 @@ class PenilaianController extends Controller
                 ->get();
 
         $data = DB::table('penilaians AS pn')
-                ->select('pn.id' , 'pn.c1' , 'pn.c2' , 'pn.c3' , 'pn.c4' , 'pn.c5' , 'pn.c6')
+                ->select('pn.id' , 'pn.c1' , 'pn.c2' , 'pn.c3' , 'pn.c4' , 'pn.c5')
                 ->get();
 
 
@@ -66,7 +66,7 @@ class PenilaianController extends Controller
     {
         $penilaian = DB::table('penilaians AS pnl')
                 ->join('users AS us' , 'pnl.siswa_id' , '=' , 'us.id')
-                ->select('pnl.id' , 'us.nama_depan', 'us.nama_belakang' , 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5' , 'pnl.c6')
+                ->select('pnl.id' , 'us.nama_depan', 'us.nama_belakang' , 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5')
                 ->get();
 
         return view('admin.penilaian.hitung' , compact('penilaian'));
@@ -76,7 +76,7 @@ class PenilaianController extends Controller
     {
         $penilaian = DB::table('penilaians AS pnl')
                 ->join('users AS us' , 'pnl.siswa_id' , '=' , 'us.id')
-                ->select('pnl.id' , 'us.nama_depan', 'us.nama_belakang' , 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5' , 'pnl.c6')
+                ->select('pnl.id' , 'us.nama_depan', 'us.nama_belakang' , 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5')
                 ->get();
 
         return response()->json($penilaian);
@@ -92,13 +92,13 @@ class PenilaianController extends Controller
         // query builder
         $siswa = DB::table('siswas AS sw')
                 ->join('users AS us' , 'sw.user_id' , '=' , 'us.id')
-                ->select('sw.id' , 'us.nama_depan', 'us.nama_belakang')
+                ->select('sw.user_id' , 'us.nama_depan', 'us.nama_belakang')
                 ->groupBy('sw.id')
                 ->groupBy('us.nama_depan')
                 ->groupBy('us.nama_belakang')
                 ->orderBy('us.nama_depan')
                 ->get();
-        
+
         // elequent with => menciptakan nested array
         $rumah = Rumah::with('rumahdetail')->get();
 
@@ -123,7 +123,7 @@ class PenilaianController extends Controller
      */
     public function store(Request $request)
     {
-        $penilaian = Penilaian::create([
+        $data = [
             "siswa_id" => $request->siswa_id,
             "penghasilan_id" => $request->penghasilan_id,
             "tanggungan_id" => $request->tanggungan_id,
@@ -132,9 +132,36 @@ class PenilaianController extends Controller
             "c2" => $request->c2,
             "c3" => $request->c3,
             "c4" => $request->c4,
-            "c5" => $request->c5,
-            "c6" => $request->c6
+            "c5" => $request->c5
+        ];
+
+
+
+        $penilaian = DB::table("penilaian")->insert([
+            "siswa_id" => $request->siswa_id,
+            "penghasilan_id" => $request->penghasilan_id,
+            "tanggungan_id" => $request->tanggungan_id,
+            "asuransi_id" => $request->asuransi_id,
+            "c1" => $request->c1,
+            "c2" => $request->c2,
+            "c3" => $request->c3,
+            "c4" => $request->c4,
+            "c5" => $request->c5
         ]);
+
+        return $penilaian;
+
+        // $penilaian = Penilaian::create([
+        //     "siswa_id" => $request->siswa_id,
+        //     "penghasilan_id" => $request->penghasilan_id,
+        //     "tanggungan_id" => $request->tanggungan_id,
+        //     "asuransi_id" => $request->asuransi_id,
+        //     "c1" => $request->c1,
+        //     "c2" => $request->c2,
+        //     "c3" => $request->c3,
+        //     "c4" => $request->c4,
+        //     "c5" => $request->c5
+        // ]);
 
         // $p_detail = PenilaianDetail::create([
         //     "penilaian_id" => $penilaian->id,
@@ -142,7 +169,7 @@ class PenilaianController extends Controller
         //     "value_rumah" => $request->rumah_data,
         // ]);
 
-        return response()->json( "data berhasil disimpan" );
+        // return response()->json( "data berhasil disimpan" );
     }
 
     /**

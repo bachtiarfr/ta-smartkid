@@ -29,7 +29,7 @@ class SiswaController extends Controller
 
         //query menampilkan data prestasi pada 1 field
         $siswa = $sw->map( function($row) use ($sp) {
-            $prestasi = $sp->where( 'siswa_id' , $row->id )->pluck( 'prestasi' );
+            $prestasi = $sp->where( 'siswa_id' , $row->id )->where( 'prestasi', '!=', null )->pluck( 'prestasi' );
             return collect($row)->put('prestasi' , $prestasi );
         });
 
@@ -218,6 +218,7 @@ class SiswaController extends Controller
      */
     public function update(Request $request, Siswa $siswa)
     {
+        dd($request);
         $berkas = $siswa->berkas_prestasi;
 
         // cek user apakah mengubah file?

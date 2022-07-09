@@ -29,12 +29,10 @@ class CreatePenilaiansTable extends Migration
             $table->float('c2');
             //nilai hasil kepemilikan asset
             $table->float('c3');
-            //nilai hasil kepemilikan ternak
-            $table->float('c4');
             //nilai tanggungan
-            $table->float('c5');
+            $table->float('c4');
             //nilai asuransi
-            $table->float('c6');
+            $table->float('c5');
             
             $table->timestamps();
 
