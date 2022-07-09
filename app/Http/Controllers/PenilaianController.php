@@ -78,7 +78,17 @@ class PenilaianController extends Controller
             "maxC5" => floatval(DB::table("penilaians")->max("c5")),
         ];
 
-        return view('admin.penilaian.hitung' , compact('penilaian', 'maxValue'));
+        foreach ($penilaian as $dataNilai) {
+            $dataNormalisasi[] = [
+                "nama" => $dataNilai->nama_depan . ' ' . $dataNilai->nama_belakang,
+                "r1" => round($dataNilai->c1 / $maxValue["maxC1"], 2), 
+                "r2" => round($dataNilai->c2 / $maxValue["maxC2"], 2), 
+                "r3" => round($dataNilai->c3 / $maxValue["maxC3"], 2), 
+                "r4" => round($dataNilai->c4 / $maxValue["maxC4"], 2), 
+                "r5" => round($dataNilai->c5 / $maxValue["maxC5"], 2)
+            ];
+        }
+        return view('admin.penilaian.hitung' , compact('penilaian', 'dataNormalisasi'));
     }
 
     public function getpenilaian(  )

@@ -59,7 +59,7 @@
                         <table id="tblnormalisasi" class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <td>Nama Siswa</td>
+                                    <td> Nama Siswa </td>
                                     <td> C1 </td>
                                     <td> C2 </td>
                                     <td> C3 </td>
@@ -68,14 +68,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($penilaian as $pnl)
+                                @foreach ($dataNormalisasi as $n)
                                     <tr>
-                                        <td> {{ $pnl->nama_depan . ' ' . $pnl->nama_belakang }} </td>
-                                        <td> {{ $pnl->c1 / $maxValue['maxC1'] }} </td>
-                                        <td> {{ $pnl->c2 / $maxValue['maxC2'] }} </td>
-                                        <td> {{ $pnl->c3 / $maxValue['maxC3'] }} </td>
-                                        <td> {{ $pnl->c4 / $maxValue['maxC4'] }} </td>
-                                        <td> {{ $pnl->c5 / $maxValue['maxC5'] }} </td>
+                                        <td> {{ $n["nama"] }} </td>
+                                        <td> {{ $n["r1"] }} </td>
+                                        <td> {{ $n["r2"] }} </td>
+                                        <td> {{ $n["r3"] }} </td>
+                                        <td> {{ $n["r4"] }} </td>
+                                        <td> {{ $n["r5"] }} </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -99,12 +99,12 @@
                         <table id="tblhasil" class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
+                                    <td> Nama Siswa </td>
                                     <td> V1 </td>
                                     <td> V2 </td>
                                     <td> V3 </td>
                                     <td> V4 </td>
-                                    <td> V6 </td>
-                                    <td> V7 </td>
+                                    <td> V5 </td>
                                 </tr>
                             </thead>
                             <tbody>
