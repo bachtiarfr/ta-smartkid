@@ -105,10 +105,21 @@
                                     <td> V3 </td>
                                     <td> V4 </td>
                                     <td> V5 </td>
+                                    <td> W </td>
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                                @foreach ($dataPerangkingan as $data)
+                                <tr>
+                                    <td> {{ $data["nama"] }} </td>
+                                    <td> {{ $data["v1"] }} </td>
+                                    <td> {{ $data["v2"] }} </td>
+                                    <td> {{ $data["v3"] }} </td>
+                                    <td> {{ $data["v4"] }} </td>
+                                    <td> {{ $data["v5"] }} </td>
+                                    <td> {{ $data["w"] }} </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

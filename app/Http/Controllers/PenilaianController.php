@@ -88,7 +88,22 @@ class PenilaianController extends Controller
                 "r5" => round($dataNilai->c5 / $maxValue["maxC5"], 2)
             ];
         }
-        return view('admin.penilaian.hitung' , compact('penilaian', 'dataNormalisasi'));
+
+        foreach ($dataNormalisasi as $key => $v) {
+            $dataPerangkingan[] = [
+                "nama" => $v["nama"],
+                "v1" => round(($v["r1"]*0.25), 2),
+                "v2" => round(($v["r2"]*0.20), 2),
+                "v3" => round(($v["r3"]*0.15), 2),
+                "v4" => round(($v["r4"]*0.15), 2),
+                "v5" => round(($v["r5"]*0.30), 2),
+                "w" => (round(($v["r1"]*0.25), 2)) + (round(($v["r2"]*0.20), 2)) + (round(($v["r3"]*0.15), 2)) + (round(($v["r4"]*0.15), 2)) + (round(($v["r5"]*0.30), 2))
+            ];
+        }
+
+
+        // dd($dataPerangkingan);
+        return view('admin.penilaian.hitung' , compact('penilaian', 'dataNormalisasi', 'dataPerangkingan'));
     }
 
     public function getpenilaian(  )
