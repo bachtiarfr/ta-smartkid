@@ -101,9 +101,7 @@ class PenilaianController extends Controller
 
         // elequent with => menciptakan nested array
         $rumah = Rumah::with('rumahdetail')->get();
-
         $assets = Assets::with('assetsdetail')->get();
-
         $ternak = Ternak::with('ternakdetail')->get();
         // query builder
         $penghasilan = Penghasilan::all();
@@ -123,7 +121,8 @@ class PenilaianController extends Controller
      */
     public function store(Request $request)
     {
-        $data = [
+
+        $dataPenilaian = Penilaian::create([
             "siswa_id" => $request->siswa_id,
             "penghasilan_id" => $request->penghasilan_id,
             "tanggungan_id" => $request->tanggungan_id,
@@ -133,43 +132,19 @@ class PenilaianController extends Controller
             "c3" => $request->c3,
             "c4" => $request->c4,
             "c5" => $request->c5
-        ];
+        ]); 
 
-
-
-        $penilaian = DB::table("penilaian")->insert([
-            "siswa_id" => $request->siswa_id,
-            "penghasilan_id" => $request->penghasilan_id,
-            "tanggungan_id" => $request->tanggungan_id,
-            "asuransi_id" => $request->asuransi_id,
-            "c1" => $request->c1,
-            "c2" => $request->c2,
-            "c3" => $request->c3,
-            "c4" => $request->c4,
-            "c5" => $request->c5
+        PenilaianDetail::create([
+            "penilaian_id" => $dataPenilaian->id,
+            "rumah_id" => $request->rumah_id,
+            "assets_id" => $request->asset_id,
+            "value_assets" => $request->asset_value,
+            "value_rumah" => $request->rumah_data,
         ]);
 
-        return $penilaian;
-
-        // $penilaian = Penilaian::create([
-        //     "siswa_id" => $request->siswa_id,
-        //     "penghasilan_id" => $request->penghasilan_id,
-        //     "tanggungan_id" => $request->tanggungan_id,
-        //     "asuransi_id" => $request->asuransi_id,
-        //     "c1" => $request->c1,
-        //     "c2" => $request->c2,
-        //     "c3" => $request->c3,
-        //     "c4" => $request->c4,
-        //     "c5" => $request->c5
-        // ]);
-
-        // $p_detail = PenilaianDetail::create([
-        //     "penilaian_id" => $penilaian->id,
-        //     "rumah_id" => $request->rumah_id,
-        //     "value_rumah" => $request->rumah_data,
-        // ]);
-
-        // return response()->json( "data berhasil disimpan" );
+        return response()->json([
+            "message" =>  "data berhasil disimpan", 
+        ]);
     }
 
     /**

@@ -23,15 +23,15 @@ class CreatePenilaianDetailsTable extends Migration
             $table->unsignedBigInteger('assets_id');
             $table->integer('value_assets');
             // ternak
-            $table->unsignedBigInteger('ternak_id');
-            $table->integer('value_ternak');
+            // $table->unsignedBigInteger('ternak_id');
+            // $table->integer('value_ternak');
 
             $table->timestamps();
 
             $table->foreign('penilaian_id')->references('id')->on('penilaians')->onDelete('cascade');
             $table->foreign('rumah_id')->references('id')->on('rumahs')->onDelete('cascade');
             $table->foreign('assets_id')->references('id')->on('assets')->onDelete('cascade');
-            $table->foreign('ternak_id')->references('id')->on('ternaks')->onDelete('cascade');
+            // $table->foreign('ternak_id')->references('id')->on('ternaks')->onDelete('cascade');
         });
     }
 

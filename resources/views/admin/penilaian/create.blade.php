@@ -5,7 +5,7 @@
 @section('content_header')
 <h1>Dashboard</h1>
 @stop
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 @section('content')
 {{-- <form action="{{ URL::to('admin/penilaian') }}" method="post"> --}}
 
@@ -175,15 +175,6 @@
 
             c3 = parseFloat( c3 / count_row_asset.length ).toFixed(2) ;
 
-            
-            let dumpData = {
-                "gaji" : c1,
-                "kondisi rumah" : c2,
-                "kepemilikan asset" : c3,
-                "nilai tanggungan" : c4,
-                "nilai asuransi" : c5,
-            }
-
             //simpan ke tabel penilaian
             $.ajax({
                 type: "POST",
@@ -193,6 +184,10 @@
                     penghasilan_id : penghasilan_id,
                     tanggungan_id : tanggungan_id,
                     asuransi_id : asuransi_id,
+                    asset_value : assets_data_id,
+                    asset_id : assets_val,
+                    rumah_id : rumah_val,
+                    rumah_data : rumah_data_id,
                     c1 : c1,
                     c2 : c2,
                     c3 : c3,
@@ -200,7 +195,11 @@
                     c5 : c5
                 },
                 success: function (response) {
-                    console.log( response );
+                    swal({
+                        title: "Berhasil",
+                        text: response.message,
+                        icon: "success",
+                    });
                 }
             });
             

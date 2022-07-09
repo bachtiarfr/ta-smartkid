@@ -36,10 +36,10 @@ class CreatePenilaiansTable extends Migration
             
             $table->timestamps();
 
-            $table->foreign('siswa_id')->references('id')->on('siswas')->onDelete('cascade');
-            $table->foreign('penghasilan_id')->references('id')->on('penghasilans')->onDelete('cascade');
-            $table->foreign('tanggungan_id')->references('id')->on('tanggungan_anaks')->onDelete('cascade');
-            $table->foreign('asuransi_id')->references('id')->on('asuransis')->onDelete('cascade');
+            // $table->foreign('siswa_id')->references('id')->on('siswas')->onDelete('cascade');
+            // $table->foreign('penghasilan_id')->references('id')->on('penghasilans')->onDelete('cascade');
+            // $table->foreign('tanggungan_id')->references('id')->on('tanggungan_anaks')->onDelete('cascade');
+            // $table->foreign('asuransi_id')->references('id')->on('asuransis')->onDelete('cascade');
         });
     }
 
