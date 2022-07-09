@@ -19,7 +19,6 @@
                         <table class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <td> ID </td>
                                     <td> Nama Siswa </td>
                                     <td> C1 </td>
                                     <td> C2 </td>
@@ -31,7 +30,6 @@
                             <tbody>
                                 @foreach ($penilaian as $pnl)
                                     <tr>
-                                        <td> {{ $pnl->id }} </td>
                                         <td> {{ $pnl->nama_depan . ' ' . $pnl->nama_belakang }} </td>
                                         <td> {{ $pnl->c1 }} </td>
                                         <td> {{ $pnl->c2 }} </td>
@@ -61,16 +59,25 @@
                         <table id="tblnormalisasi" class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
+                                    <td>Nama Siswa</td>
                                     <td> C1 </td>
                                     <td> C2 </td>
                                     <td> C3 </td>
                                     <td> C4 </td>
-                                    <td> C6 </td>
-                                    <td> C7 </td>
+                                    <td> C5 </td>
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                                @foreach ($penilaian as $pnl)
+                                    <tr>
+                                        <td> {{ $pnl->nama_depan . ' ' . $pnl->nama_belakang }} </td>
+                                        <td> {{ $pnl->c1 / $maxValue['maxC1'] }} </td>
+                                        <td> {{ $pnl->c2 / $maxValue['maxC2'] }} </td>
+                                        <td> {{ $pnl->c3 / $maxValue['maxC3'] }} </td>
+                                        <td> {{ $pnl->c4 / $maxValue['maxC4'] }} </td>
+                                        <td> {{ $pnl->c5 / $maxValue['maxC5'] }} </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

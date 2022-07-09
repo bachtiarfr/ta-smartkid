@@ -64,12 +64,21 @@ class PenilaianController extends Controller
 
     public function hitungpenilaian (  )
     {
+
         $penilaian = DB::table('penilaians AS pnl')
                 ->join('users AS us' , 'pnl.siswa_id' , '=' , 'us.id')
                 ->select('pnl.id' , 'us.nama_depan', 'us.nama_belakang' , 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5')
                 ->get();
 
-        return view('admin.penilaian.hitung' , compact('penilaian'));
+        $maxValue = [
+            "maxC1" => floatval(DB::table("penilaians")->max("c1")),
+            "maxC2" => floatval(DB::table("penilaians")->max("c2")),
+            "maxC3" => floatval(DB::table("penilaians")->max("c3")),
+            "maxC4" => floatval(DB::table("penilaians")->max("c4")),
+            "maxC5" => floatval(DB::table("penilaians")->max("c5")),
+        ];
+
+        return view('admin.penilaian.hitung' , compact('penilaian', 'maxValue'));
     }
 
     public function getpenilaian(  )
