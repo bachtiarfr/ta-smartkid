@@ -101,7 +101,6 @@ class PenilaianController extends Controller
             ];
         }
 
-
         // dd($dataPerangkingan);
         return view('admin.penilaian.hitung' , compact('penilaian', 'dataNormalisasi', 'dataPerangkingan'));
     }

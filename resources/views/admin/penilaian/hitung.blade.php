@@ -108,9 +108,9 @@
                                     <td> W </td>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="v-content">
                                 @foreach ($dataPerangkingan as $data)
-                                <tr>
+                                <tr class="item-list" data-value="{{ $data["w"] }}">
                                     <td> {{ $data["nama"] }} </td>
                                     <td> {{ $data["v1"] }} </td>
                                     <td> {{ $data["v2"] }} </td>
@@ -137,6 +137,17 @@
 @section('js')
     <script>
         $(function () {
+
+            // reordering table (highest W to lower)
+            var div = $('#v-content');
+            var listitems = $(".item-list").get();
+            listitems.sort(function (a, b) {
+            return (+$(a).attr('data-value') > +$(b).attr('data-value')) ?
+            -1 : (+$(a).attr('data-value') < +$(b).attr('data-value')) ? 
+            1 : 0;
+            })
+            $.each(listitems, function (idx, itm) { div.append(itm); });
+            
 
             normalisasi();
 
