@@ -106,6 +106,7 @@
                                     <td> V4 </td>
                                     <td> V5 </td>
                                     <td> W </td>
+                                    <td> Hasil </td>
                                 </tr>
                             </thead>
                             <tbody id="v-content">
@@ -117,7 +118,8 @@
                                     <td> {{ $data["v3"] }} </td>
                                     <td> {{ $data["v4"] }} </td>
                                     <td> {{ $data["v5"] }} </td>
-                                    <td> {{ $data["w"] }} </td>
+                                    <td class="vResult"> {{ $data["w"] }} </td>
+                                    <td class="hasil"> Tidak </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -142,12 +144,18 @@
             var div = $('#v-content');
             var listitems = $(".item-list").get();
             listitems.sort(function (a, b) {
-            return (+$(a).attr('data-value') > +$(b).attr('data-value')) ?
-            -1 : (+$(a).attr('data-value') < +$(b).attr('data-value')) ? 
-            1 : 0;
+                return (+$(a).attr('data-value') > +$(b).attr('data-value')) ?
+                -1 : (+$(a).attr('data-value') < +$(b).attr('data-value')) ? 
+                1 : 0;
             })
-            $.each(listitems, function (idx, itm) { div.append(itm); });
+            $.each(listitems, function (idx, itm) { 
+                div.append(itm);
+            });
             
+            $('#v-content tr:first-child .hasil').each(function() {
+                $(this).text("Rekomendasi")
+                console.log($(this).text());
+            });
 
             normalisasi();
 

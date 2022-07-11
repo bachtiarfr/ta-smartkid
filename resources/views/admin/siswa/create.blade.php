@@ -46,9 +46,7 @@
         <option value="XI"> Kelas XI </option>
         <option value="XII"> Kelas XII </option>
     </select>
-
     <hr>
-
     <div class="form-group mb-2">
         <Label> Prestasi </Label>
         <button id="btnplus" class="btn btn-success"> Tambah prestasi </button>

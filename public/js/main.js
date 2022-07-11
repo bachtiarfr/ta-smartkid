@@ -25,6 +25,34 @@
         }
     });
     
+    let isi = '';
+    let no = 1;
+    // kondisi jika diklik dengan jquery click
+    $('#btnAddPrestasi').click(function (e) { 
+        e.preventDefault();
+        // $('#dv_prestasi').clone().insertAfter('#dv_prestasi');
+
+        // ambil form bagian input prestasi kemudia dicloning
+        isi = `
+            <div class="col-md-9 form-inline p-0" id="dv_prestasi">
+                <div class="form-group d-flex mb-3">
+                    <input type="text" name="prestasi${no}" id="prestasi${no}" class="form-control">
+                    <div class="btn btn-danger ml-2 btnDelete">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        no++;
+
+        $('#group_prestasi').append( isi );
+    });
+
+    $(document).on("click", ".btnDelete", function(e) {
+        e.preventDefault();
+        $(this).parent().parent().remove();
+    })
     
     // Dropdown on mouse hover
     const $dropdown = $(".dropdown");
@@ -52,8 +80,7 @@
             $dropdown.off("mouseenter mouseleave");
         }
     });
-    
-    
+        
     // Back to top button
     $(window).scroll(function () {
         if ($(this).scrollTop() > 300) {

@@ -17,6 +17,8 @@ use App\Http\Controllers\AsuransiController;
 use App\Http\Controllers\TanggunganAnakController;
 use App\Http\Controllers\AssetsDetailController;
 use App\Http\Controllers\PenilaianController;
+use App\Http\Controllers\BeasiswaController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,7 @@ Route::get('/', function () {
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/daftar-beasiswa', [App\Http\Controllers\BeasiswaController::class, 'index']);
 
 
 Route::group(['middleware' => ['auth']], function() {

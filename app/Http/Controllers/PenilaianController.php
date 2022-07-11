@@ -70,6 +70,7 @@ class PenilaianController extends Controller
                 ->select('pnl.id' , 'us.nama_depan', 'us.nama_belakang' , 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5')
                 ->get();
 
+        // cari max value dari setiap kriteria
         $maxValue = [
             "maxC1" => floatval(DB::table("penilaians")->max("c1")),
             "maxC2" => floatval(DB::table("penilaians")->max("c2")),
@@ -78,6 +79,7 @@ class PenilaianController extends Controller
             "maxC5" => floatval(DB::table("penilaians")->max("c5")),
         ];
 
+        // proses normalisasi
         foreach ($penilaian as $dataNilai) {
             $dataNormalisasi[] = [
                 "nama" => $dataNilai->nama_depan . ' ' . $dataNilai->nama_belakang,
@@ -89,6 +91,7 @@ class PenilaianController extends Controller
             ];
         }
 
+        // nilai normalisasi dikali dengan bobot
         foreach ($dataNormalisasi as $key => $v) {
             $dataPerangkingan[] = [
                 "nama" => $v["nama"],
