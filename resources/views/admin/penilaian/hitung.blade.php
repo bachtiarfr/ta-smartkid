@@ -154,7 +154,6 @@
             
             $('#v-content tr:first-child .hasil').each(function() {
                 $(this).text("Rekomendasi")
-                console.log($(this).text());
             });
 
             normalisasi();
