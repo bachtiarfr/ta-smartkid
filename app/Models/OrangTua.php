@@ -9,5 +9,5 @@ class OrangTua extends Model
 {
     use HasFactory;
     protected $table = 'orang_tuas';
-    protected $fillable = ['user_id' , 'status' , 'nik' , 'pendidikan' , 'pekerjaan' ];
+    protected $fillable = ['user_id' , 'status' , 'nik', 'berkas_surat' , 'pendidikan' , 'pekerjaan' ];
 }

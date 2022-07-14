@@ -36,6 +36,7 @@ class OrangTuaSeeder extends Seeder
             "user_id" => $user->id,
             "status" => "ayah",
             "nik" => "234354645645",
+            "berkas_surat" => "example.pdf",
             "pendidikan" => "sma/k",
             "pekerjaan" => "guru"
         ]);

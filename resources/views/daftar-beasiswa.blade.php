@@ -277,7 +277,7 @@
                             
                             <div class="col-md-3 mb-2">
                                 <Label> Upload Berkas </Label>
-                                <input type="file" name="upload_berkas" id="upload_berkas">
+                                <input type="file" name="berkas_surat" id="berkas_surat">
                             </div>    
                             
                         </div> 

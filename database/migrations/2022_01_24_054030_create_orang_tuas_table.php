@@ -18,6 +18,7 @@ class CreateOrangTuasTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->enum('status' , ['ayah' , 'ibu' , 'wali'])->default('ayah');
             $table->string('nik' , 50);
+            $table->string('berkas_surat' , 255 )->nullable(true);
             $table->enum('pendidikan' , ['sd' , 'smp' , 'sma/k' , 's1' , 's2' , 's3'])->default('sma/k');
             $table->string('pekerjaan' , 80)->nullable();
 

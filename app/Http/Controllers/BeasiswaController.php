@@ -132,7 +132,17 @@ class BeasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+        if ($request->file('berkas_surat') != null) {
+            
+            $fileTypeOrtu = $request->berkas_surat->getClientOriginalExtension();
+            
+            if ($fileTypeOrtu != 'pdf') {
+                return "File harus pdf";
+            }
+            
+            $namaBerkasOrtu = $request->file('berkas_surat')->getClientOriginalName();
+            $request->berkas_surat->move(public_path('pdf') , $namaBerkasOrtu);
+        }
         if ($request->file('berkas_prestasi') != null) {
 
             $fileType = $request->berkas_prestasi->getClientOriginalExtension();
@@ -141,12 +151,10 @@ class BeasiswaController extends Controller
                 return "File harus pdf";
             }
     
-            $namaBerkas = rand( pow(10, 3 -1) , pow(10 , 3) -1 ) . '_' . $request->file('berkas_prestasi')->getClientOriginalName();
-            $request->berkas_prestasi->move(public_path('images') , $namaBerkas);
+            $namaBerkas = $request->file('berkas_prestasi')->getClientOriginalName();
+            $request->berkas_prestasi->move(public_path('pdf') , $namaBerkas);
 
         }
-        
-        $namaBerkas = rand( pow(10, 3 -1) , pow(10 , 3) -1 ) . '_' . ' ';
 
         // //1. simpan ke tabel user
         $user = User::create([
@@ -170,8 +178,10 @@ class BeasiswaController extends Controller
             "status" => $request->status,
             "nik" => $request->nik,
             "pendidikan" => $request->pendidikan,
-            "pekerjaan" => $request->pekerjaan
+            "pekerjaan" => $request->pekerjaan,
+            "berkas_surat" => $namaBerkasOrtu
         ]);
+
         
         // //3. simpan ke tabel siswa
         $siswa = Siswa::create([

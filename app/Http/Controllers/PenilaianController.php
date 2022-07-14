@@ -94,6 +94,10 @@ class PenilaianController extends Controller
                 $dataNilai->c3 = 1;
             } 
             
+            if ($dataNilai->c4 == 0) {
+                $nValue["maxC4"] = 1;
+            } 
+            
             if ($nValue["minC5"] == 0) {
                 $dataNilai->c5 = 1;
             } 
