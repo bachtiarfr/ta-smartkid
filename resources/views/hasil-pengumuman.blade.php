@@ -69,6 +69,7 @@
                 <a href="/home" class="btn btn-primary btn-dashboard">Dashboard</a>
                 @else
                 <a href="{{ URL::to('/login') }}" class="btn btn-primary btn-login">Masuk</i></a>
+                <a href="{{ URL::to('/register') }}" class="btn btn-primary btn-register">Daftar</i></a>
             @endif
         </div>
     </nav>
@@ -111,192 +112,40 @@
         </div>
     </div>
     <!-- Carousel End -->
-
+    
     <div class="container">
-    
-        <div class="row mb-4">
+        <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header alert-success">
-                       Data diri siswa
+                        Hasil pengumuman
                     </div>
                     <div class="card-body">
-                       <div class="row">
-                        <div class="col-md-12 mb-2">
-                            <Label> Nomor Induk Siswa Nasional </Label>
-                            <input type="text" name="nisn" class="form-control" placeholder="nism">
-                        </div>
-                        <div class="col-md-6 mb-2">
-                            <Label> Nama Depan </Label>
-                            <input type="text" id="siswa_id" name="siswa_id" class="form-control" placeholder="masukan nama">
-                        </div>
-                        <div class="col-md-6 mb-2">
-                            <Label> Nama Belakang </Label>
-                            <input type="text" id="siswa_id" name="siswa_id" class="form-control" placeholder="masukan nama">
-                        </div>
-                        <div class="col-md-4 mb-2">
-                            <label> Jenis Kelamin </label>
-                            <select name="jk" class="form-control">
-                                <option value="L"> Laki-Laki</option>
-                                <option value="P"> Perempuan </option>
-                            </select>
-                        </div>
-                        <div class="col-md-4 mb-2">
-                            <label> Jurusan </label>
-                            <select name="jurusan" class="form-control">
-                                <option value="Teknik Kendaraan Ringan"> Teknik Kendaraan Ringan </option>
-                                <option value="Teknik Permesinan"> Teknik Permesinan </option>
-                                <option value="Teknik Komputer Jaringan"> Teknik Komputer Jaringan </option>
-                                <option value="Teknik Kimia Industri"> Teknik Kimia Industri </option>
-                            </select>
-                        </div>
-                        <div class="col-md-4 mb-2">
-                            <label> Kelas </label>
-                            <select name="kelas" class="form-control">
-                                <option value="X"> Kelas X </option>
-                                <option value="XI"> Kelas XI </option>
-                                <option value="XII"> Kelas XII </option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 mb-2">
-                            <div class="form-group mb-2">
-                                <Label> Prestasi </Label>
-                                <button id="btnAddPrestasi" class="btn btn-success" style="padding: 5px 10px; font-size: 10px; margin-left: 10px;"> Tambah prestasi </button>
-                            </div>
-                            <div id="group_prestasi">
-                                <div class="col-md-9 form-inline p-0" id="dv_prestasi">
-                                    <div class="form-group d-flex mb-3">
-                                        <input type="text" name="prestasi" id="prestasi" class="form-control">
-                                        <div class="btn btn-danger ml-2 btnDelete">
-                                            <i class="fas fa-times"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-3">
-                            <Label> Upload Berkas Prestasi </Label>
-                            <input type="file" name="berkas_prestasi" id="berkas_prestasi">
-                        </div>    
-                        
-                        <div class="col-md-3">
-                            <Label> Jenis Asuransi Kesehatan </Label>
-                            <select id="asuransi_id" name="asuransi_id" class="form-control">
-                                @foreach ( $asuransi as $asr )
-                                    <option data-id="{{ $asr->nilai }}" value="{{ $asr->id  }}"> {{ $asr->nama }} </option>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="tblhasil" class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <td> Nama Siswa </td>
+                                        <td> Hasil Pengumuman </td>
+                                    </tr>
+                                </thead>
+                                <tbody id="v-hasil">
+                                    @foreach ($dataPerangkingan as $data)
+                                    <tr class="item-list" data-value="{{ $data["w"] }}">
+                                        <td> {{ $data["nama"] }} </td>
+                                        <td class="hasil"> Tidak </td>
+                                    </tr>
                                 @endforeach
-                            </select>
-                        </div>    
-                       </div> 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> 
                     </div>
                 </div>
             </div>
         </div>
-    
-        <div class="row mb-4">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header alert-success">
-                       Data orang tua
-                    </div>
-                    <div class="card-body">
-                       <div class="row">
-
-                        <div class="col-md-3 mb-2">
-                            <label> Nama Orang Tua / Wali </label>
-                            <input type="text" name="ortu_id" class="form-control">
-                            </select>
-                        </div>
-
-                        <div class="col-md-3 mb-2">
-                            <label> Pekerjaan Orang Tua</label>
-                            <input type="text" name="pekerjaan" class="form-control">
-                            </select>
-                        </div>
-                        <div class="col-md-3 mb-2">
-                            <Label> Penghasilan Orangtua </Label>
-                            <select id="penghasilan_id" name="penghasilan_id" class="form-control">
-                                @foreach ( $penghasilan as $hsl )
-                                    <option data-id="{{ $hsl->bobot }}" value="{{ $hsl->id  }}"> {{ $hsl->penghasilan }} </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-3 mb-2">
-                            <Label> Jumlah Tanggungan Orangtua </Label>
-                            <select id="tanggungan_id" name="tanggungan_id" class="form-control">
-                                @foreach ( $tanggungan as $tgn )
-                                    <option data-id="{{ $tgn->nilai }}" value="{{ $tgn->id  }}"> {{ $tgn->jumlah }} </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        
-                        <div class="col-md-3 mb-2">
-                            <Label> Upload Berkas </Label>
-                            <input type="file" name="upload_berkas" id="upload_berkas">
-                        </div>    
-                        
-                       </div> 
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <div class="row mb-4">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header alert-success">
-                      Asset
-                    </div>
-                    <div class="card-body" id="dvasset">
-                      <div id="row_rumah" class="row">
-                        @foreach ( $rumah as $rmh )
-                            <div class="col-md-4 mb-2">
-                                <label>{{ $rmh->keterangan }}</label>
-                                <select name="rumah_id" id="rumah_id" class="form-control">
-                                    @foreach ( $rmh->rumahdetail as $rdet)
-                                        <option value="{{ $rmh->id }}" data-id="{{ $rdet->value }}"> {{ $rdet->key }} </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        @endforeach
-                      </div>
-                      <div id="row_asset" class="row">
-                        @foreach ( $assets as $ast )
-                            <div class="col-md-4 mb-2">
-                                <label>{{ $ast->nama }}</label>
-                                <select name="assets_id" id="assets_id" class="form-control">
-                                    @foreach ( $ast->assetsdetail as $asdet)
-                                        <option value="{{ $ast->id }}" data-id="{{ $asdet->value }}"> {{ $asdet->key }} </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        @endforeach
-                      </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        {{-- <div class="row mb-4">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header alert-success">
-                      Upload File
-                    </div>
-                    <div class="card-body" id="dvberkas">
-                      <div id="row_berkas" class="row">
-                        <input type="file" name="file_berkas" id="file_berkas">
-                      </div>
-                    </div>
-                  </div>
-            </div>
-        </div> --}}
-    
-        <input type="submit" value="simpan" class="btn btn-primary" name="simpan" id="btnsimpan">
-        
     </div>
-
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -401,6 +250,24 @@
     let no = 1;
     console.log('daftar beasiswa js');
     $(function () {
+
+        // reordering table (highest W to lower)
+        var div = $('#v-hasil');
+        var listitems = $(".item-list").get();
+        listitems.sort(function (a, b) {
+            return (+$(a).attr('data-value') > +$(b).attr('data-value')) ?
+            -1 : (+$(a).attr('data-value') < +$(b).attr('data-value')) ? 
+            1 : 0;
+        })
+        $.each(listitems, function (idx, itm) { 
+            div.append(itm);
+        });
+        
+        $('#v-hasil tr:first-child .hasil').each(function() {
+            $(this).text("Rekomendasi")
+        });
+
+
         // kondisi jika diklik dengan jquery click
         $('#btnAddPrestasi').click(function (e) { 
             e.preventDefault();

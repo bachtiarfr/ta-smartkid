@@ -106,7 +106,8 @@
                                     <td> V4 </td>
                                     <td> V5 </td>
                                     <td> W </td>
-                                    <td> Hasil </td>
+                                    <td> Berkas </td>
+                                    <td> Aksi </td>
                                 </tr>
                             </thead>
                             <tbody id="v-content">
@@ -119,7 +120,17 @@
                                     <td> {{ $data["v4"] }} </td>
                                     <td> {{ $data["v5"] }} </td>
                                     <td class="vResult"> {{ $data["w"] }} </td>
-                                    <td class="hasil"> Tidak </td>
+                                    <td> 
+                                        <div class="berkasPrestasi">
+                                            <a href="#">berkas.pdf</a>
+                                        </div>
+                                        <div class="berkasBukti">
+                                            <a href="#">berkas.pdf</a>
+                                        </div>
+                                    </td>
+                                    <td> 
+                                       <button class="btn btn-info">acc</button> 
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

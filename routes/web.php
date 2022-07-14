@@ -41,6 +41,7 @@ Route::get('/', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/daftar-beasiswa', [App\Http\Controllers\BeasiswaController::class, 'index']);
+Route::get('/hasil-pengumuman', [App\Http\Controllers\BeasiswaController::class, 'hasilPengumuman']);
 
 
 Route::group(['middleware' => ['auth']], function() {

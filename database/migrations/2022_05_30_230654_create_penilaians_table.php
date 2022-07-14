@@ -33,7 +33,8 @@ class CreatePenilaiansTable extends Migration
             $table->float('c4');
             //nilai asuransi
             $table->float('c5');
-            
+            // $table->string('berkas_prestasi');
+            // $table->string('berkas_syarat');
             $table->timestamps();
 
             // $table->foreign('siswa_id')->references('id')->on('siswas')->onDelete('cascade');

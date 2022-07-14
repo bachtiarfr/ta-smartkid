@@ -23,7 +23,6 @@
                 <td> Jenis Kelamin </td>
                 <td> Kelas </td>
                 <td> Prestasi </td>
-                <td> Berkas Pretasi </td>
                 <td> Aksi </td>
             </tr>
         </thead>
@@ -37,9 +36,6 @@
                     <td>{{ $sw['jk'] }}</td>
                     <td>{{ $sw['kelas'] }}</td>
                     <td>{{ filterFileName( $sw['prestasi'] ) }}</td>
-                    <td>
-                        <img style="width:150px; height:100px;" src="{{ asset('images/' . $sw['berkas_prestasi']) }}">
-                    </td>
                     <td>
                         <a class="btn btn-warning"  href=" {{ URL::to('admin/siswa/' . $sw['id'] . '/edit') }} "> EDIT </a>
                         @can('ortu-edit')

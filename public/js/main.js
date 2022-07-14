@@ -15,6 +15,22 @@
     // Initiate the wowjs
     new WOW().init();
 
+    // reordering table (highest W to lower)
+    var div = $('#v-hasil');
+    var listitems = $(".item-list").get();
+    listitems.sort(function (a, b) {
+        return (+$(a).attr('data-value') > +$(b).attr('data-value')) ?
+        -1 : (+$(a).attr('data-value') < +$(b).attr('data-value')) ? 
+        1 : 0;
+    })
+    $.each(listitems, function (idx, itm) { 
+        div.append(itm);
+    });
+    
+    $('#v-hasil tr:first-child .hasil').each(function() {
+        $(this).text("Diterima")
+    });
+
 
     // Sticky Navbar
     $(window).scroll(function () {

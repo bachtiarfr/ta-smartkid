@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Str;
+use Illuminate\Support\Facades\Validator;
 
 class SiswaController extends Controller
 {
@@ -61,9 +62,22 @@ class SiswaController extends Controller
      */
     public function store( Request $request )
     {
-        $namaBerkas = rand( pow(10, 3 -1) , pow(10 , 3) -1 ) . '_' . $request->file('berkas_prestasi')->getClientOriginalName();
 
-        $request->berkas_prestasi->move(public_path('images') , $namaBerkas);
+        if ($request->file('berkas_prestasi') != null) {
+
+            $fileType = $request->berkas_prestasi->getClientOriginalExtension();
+
+            if ($fileType != 'pdf') {
+                return "File harus pdf";
+            }
+    
+            $namaBerkas = rand( pow(10, 3 -1) , pow(10 , 3) -1 ) . '_' . $request->file('berkas_prestasi')->getClientOriginalName();
+            $request->berkas_prestasi->move(public_path('images') , $namaBerkas);
+
+        }
+        
+        $namaBerkas = rand( pow(10, 3 -1) , pow(10 , 3) -1 ) . '_' . ' ';
+
 
         // //1. simpan ke tabel user
         $user = User::create([

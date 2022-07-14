@@ -66,7 +66,6 @@
                 <a href="/home" class="btn btn-primary btn-dashboard">Dashboard</a>
                 @else
                 <a href="{{ URL::to('/login') }}" class="btn btn-primary btn-login">Masuk</i></a>
-                <a href="{{ URL::to('/register') }}" class="btn btn-primary btn-register">Daftar</i></a>
             @endif
         </div>
     </nav>
