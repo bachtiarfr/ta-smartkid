@@ -46,7 +46,7 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <a href="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>eLEARNING</h2>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -54,7 +54,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link">Home</a>
+                <a href="/" class="nav-item nav-link">Home</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Beasiswa</a>
                     <div class="dropdown-menu fade-down m-0">
@@ -62,8 +62,8 @@
                         <a href="{{ URL::to('/hasil-pengumuman') }}" class="dropdown-item">Hasil Pengumuman</a>
                     </div>
                 </div>
-                <a href="about.html" class="nav-item nav-link">Tentang</a>
-                <a href="contact.html" class="nav-item nav-link">Kontak</a>
+                {{-- <a href="about.html" class="nav-item nav-link">Tentang</a> --}}
+                <a href="/contact" class="nav-item nav-link">Kontak</a>
             </div>
             @if (Auth::check() > 0)
                 <a href="/home" class="btn btn-primary btn-dashboard">Dashboard</a>
@@ -78,32 +78,45 @@
     <div class="container-fluid p-0 mb-5">
         <div class="owl-carousel header-carousel position-relative">
             <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="img/carousel-1.jpg" alt="">
-                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7);">
+                <img class="img-fluid" src="img/1.jpg" alt="" style="height: 685px; object-fit: cover;">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7); height: 685px !important;">
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-sm-10 col-lg-8">
-                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Best Online Courses</h5>
-                                <h1 class="display-3 text-white animated slideInDown">The Best Online Learning Platform</h1>
-                                <p class="fs-5 text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea sanctus eirmod elitr.</p>
-                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
-                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a>
+                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Beasiswa Smartkid</h5>
+                                <h1 class="display-3 text-white animated slideInDown">Portal pendaftaran beasiswa</h1>
+                                <p class="fs-5 text-white mb-4 pb-2">Ditujukan untuk siswa berprestasi dalam melanjutkan pendidikan nya dijalur beasiswa.</p>
+                                <a href="/daftar-beasiswa" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Daftar Sekarang</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="img/carousel-2.jpg" alt="">
-                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7);">
+                <img class="img-fluid" src="img/2.jpg" alt="" style="height: 685px; object-fit: cover;">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7); height: 685px !important;">
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-sm-10 col-lg-8">
-                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Best Online Courses</h5>
-                                <h1 class="display-3 text-white animated slideInDown">Get Educated Online From Your Home</h1>
-                                <p class="fs-5 text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea sanctus eirmod elitr.</p>
-                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
-                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a>
+                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Beasiswa Smartkid</h5>
+                                <h1 class="display-3 text-white animated slideInDown">Portal pendaftaran beasiswa</h1>
+                                <p class="fs-5 text-white mb-4 pb-2">Ditujukan untuk siswa berprestasi dalam melanjutkan pendidikan nya dijalur beasiswa.</p>
+                                <a href="/daftar-beasiswa" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Daftar Sekarang</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="owl-carousel-item position-relative">
+                <img class="img-fluid" src="img/3.jpg" alt="" style="height: 685px; object-fit: cover;">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7); height: 685px !important;">
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <div class="col-sm-10 col-lg-8">
+                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Beasiswa Smartkid</h5>
+                                <h1 class="display-3 text-white animated slideInDown">Portal pendaftaran beasiswa</h1>
+                                <p class="fs-5 text-white mb-4 pb-2">Ditujukan untuk siswa berprestasi dalam melanjutkan pendidikan nya dijalur beasiswa.</p>
+                                <a href="/daftar-beasiswa" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Daftar Sekarang</a>
                             </div>
                         </div>
                     </div>

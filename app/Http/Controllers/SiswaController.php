@@ -179,8 +179,7 @@ class SiswaController extends Controller
             }
         }
 
-        return redirect()->route('siswa.index')
-                        ->with('success' , 'berhasil simpan data siswa' );
+        return redirect()->route('siswa.index')->with('success' , 'berhasil simpan data siswa' );
 
         // return response()->json($request->all() );
     }
@@ -232,7 +231,6 @@ class SiswaController extends Controller
      */
     public function update(Request $request, Siswa $siswa)
     {
-        dd($request);
         $berkas = $siswa->berkas_prestasi;
 
         // cek user apakah mengubah file?
