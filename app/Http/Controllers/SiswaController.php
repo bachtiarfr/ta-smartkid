@@ -237,11 +237,11 @@ class SiswaController extends Controller
         // jika tidak diubah menggunakan file lama
         if ( $request->hasFile('berkas_prestasi') ) {
             // hapus file lama
-            unlink( public_path() . "/images/" . $berkas );
+            // unlink( public_path() . "/pdf/" . $berkas );
             // simpan file baru dan move ke folder
             $namaBerkas = rand( pow(10, 3 -1) , pow(10 , 3) -1 ) . '_' . $request->file('berkas_prestasi')->getClientOriginalName();
 
-            $request->berkas_prestasi->move(public_path('images') , $namaBerkas);
+            $request->berkas_prestasi->move(public_path('pdf') , $namaBerkas);
 
            
             // 1. simpan ke tabel user 
@@ -252,7 +252,7 @@ class SiswaController extends Controller
             $user->save();
 
             // 2. simpan ke tabel siswa
-            $siswa->admin_id = Auth::id();
+            // $siswa->admin_id = Auth::id();
             $siswa->user_id = $user->id;
             $siswa->nisn = $request->nisn;
             $siswa->jk = $request->jk;

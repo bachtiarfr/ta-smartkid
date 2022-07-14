@@ -7,6 +7,7 @@
 @stop
 
 @section('content')
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -122,14 +123,14 @@
                                     <td class="vResult"> {{ $data["w"] }} </td>
                                     <td> 
                                         <div class="berkasPrestasi">
-                                            <a href="#">berkas.pdf</a>
+                                            <a target="_blank" href="{{ url('/pdf/'. $data["berkas_prestasi"] )}}">{{ $data["berkas_prestasi"] }}</a>
                                         </div>
                                         <div class="berkasBukti">
-                                            <a href="#">berkas.pdf</a>
+                                            <a target="_blank" href="{{ url('/pdf/'. $data["berkas_surat"] )}}">{{ $data["berkas_surat"] }}</a>
                                         </div>
                                     </td>
                                     <td> 
-                                       <button class="btn btn-info">acc</button> 
+                                       <button class="btn btn-info btnAcc" data-name="{{ $data['nama'] }}">acc</button> 
                                     </td>
                                 </tr>
                             @endforeach
@@ -292,6 +293,30 @@
                     }
                 });
             }
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $(document).on("click", ".btnAcc", function(){
+                let dataName = $(this).attr("data-name")
+                //simpan ke tabel penilaian
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/acc-beasiswa",
+                    data: {
+                        dataName : dataName
+                    },
+                    success: function (response) {
+                        swal({
+                            title: "Berhasil",
+                            text: response.message,
+                            icon: "success",
+                        });
+                    }
+                });
+            })
 
         });
     </script>

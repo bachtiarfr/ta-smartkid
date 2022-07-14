@@ -186,7 +186,7 @@ class BeasiswaController extends Controller
         // //3. simpan ke tabel siswa
         $siswa = Siswa::create([
             "user_id" => $user->id,
-            "ortu_id" => $ortu->id,
+            "ortu_id" => $userOrtu->id,
             "nisn" => $request->nisn,
             "jk" => $request->jk,
             "jurusan" => $request->jurusan,

@@ -58,6 +58,17 @@ class OrangTuaController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->file('berkas_surat') != null) {
+            
+            $fileTypeOrtu = $request->berkas_surat->getClientOriginalExtension();
+            
+            if ($fileTypeOrtu != 'pdf') {
+                return "File harus pdf";
+            }
+            
+            $namaBerkas = $request->file('berkas_surat')->getClientOriginalName();
+            $request->berkas_surat->move(public_path('pdf') , $namaBerkas);
+        }
         // simpan data user ortu
         $user = User::create([
             "nama_depan" => $request->nama_depan,
@@ -71,6 +82,7 @@ class OrangTuaController extends Controller
             "user_id" => $user->id,
             "status" => $request->status,
             "nik" => $request->nik,
+            "berkas_surat" => $namaBerkas,
             "pendidikan" => $request->pendidikan,
             "pekerjaan" => $request->pekerjaan
         ]);

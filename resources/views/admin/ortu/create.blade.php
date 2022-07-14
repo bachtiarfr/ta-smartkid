@@ -9,7 +9,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-8">
-            <form action="{{ URL::to('admin/orangtua') }}" method="post">
+            <form action="{{ URL::to('admin/orangtua') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <label> Nama Orang Tua</label>
                 <input type="text" name="nama_depan" class="form-control" placeholder="nama depan">
@@ -38,6 +38,9 @@
 
                 <label> Pekerjaan </label>
                 <input type="text" name="pekerjaan" class="form-control">
+                
+                <label for="">Berkas Surat (kk, slip gaji dll)</label>
+                <input type="file" name="berkas_surat" class="form-control">
 
                 <input type="submit" value="simpan" name="simpan" class="btn btn-success">
             </form>

@@ -11,6 +11,7 @@ use App\Models\Asuransi;
 use App\Models\Rumah;
 use App\Models\RumahDetail;
 use App\Models\Assets;
+use App\Models\Penerima;
 use App\Models\Ternak;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -62,14 +63,21 @@ class PenilaianController extends Controller
         // return response()->json($data);
     }
 
+    public function accBeasiswa(Request $request) 
+    {
+        return Penerima::create([
+            "nama_penerima" => $request->dataName
+        ]);
+    }
+
     public function hitungpenilaian (  )
     {
-
         $penilaian = DB::table('penilaians AS pnl')
+                ->select('pnl.id' , 'us.nama_depan', 'us.nama_belakang', 'sw.berkas_prestasi', 'ortu.berkas_surat', 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5')
                 ->join('users AS us' , 'pnl.siswa_id' , '=' , 'us.id')
-                ->select('pnl.id' , 'us.nama_depan', 'us.nama_belakang' , 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5')
+                ->join('siswas AS sw' , 'us.id' , '=' , 'sw.user_id')
+                ->join('orang_tuas AS ortu' , 'sw.ortu_id' , '=' , 'ortu.user_id')
                 ->get();
-
         // cari max value dari setiap kriteria
 
         $nValue = [
@@ -121,6 +129,8 @@ class PenilaianController extends Controller
                 "v3" => round(($v["r3"]*0.15), 2),
                 "v4" => round(($v["r4"]*0.30), 2),
                 "v5" => round(($v["r5"]*0.10), 2),
+                "berkas_prestasi" => $dataNilai->berkas_prestasi,
+                "berkas_surat" => $dataNilai->berkas_surat,
                 "w" => (round(($v["r1"]*0.25), 2)) + (round(($v["r2"]*0.20), 2)) + (round(($v["r3"]*0.15), 2)) + (round(($v["r4"]*0.15), 2)) + (round(($v["r5"]*0.30), 2))
             ];
         }

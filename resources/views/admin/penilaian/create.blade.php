@@ -90,7 +90,7 @@
             </div>
         </div>
     </div>
-    
+{{--     
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -104,7 +104,7 @@
                 </div>
               </div>
         </div>
-    </div>
+    </div> --}}
 
     <input type="submit" value="simpan" class="btn btn-primary" name="simpan" id="btnsimpan">
 {{-- </form> --}}
