@@ -144,10 +144,10 @@
                                     </tr>
                                 </thead>
                                 <tbody id="v-hasil">
-                                    @foreach ($dataPerangkingan as $data)
-                                    <tr class="item-list" data-value="{{ $data["w"] }}">
-                                        <td> {{ $data["nama"] }} </td>
-                                        <td class="hasil"> Tidak </td>
+                                    @foreach ($dataPenerima as $data)
+                                    <tr class="item-list">
+                                        <td> {{ $data->nama_penerima }} </td>
+                                        <td class="hasil"> Diterima </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
