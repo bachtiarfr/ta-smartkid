@@ -29,14 +29,14 @@ class BeasiswaController extends Controller
     public function index()
     {
         // query builder
-        $siswa = DB::table('siswas AS sw')
-            ->join('users AS us' , 'sw.user_id' , '=' , 'us.id')
-            ->select('sw.user_id' , 'us.nama_depan', 'us.nama_belakang')
-            ->groupBy('sw.id')
-            ->groupBy('us.nama_depan')
-            ->groupBy('us.nama_belakang')
-            ->orderBy('us.nama_depan')
-            ->get();
+        // $siswa = DB::table('siswas AS sw')
+        //     ->join('users AS us' , 'sw.user_id' , '=' , 'us.id')
+        //     ->select('sw.user_id' , 'us.nama_depan', 'us.nama_belakang')
+        //     ->groupBy('sw.id')
+        //     ->groupBy('us.nama_depan')
+        //     ->groupBy('us.nama_belakang')
+        //     ->orderBy('us.nama_depan')
+        //     ->get();
 
         // elequent with => menciptakan nested array
         $rumah = Rumah::with('rumahdetail')->get();
@@ -47,11 +47,11 @@ class BeasiswaController extends Controller
         $tanggungan = TanggunganAnak::all();
         $asuransi = Asuransi::all();
 
-        return view('daftar-beasiswa', compact('ternak' , 'assets' , 'rumah' , 'siswa' , 'penghasilan' , 'tanggungan' , 'asuransi'));
+        return view('daftar-beasiswa', compact('ternak' , 'assets' , 'rumah' , 'penghasilan' , 'tanggungan' , 'asuransi'));
     }
 
 
-    public function hasilPengumuman() 
+    public function hasilPengumuman()
     {
         $dataPenerima = DB::table('penerimas')->select('nama_penerima')->get();
         // dd($dataPenerima);
