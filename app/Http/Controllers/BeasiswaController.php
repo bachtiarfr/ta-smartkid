@@ -75,44 +75,47 @@ class BeasiswaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        if ($request->file('berkas_surat') != null) {
-            
-            $fileTypeOrtu = $request->berkas_surat->getClientOriginalExtension();
-            
-            if ($fileTypeOrtu != 'pdf') {
-                return "File harus pdf";
-            }
-            
-            $namaBerkasOrtu = $request->file('berkas_surat')->getClientOriginalName();
-            $request->berkas_surat->move(public_path('pdf') , $namaBerkasOrtu);
-        }
-        if ($request->file('berkas_prestasi') != null) {
+    {        
 
-            $fileType = $request->berkas_prestasi->getClientOriginalExtension();
+        // return $request;
+        // if ($request->file('berkas_surat') != null) {
+            
+        //     $fileTypeOrtu = $request->berkas_surat->getClientOriginalExtension();
+            
+        //     if ($fileTypeOrtu != 'pdf') {
+        //         return "File harus pdf";
+        //     }
+            
+        //     $namaBerkasOrtu = $request->file('berkas_surat')->getClientOriginalName();
+        //     $request->berkas_surat->move(public_path('pdf') , $namaBerkasOrtu);
+        // }
+        // if ($request->file('berkas_prestasi') != null) {
 
-            if ($fileType != 'pdf') {
-                return "File harus pdf";
-            }
+        //     $fileType = $request->berkas_prestasi->getClientOriginalExtension();
+
+        //     if ($fileType != 'pdf') {
+        //         return "File harus pdf";
+        //     }
     
-            $namaBerkas = $request->file('berkas_prestasi')->getClientOriginalName();
-            $request->berkas_prestasi->move(public_path('pdf') , $namaBerkas);
+        //     $namaBerkas = $request->file('berkas_prestasi')->getClientOriginalName();
+        //     $request->berkas_prestasi->move(public_path('pdf') , $namaBerkas);
 
-        }
+        // }
 
-        // //1. simpan ke tabel user
-        $user = User::create([
-            "nama_depan" => $request->nama_depan,
-            "nama_belakang" => $request->nama_belakang,
-            "email" => Str::lower($request->nama_depan . "@gmail.com"),
-            "password" => bcrypt("rahasia123")
-        ]);
         
          // //2. simpan ke tabel user orang tua
          $userOrtu = User::create([
             "nama_depan" => $request->nama_orangtua_depan,
             "nama_belakang" => $request->nama_orangtua_belakang,
             "email" => Str::lower($request->nama_orangtua_depan . "@gmail.com"),
+            "password" => bcrypt("rahasia123")
+        ]);
+
+        // //1. simpan ke tabel user
+        $user = User::create([
+            "nama_depan" => $request->nama_depan,
+            "nama_belakang" => $request->nama_belakang,
+            "email" => Str::lower($request->nama_depan . "@gmail.com"),
             "password" => bcrypt("rahasia123")
         ]);
         
@@ -123,51 +126,39 @@ class BeasiswaController extends Controller
             "nik" => $request->nik,
             "pendidikan" => $request->pendidikan,
             "pekerjaan" => $request->pekerjaan,
-            "berkas_surat" => $namaBerkasOrtu
+            "berkas_surat" => "berkas_surat.pdf"
         ]);
 
         
         // //3. simpan ke tabel siswa
         $siswa = Siswa::create([
             "user_id" => $user->id,
-            "ortu_id" => $userOrtu->id,
+            "ortu_id" => $ortu->user_id,
             "nisn" => $request->nisn,
             "jk" => $request->jk,
             "jurusan" => $request->jurusan,
             "kelas" => $request->kelas,
-            "berkas_prestasi" => $namaBerkas
+            "berkas_prestasi" => "berkas_prestasi.pdf"
         ]);
 
-        $penghasilan = DB::table("penghasilans")->select("bobot")->where("id", $request->penghasilan_id)->first();
-        $tanggungan = DB::table("tanggungan_anaks")->select("nilai")->where("id", $request->tanggungan_id)->first();
-        $asset = DB::table("assets_details")->select("value")->where("assets_id", $request->assets_id)->first();
-        $asuransi = DB::table("asuransis")->select("nilai")->where("id", $request->asuransi_id)->first();
-        $valueRumah = DB::table("rumah_details")->select("value")->where("id", $request->rumah_id)->first();
-
-        $c1 = $penghasilan->bobot;
-        $c2 = $request->rumah_id;
-        $c3 = $asset->value;
-        $c4 = $tanggungan->nilai;
-        $c5 = $asuransi->nilai;
-        
         $dataPenilaian = Penilaian::create([
-            "siswa_id" => $siswa->id,
+            "siswa_id" => $siswa->user_id,
             "penghasilan_id" => $request->penghasilan_id,
             "tanggungan_id" => $request->tanggungan_id,
             "asuransi_id" => $request->asuransi_id,
-            "c1" => $c1,
-            "c2" => $c2,
-            "c3" => $c3,
-            "c4" => $c4,
-            "c5" => $c5
+            "c1" => $request->c1,
+            "c2" => $request->c2,
+            "c3" => $request->c3,
+            "c4" => $request->c4,
+            "c5" => $request->c5
         ]); 
 
         PenilaianDetail::create([
             "penilaian_id" => $dataPenilaian->id,
             "rumah_id" => $request->rumah_id,
-            "assets_id" => $request->assets_id,
-            "value_assets" => $c3,
-            "value_rumah" => $valueRumah->value,
+            "assets_id" => $request->asset_id,
+            "value_assets" => $request->asset_value,
+            "value_rumah" => $request->rumah_data,
         ]);
 
         // 4. simpan data prestasi sesuai clone ajax
@@ -248,9 +239,10 @@ class BeasiswaController extends Controller
                 }
             }
         }
-
         
-        return redirect('daftar-beasiswa-post')->with('success' , 'berhasil simpan data siswa' );
+        return response()->json([
+            "message" =>  "data berhasil disimpan", 
+        ]);
     }
 
     /**

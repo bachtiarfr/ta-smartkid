@@ -73,13 +73,13 @@ class PenilaianController extends Controller
     public function hitungpenilaian (  )
     {
         $penilaian = DB::table('penilaians AS pnl')
-                ->select('pnl.id' , 'us.nama_depan', 'us.nama_belakang', 'sw.berkas_prestasi', 'ortu.berkas_surat', 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5')
-                ->join('users AS us' , 'pnl.siswa_id' , '=' , 'us.id')
-                ->join('siswas AS sw' , 'us.id' , '=' , 'sw.user_id')
+                ->select('sw.nisn', 'sw.kelas', 'pnl.id' , 'us.nama_depan', 'us.nama_belakang', 'sw.berkas_prestasi', 'ortu.berkas_surat', 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5')
+                ->join('siswas AS sw' , 'pnl.siswa_id' , '=' , 'sw.user_id')
+                ->join('users AS us' , 'sw.user_id' , '=' , 'us.id')
                 ->join('orang_tuas AS ortu' , 'sw.ortu_id' , '=' , 'ortu.user_id')
                 ->get();
+                
         // cari max value dari setiap kriteria
-
         $nValue = [
             "minC1" => floatval(DB::table("penilaians")->min("c1")),
             "minC2" => floatval(DB::table("penilaians")->min("c2")),
@@ -112,25 +112,33 @@ class PenilaianController extends Controller
             
             $dataNormalisasi[] = [
                 "nama" => $dataNilai->nama_depan . ' ' . $dataNilai->nama_belakang,
+                "nisn" => $dataNilai->nisn,
+                "kelas" => $dataNilai->kelas,
                 "r1" => round($nValue["minC1"] / $dataNilai->c1, 2), 
                 "r2" => round($nValue["minC2"] / $dataNilai->c2, 2), 
                 "r3" => round($nValue["minC3"] / $dataNilai->c3, 2), 
                 "r4" => round($dataNilai->c4 / $nValue["maxC4"], 2), 
-                "r5" => round($nValue["minC5"] / $dataNilai->c5, 2)
+                "r5" => round($nValue["minC5"] / $dataNilai->c5, 2),
+                "berkas_prestasi" => $dataNilai->berkas_prestasi,
+                "berkas_surat" => $dataNilai->berkas_surat
             ];
         }
+
+        // dd($dataNormalisasi);
 
         // nilai normalisasi dikali dengan bobot
         foreach ($dataNormalisasi as $key => $v) {
             $dataPerangkingan[] = [
                 "nama" => $v["nama"],
+                "nisn" => $v["nisn"],
+                "kelas" => $v["kelas"],
                 "v1" => round(($v["r1"]*0.25), 2),
                 "v2" => round(($v["r2"]*0.20), 2),
                 "v3" => round(($v["r3"]*0.15), 2),
                 "v4" => round(($v["r4"]*0.30), 2),
                 "v5" => round(($v["r5"]*0.10), 2),
-                "berkas_prestasi" => $dataNilai->berkas_prestasi,
-                "berkas_surat" => $dataNilai->berkas_surat,
+                "berkas_prestasi" => $v['berkas_prestasi'],
+                "berkas_surat" => $v['berkas_surat'],
                 "w" => (round(($v["r1"]*0.25), 2)) + (round(($v["r2"]*0.20), 2)) + (round(($v["r3"]*0.15), 2)) + (round(($v["r4"]*0.15), 2)) + (round(($v["r5"]*0.30), 2))
             ];
         }

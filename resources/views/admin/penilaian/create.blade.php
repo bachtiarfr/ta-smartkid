@@ -152,8 +152,6 @@
             let c4 = tanggungan_bobot.selectedOptions[0].getAttribute("data-id");
             let c5 = asuransi_bobot.selectedOptions[0].getAttribute("data-id");
 
-            // 
-
             let count_row_rumah = $('#dvasset > #row_rumah').find('option:selected').each(function () {
                 // console.log(this.value);
                 console.log( $(this).data("id") );

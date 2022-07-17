@@ -48,7 +48,7 @@ class SiswaController extends Controller
     {
         $ortu = DB::table('orang_tuas AS or')
         ->join('users AS us' , 'or.user_id' , '=' , 'us.id')
-        ->select('or.id' , 'us.nama_depan' )
+        ->select('or.user_id' , 'us.nama_depan' )
         ->get();
 
         return view('admin.siswa.create' , compact('ortu'));

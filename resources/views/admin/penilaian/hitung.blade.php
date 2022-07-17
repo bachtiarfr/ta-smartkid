@@ -100,13 +100,11 @@
                         <table id="tblhasil" class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
+                                    <td> NISN </td>
                                     <td> Nama Siswa </td>
-                                    <td> V1 </td>
-                                    <td> V2 </td>
-                                    <td> V3 </td>
-                                    <td> V4 </td>
-                                    <td> V5 </td>
-                                    <td> W </td>
+                                    <td> Kelas </td>
+                                    <td> Score </td>
+                                    <td> Keterangan </td>
                                     <td> Berkas </td>
                                     <td> Aksi </td>
                                 </tr>
@@ -114,13 +112,11 @@
                             <tbody id="v-content">
                                 @foreach ($dataPerangkingan as $data)
                                 <tr class="item-list" data-value="{{ $data["w"] }}">
+                                    <td> {{ $data["nisn"] }} </td>
                                     <td> {{ $data["nama"] }} </td>
-                                    <td> {{ $data["v1"] }} </td>
-                                    <td> {{ $data["v2"] }} </td>
-                                    <td> {{ $data["v3"] }} </td>
-                                    <td> {{ $data["v4"] }} </td>
-                                    <td> {{ $data["v5"] }} </td>
+                                    <td> {{ $data["kelas"] }} </td>
                                     <td class="vResult"> {{ $data["w"] }} </td>
+                                    <td class="vResult"> Tidak </td>
                                     <td> 
                                         <div class="berkasPrestasi">
                                             <a target="_blank" href="{{ url('/pdf/'. $data["berkas_prestasi"] )}}">{{ $data["berkas_prestasi"] }}</a>

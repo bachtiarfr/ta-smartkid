@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- sweetalert --}}
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -125,8 +125,87 @@
     </div>
     <!-- Carousel End -->
     <div class="container">
-        <form action="{{ URL::to('/daftar-beasiswa-post') }}" method="post" enctype="multipart/form-data" >
-            @csrf
+        {{-- <form action="{{ URL::to('/daftar-beasiswa-post') }}" method="post" enctype="multipart/form-data" > --}}
+            {{-- @csrf --}}
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header alert-success">
+                        Data orang tua
+                        </div>
+                        <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-md-3 mb-2">
+                                <label> Nama Orang Tua / Wali (Depan) </label>
+                                <input type="text" name="nama_orangtua_depan" id="nama_orangtua_depan" class="form-control">
+                                </select>
+                            </div>
+
+                            <div class="col-md-3 mb-2">
+                                <label> Nama Orang Tua / Wali (Belakang) </label>
+                                <input type="text" name="nama_orangtua_belakang" id="nama_orangtua_belakang" class="form-control">
+                                </select>
+                            </div>
+
+                            <div class="col-md-3 mb-2">
+                                <label> Nomer Induk Kependudukan </label>
+                                <input type="text" name="nik" id="nik" class="form-control" required>
+                            </div>
+ 
+                            <div class="col-md-3 mb-2">
+                                <label> Status </label>
+                                <select name="status" id="status" class="form-control">
+                                    <option selected value="ayah" data-id="1"> Ayah </option>
+                                    <option value="ibu"> Ibu </option>
+                                    <option value="wali"> Wali Murid </option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3 mb-2">
+                                <label> Pendidikan Terakhir </label>
+                                <select name="pendidikan" id="pendidikan" class="form-control">
+                                    <option value="sd"> Sekolah Dasar </option>
+                                    <option value="smp"> Sekolah Menengah Pertama </option>
+                                    <option selected value="sma/k"> Sekolah Menengah Atas/Kejuruan </option>
+                                    <option value="s1"> Sarjanah Strata 1 </option>
+                                    <option value="s2"> Sarjanah Strata 2 </option>
+                                    <option value="s3"> Sarjanah Strata 3 </option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label> Pekerjaan Orang Tua</label>
+                                <input type="text" name="pekerjaan" id="pekerjaan" class="form-control">
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <Label> Penghasilan Orangtua </Label>
+                                <select id="penghasilan_id" name="penghasilan_id" class="form-control">
+                                    @foreach ( $penghasilan as $hsl )
+                                        <option data-id="{{ $hsl->bobot }}" value="{{ $hsl->id  }}"> {{ $hsl->penghasilan }} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <Label> Jumlah Tanggungan Orangtua </Label>
+                                <select id="tanggungan_id" name="tanggungan_id" class="form-control">
+                                    @foreach ( $tanggungan as $tgn )
+                                        <option data-id="{{ $tgn->nilai }}" name="{{ $tgn->nilai }}" value="{{ $tgn->id  }}"> {{ $tgn->jumlah }} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-3 mb-2">
+                                <Label> Upload Berkas </Label>
+                                <input type="file" name="berkas_surat" id="berkas_surat">
+                            </div>    
+                            
+                        </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row mb-4">
                 <div class="col-md-12">
                     <div class="card">
@@ -137,7 +216,7 @@
                         <div class="row">
                             <div class="col-md-12 mb-2">
                                 <Label> Nomor Induk Siswa Nasional </Label>
-                                <input type="text" name="nisn" class="form-control" placeholder="nisn">
+                                <input type="text" name="nisn" id="nisn" class="form-control" placeholder="nisn">
                             </div>
                             <div class="col-md-6 mb-2">
                                 <Label> Nama Depan </Label>
@@ -149,14 +228,14 @@
                             </div>
                             <div class="col-md-4 mb-2">
                                 <label> Jenis Kelamin </label>
-                                <select name="jk" class="form-control">
+                                <select name="jk" id="jk" class="form-control">
                                     <option value="L"> Laki-Laki</option>
                                     <option value="P"> Perempuan </option>
                                 </select>
                             </div>
                             <div class="col-md-4 mb-2">
                                 <label> Jurusan </label>
-                                <select name="jurusan" class="form-control">
+                                <select name="jurusan" id="jurusan" class="form-control">
                                     <option value="Teknik Kendaraan Ringan"> Teknik Kendaraan Ringan </option>
                                     <option value="Teknik Permesinan"> Teknik Permesinan </option>
                                     <option value="Teknik Komputer Jaringan"> Teknik Komputer Jaringan </option>
@@ -165,7 +244,7 @@
                             </div>
                             <div class="col-md-4 mb-2">
                                 <label> Kelas </label>
-                                <select name="kelas" class="form-control">
+                                <select name="kelas" id="kelas" class="form-control">
                                     <option value="X"> Kelas X </option>
                                     <option value="XI"> Kelas XI </option>
                                     <option value="XII"> Kelas XII </option>
@@ -211,85 +290,6 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header alert-success">
-                        Data orang tua
-                        </div>
-                        <div class="card-body">
-                        <div class="row">
-
-                            <div class="col-md-3 mb-2">
-                                <label> Nama Orang Tua / Wali (Depan) </label>
-                                <input type="text" name="nama_orangtua_depan" class="form-control">
-                                </select>
-                            </div>
-
-                            <div class="col-md-3 mb-2">
-                                <label> Nama Orang Tua / Wali (Belakang) </label>
-                                <input type="text" name="nama_orangtua_belakang" class="form-control">
-                                </select>
-                            </div>
-
-                            <div class="col-md-3 mb-2">
-                                <label> Nomer Induk Kependudukan </label>
-                                <input type="text" name="nik" class="form-control" required>
-                            </div>
- 
-                            <div class="col-md-3 mb-2">
-                                <label> Status </label>
-                                <select name="status" class="form-control">
-                                    <option selected value="ayah"> Ayah </option>
-                                    <option value="ibu"> Ibu </option>
-                                    <option value="wali"> Wali Murid </option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-3 mb-2">
-                                <label> Pendidikan Terakhir </label>
-                                <select name="pendidikan" class="form-control">
-                                    <option value="sd"> Sekolah Dasar </option>
-                                    <option value="smp"> Sekolah Menengah Pertama </option>
-                                    <option selected value="sma/k"> Sekolah Menengah Atas/Kejuruan </option>
-                                    <option value="s1"> Sarjanah Strata 1 </option>
-                                    <option value="s2"> Sarjanah Strata 2 </option>
-                                    <option value="s3"> Sarjanah Strata 3 </option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-2">
-                                <label> Pekerjaan Orang Tua</label>
-                                <input type="text" name="pekerjaan" class="form-control">
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-2">
-                                <Label> Penghasilan Orangtua </Label>
-                                <select id="penghasilan_id" name="penghasilan_id" class="form-control">
-                                    @foreach ( $penghasilan as $hsl )
-                                        <option data-id="{{ $hsl->bobot }}" value="{{ $hsl->id  }}"> {{ $hsl->penghasilan }} </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-2">
-                                <Label> Jumlah Tanggungan Orangtua </Label>
-                                <select id="tanggungan_id" name="tanggungan_id" class="form-control">
-                                    @foreach ( $tanggungan as $tgn )
-                                        <option data-id="{{ $tgn->nilai }}" name="{{ $tgn->nilai }}" value="{{ $tgn->id  }}"> {{ $tgn->jumlah }} </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-3 mb-2">
-                                <Label> Upload Berkas </Label>
-                                <input type="file" name="berkas_surat" id="berkas_surat">
-                            </div>    
-                            
-                        </div> 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-            <div class="row mb-4">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header alert-success">
                         Asset
                         </div>
                         <div class="card-body" id="dvasset">
@@ -322,8 +322,9 @@
                 </div>
             </div>
         
-            <input type="submit" value="simpan" class="btn btn-primary" name="simpan" id="btnsimpan">
-        </form>
+            {{-- <a href="#" class="btnSimpan">Simpan</a> --}}
+            <input type="submit" value="simpan" class="btn btn-primary btnSimpan" name="simpan" id="btnsimpan">
+        {{-- </form> --}}
     </div>
 
 
@@ -423,129 +424,137 @@
 
     <!-- Template Javascript -->
     <script src="{{ ('js/main.js') }}"></script>
-    
-@section('js')
-<script>
-    let isi = '';
-    let no = 1;
-    console.log('daftar beasiswa js');
-    $(function () {
-        // kondisi jika diklik dengan jquery click
-        $('#btnAddPrestasi').click(function (e) { 
-            e.preventDefault();
-            // $('#dv_prestasi').clone().insertAfter('#dv_prestasi');
-
-            // ambil form bagian input prestasi kemudia dicloning
-            isi = `
-                <div class="col-md-9 form-inline p-0" id="dv_prestasi">
-                    <div class="form-group d-flex mb-3">
-                        <input type="text" name="prestasi${no}" id="prestasi${no}" class="form-control">
-                        <div class="btn btn-danger ml-2 btnDelete">
-                            <i class="fas fa-times"></i>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            no++;
-
-            $('#group_prestasi').append( isi );
-        });
-
-        $(document).on("click", ".btnDelete", function(e) {
-            e.preventDefault();
-            $(this).parent().parent().remove();
-        })
-
-      $.ajaxSetup({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-      });
-
-      $('#btnsimpan').click(function (e) { 
-          e.preventDefault();
-
-          //profil siswa
-          let siswa_id = $('#siswa_id').val();
-          let penghasilan_id = $('#penghasilan_id').val();
-          let tanggungan_id = $('#tanggungan_id').val();
-          let asuransi_id = $('#asuransi_id').val();
-
-          //membaca selectedOptions penghasilan, tanggungan, asuransi untuk c1,c5,c6
-          const gaji_bobot = document.querySelector('#penghasilan_id');
-          const tanggungan_bobot = document.querySelector('#tanggungan_id');
-          const asuransi_bobot = document.querySelector('#asuransi_id');
-
-          // variable rumah
-          let rumah_val = $('#rumah_id option:selected').val();
-          let rumah_data_id = $('#rumah_id option:selected').data('id');
-          //variable asset
-          let assets_val = $('#assets_id option:selected').val();
-          let assets_data_id = $('#assets_id option:selected').data('id');
-
-          //variable
-          let c1 = gaji_bobot.selectedOptions[0].getAttribute("data-id");
-          let c2 = 0;
-          let jml_c2 = 0;
-          let c4 = tanggungan_bobot.selectedOptions[0].getAttribute("data-id");
-          let c5 = asuransi_bobot.selectedOptions[0].getAttribute("data-id");
-
-          // 
-
-          let count_row_rumah = $('#dvasset > #row_rumah').find('option:selected').each(function () {
-              // console.log(this.value);
-              console.log( $(this).data("id") );
-              c2 += $(this).data("id") ;
-          });
-
-          c2 = parseFloat( c2 / count_row_rumah.length ).toFixed(2) ;
-
-          //get data asset - row_asset
-
-          let c3 = 0;
-          let jml_c3 = 0;
-         
-          let count_row_asset = $('#dvasset > #row_asset').find('option:selected').each(function () {
-              // console.log(this.value);
-              console.log( $(this).data("id") );
-              c3 += $(this).data("id");
-          });
-
-          c3 = parseFloat( c3 / count_row_asset.length ).toFixed(2) ;
-
-          //simpan ke tabel penilaian
-          $.ajax({
-              type: "POST",
-              url: "/admin/penilaian",
-              data: {
-                  siswa_id : siswa_id,
-                  penghasilan_id : penghasilan_id,
-                  tanggungan_id : tanggungan_id,
-                  asuransi_id : asuransi_id,
-                  asset_value : assets_data_id,
-                  asset_id : assets_val,
-                  rumah_id : rumah_val,
-                  rumah_data : rumah_data_id,
-                  c1 : c1,
-                  c2 : c2,
-                  c3 : c3,
-                  c4 : c4,
-                  c5 : c5
-              },
-              success: function (response) {
-                  swal({
-                      title: "Berhasil",
-                      text: response.message,
-                      icon: "success",
-                  });
-              }
-          });
-          
-      });
-    });
-</script>
-@stop
 </body>
 
+<script>
+  $(function () {
+      console.log('beasiswa daftar');
+      $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $('.btnSimpan').click(function (e) { 
+        e.preventDefault();
+
+        //profil siswa
+        let siswa_id = $('#siswa_id').val();
+        let penghasilan_id = $('#penghasilan_id').val();
+        let tanggungan_id = $('#tanggungan_id').val();
+        let asuransi_id = $('#asuransi_id').val();
+        let berkas_prestasi = $("#berkas_prestasi")[0].files[0];
+        let berkas_surat = $("#berkas_surat")[0].files[0];
+        let nama_depan = $("#nama_depan").val();
+        let nama_belakang = $("#nama_belakang").val();
+        let nisn = $("#nisn").val();
+        let jurusan = $('#jurusan option:selected').val();
+        let kelas = $('#kelas option:selected').val();
+        let jk = $('#jk option:selected').val();
+        
+        let nama_depan_siswa = $("#nama_depan").val();
+        let nama_depan_belakang = $("#nama_belakang").val();
+        let status = $('#status option:selected').val();
+        let nik = $("#nik").val();
+        let pendidikan = $('#pendidikan option:selected').val();
+        let pekerjaan = $("#pekerjaan").val();
+
+        let nama_orangtua_depan = $("#nama_orangtua_depan").val();
+        let nama_orangtua_belakang = $("#nama_orangtua_belakang").val();
+
+        //membaca selectedOptions penghasilan, tanggungan, asuransi untuk c1,c5,c6
+        const gaji_bobot = document.querySelector('#penghasilan_id');
+        const tanggungan_bobot = document.querySelector('#tanggungan_id');
+        const asuransi_bobot = document.querySelector('#asuransi_id');
+
+        // variable rumah
+        let rumah_val = $('#rumah_id option:selected').val();
+        let rumah_data_id = $('#rumah_id option:selected').data('id');
+        //variable asset
+        let assets_val = $('#assets_id option:selected').val();
+        let assets_data_id = $('#assets_id option:selected').data('id');
+
+        //variable
+        let c1 = gaji_bobot.selectedOptions[0].getAttribute("data-id");
+        let c2 = 0;
+        let jml_c2 = 0;
+        let c4 = tanggungan_bobot.selectedOptions[0].getAttribute("data-id");
+        let c5 = asuransi_bobot.selectedOptions[0].getAttribute("data-id");
+
+        let count_row_rumah = $('#dvasset > #row_rumah').find('option:selected').each(function () {
+            // console.log(this.value);
+            console.log( $(this).data("id") );
+            c2 += $(this).data("id") ;
+        });
+
+        c2 = parseFloat( c2 / count_row_rumah.length ).toFixed(2) ;
+
+        //get data asset - row_asset
+
+        let c3 = 0;
+        let jml_c3 = 0;
+       
+        let count_row_asset = $('#dvasset > #row_asset').find('option:selected').each(function () {
+            // console.log(this.value);
+            console.log( $(this).data("id") );
+            c3 += $(this).data("id");
+        });
+
+        c3 = parseFloat( c3 / count_row_asset.length ).toFixed(2) ;
+
+        console.log("berkas prestasi :", berkas_prestasi);
+        console.log("berkas surat :", berkas_surat);
+
+        console.log("nama depan orang tua :", nama_orangtua_depan);
+        console.log("nama belakang orang tua :", nama_orangtua_belakang);
+
+        console.log("nama depan :", nama_depan);
+        console.log("nama belakang :", nama_belakang);
+        console.log("status id :", status);
+
+        //simpan ke tabel penilaian
+        $.ajax({
+            type: "POST",
+            url: "/daftar-beasiswa/post",
+            data: {
+                siswa_id : siswa_id,
+                penghasilan_id : penghasilan_id,
+                tanggungan_id : tanggungan_id,
+                asuransi_id : asuransi_id,
+                status : status,
+                nik : nik,
+                nisn : nisn,
+                pekerjaan : pekerjaan,
+                jurusan : jurusan,
+                kelas : kelas,
+                pendidikan : pendidikan,
+                jk : jk,
+                asset_value : assets_data_id,
+                asset_id : assets_val,
+                rumah_id : rumah_val,
+                rumah_data : rumah_data_id,
+                berkas_prestasi : berkas_prestasi.name,
+                berkas_surat : berkas_surat.name,
+                nama_depan : nama_depan,
+                nama_belakang : nama_belakang,
+                nama_orangtua_depan : nama_orangtua_depan,
+                nama_orangtua_belakang : nama_orangtua_belakang,
+                c1 : c1,
+                c2 : c2,
+                c3 : c3,
+                c4 : c4,
+                c5 : c5
+            },
+            success: function (response) {
+                swal({
+                    title: "Berhasil",
+                    text: response.message,
+                    icon: "success",
+                });
+            }
+        });
+        
+    });
+  });
+</script>
 </html>

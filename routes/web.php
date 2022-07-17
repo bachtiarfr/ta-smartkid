@@ -42,7 +42,7 @@ Route::get('/', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/daftar-beasiswa', [App\Http\Controllers\BeasiswaController::class, 'index']);
 
-Route::resource('/daftar-beasiswa-post', BeasiswaController::class);
+Route::resource('/daftar-beasiswa/post', BeasiswaController::class);
 Route::get('/hasil-pengumuman', [App\Http\Controllers\BeasiswaController::class, 'hasilPengumuman']);
 
 

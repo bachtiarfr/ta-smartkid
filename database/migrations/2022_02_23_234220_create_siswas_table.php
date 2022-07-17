@@ -24,7 +24,7 @@ class CreateSiswasTable extends Migration
             $table->string('berkas_prestasi' , 255 )->nullable(true);
             $table->timestamps();
 
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             // $table->foreign('ortu_id')->references('id')->on('orang_tuas')->onDelete('cascade');
         });
     }
