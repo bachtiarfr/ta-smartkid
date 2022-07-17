@@ -263,20 +263,20 @@ return [
             ],
         ],
 
-        [
-            'text'    => 'Kondisi Rumah',
-            'icon'    => 'fas fa-fw fa-home',
-            'submenu' => [
-                [
-                    'text' => 'Tampil',
-                    'url'  => 'admin/kondisi',
-                ],
-                [
-                    'text'    => 'Tambah',
-                    'url'     => 'admin/kondisi/create',
-                ],
-            ],
-        ],
+        // [
+        //     'text'    => 'Kondisi Rumah',
+        //     'icon'    => 'fas fa-fw fa-home',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Tampil',
+        //             'url'  => 'admin/kondisi',
+        //         ],
+        //         [
+        //             'text'    => 'Tambah',
+        //             'url'     => 'admin/kondisi/create',
+        //         ],
+        //     ],
+        // ],
 
         [
             'text'    => 'Siswa',

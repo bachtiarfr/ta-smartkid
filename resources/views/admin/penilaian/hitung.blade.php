@@ -115,8 +115,8 @@
                                     <td> {{ $data["nisn"] }} </td>
                                     <td> {{ $data["nama"] }} </td>
                                     <td> {{ $data["kelas"] }} </td>
-                                    <td class="vResult"> {{ $data["w"] }} </td>
-                                    <td class="vResult"> Tidak </td>
+                                    <td> {{ $data["w"] }} </td>
+                                    <td class="hasil"> Rekomendasi </td>
                                     <td> 
                                         <div class="berkasPrestasi">
                                             <a target="_blank" href="{{ url('/pdf/'. $data["berkas_prestasi"] )}}">{{ $data["berkas_prestasi"] }}</a>
@@ -160,8 +160,8 @@
                 div.append(itm);
             });
             
-            $('#v-content tr:first-child .hasil').each(function() {
-                $(this).text("Rekomendasi")
+            $('#v-content tr:nth-child(n+11) .hasil').each(function() {
+                $(this).text("Tidak")
             });
 
             normalisasi();
