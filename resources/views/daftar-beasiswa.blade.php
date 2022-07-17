@@ -125,8 +125,8 @@
     </div>
     <!-- Carousel End -->
     <div class="container">
-        {{-- <form action="{{ URL::to('/daftar-beasiswa-post') }}" method="post" enctype="multipart/form-data" > --}}
-            {{-- @csrf --}}
+        <form action="{{ URL::to('/daftar-beasiswa/post') }}" id="formBeasiswa" method="post" enctype="multipart/form-data" >
+            @csrf
             <div class="row mb-4">
                 <div class="col-md-12">
                     <div class="card">
@@ -197,7 +197,7 @@
                             
                             <div class="col-md-3 mb-2">
                                 <Label> Upload Berkas </Label>
-                                <input type="file" name="berkas_surat" id="berkas_surat">
+                                <input type="file" name="berkas_surat" id="berkas_surat" accept="application/pdf" >
                             </div>    
                             
                         </div> 
@@ -258,7 +258,7 @@
                                 <div id="group_prestasi">
                                     <div class="col-md-9 form-inline p-0" id="dv_prestasi">
                                         <div class="form-group d-flex mb-3">
-                                            <input type="text" name="prestasi" id="prestasi" class="form-control">
+                                            <input type="text" name="prestasi" id="prestasi" class="form-control prestasi">
                                             <div class="btn btn-danger ml-2 btnDelete">
                                                 <i class="fas fa-times"></i>
                                             </div>
@@ -269,14 +269,14 @@
                             
                             <div class="col-md-3">
                                 <Label> Upload Berkas Prestasi </Label>
-                                <input type="file" name="berkas_prestasi" id="berkas_prestasi">
+                                <input type="file" name="berkas_prestasi" id="berkas_prestasi" accept="application/pdf" >
                             </div>    
                             
                             <div class="col-md-3">
                                 <Label> Jenis Asuransi Kesehatan </Label>
                                 <select id="asuransi_id" name="asuransi_id" class="form-control">
                                     @foreach ( $asuransi as $asr )
-                                        <option data-id="{{ $asr->nilai }}" value="{{ $asr->id  }}"> {{ $asr->nama }} </option>
+                                        <option data-id="{{ $asr->nilai }}" value="{{ $asr->id }}"> {{ $asr->nama }} </option>
                                     @endforeach
                                 </select>
                             </div>    
@@ -323,8 +323,8 @@
             </div>
         
             {{-- <a href="#" class="btnSimpan">Simpan</a> --}}
-            <input type="submit" value="simpan" class="btn btn-primary btnSimpan" name="simpan" id="btnsimpan">
-        {{-- </form> --}}
+            <input type="submit" value="simpan" class="btn btn-primary btnSimpan" name="simpan">
+        </form>
     </div>
 
 
@@ -425,6 +425,31 @@
     <!-- Template Javascript -->
     <script src="{{ ('js/main.js') }}"></script>
 </body>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+  </button>
+  
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        ...
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+    </div>
+    </div>
+</div>
+</div>
 
 <script>
   $(function () {
@@ -437,14 +462,16 @@
 
     $('.btnSimpan').click(function (e) { 
         e.preventDefault();
+        
+        let berkas_prestasi = $("#berkas_prestasi")[0].files[0];
+        let berkas_surat = $("#berkas_surat")[0].files[0];
+
 
         //profil siswa
         let siswa_id = $('#siswa_id').val();
         let penghasilan_id = $('#penghasilan_id').val();
         let tanggungan_id = $('#tanggungan_id').val();
         let asuransi_id = $('#asuransi_id').val();
-        let berkas_prestasi = $("#berkas_prestasi")[0].files[0];
-        let berkas_surat = $("#berkas_surat")[0].files[0];
         let nama_depan = $("#nama_depan").val();
         let nama_belakang = $("#nama_belakang").val();
         let nisn = $("#nisn").val();
@@ -483,7 +510,7 @@
 
         let count_row_rumah = $('#dvasset > #row_rumah').find('option:selected').each(function () {
             // console.log(this.value);
-            console.log( $(this).data("id") );
+            console.log("c2 :", $(this).data("id") );
             c2 += $(this).data("id") ;
         });
 
@@ -496,55 +523,63 @@
        
         let count_row_asset = $('#dvasset > #row_asset').find('option:selected').each(function () {
             // console.log(this.value);
-            console.log( $(this).data("id") );
+            console.log("c3", $(this).data("id") );
             c3 += $(this).data("id");
         });
 
         c3 = parseFloat( c3 / count_row_asset.length ).toFixed(2) ;
 
-        console.log("berkas prestasi :", berkas_prestasi);
-        console.log("berkas surat :", berkas_surat);
+        console.log("c1 :", c1);
+        console.log("c2 :", c2);
+        console.log("c3 :", c3);
+        console.log("c4 :", c4);
+        console.log("c5 :", c5);
+        console.log("berkas surat:", berkas_surat);
+        console.log("berkas prestasi:", berkas_prestasi);
 
-        console.log("nama depan orang tua :", nama_orangtua_depan);
-        console.log("nama belakang orang tua :", nama_orangtua_belakang);
+        let formData = new FormData();
+        formData.append("berkas_prestasi", berkas_prestasi)
+        formData.append("berkas_surat", berkas_surat)
+        formData.append("siswa_id", siswa_id)
+        formData.append("penghasilan_id", penghasilan_id)
+        formData.append("tanggungan_id", tanggungan_id)
+        formData.append("asuransi_id", asuransi_id)
+        formData.append("status", status)
 
-        console.log("nama depan :", nama_depan);
-        console.log("nama belakang :", nama_belakang);
-        console.log("status id :", status);
-
+        let group_prestasi = $("#group_prestasi .prestasi");
+        var prestasis = [];
+        group_prestasi.each(function(){
+            prestasis.push($(this).val()); 
+            formData.append("prestasis", prestasis)
+        });
+        
+        formData.append("nik", nik)
+        formData.append("nisn", nisn)
+        formData.append("pekerjaan", pekerjaan)
+        formData.append("jurusan", jurusan)
+        formData.append("kelas", kelas)
+        formData.append("pendidikan", pendidikan)
+        formData.append("jk", jk)
+        formData.append("asset_value", assets_data_id)
+        formData.append("asset_id", assets_val)
+        formData.append("rumah_id", rumah_val)
+        formData.append("rumah_data", rumah_data_id)
+        formData.append("nama_depan", nama_depan)
+        formData.append("nama_belakang", nama_belakang)
+        formData.append("nama_orangtua_depan", nama_orangtua_depan)
+        formData.append("nama_orangtua_belakang", nama_orangtua_belakang)
+        formData.append("c1", c1)
+        formData.append("c2", c2)
+        formData.append("c3", c3)
+        formData.append("c4", c4)
+        formData.append("c5", c5)
         //simpan ke tabel penilaian
         $.ajax({
             type: "POST",
             url: "/daftar-beasiswa/post",
-            data: {
-                siswa_id : siswa_id,
-                penghasilan_id : penghasilan_id,
-                tanggungan_id : tanggungan_id,
-                asuransi_id : asuransi_id,
-                status : status,
-                nik : nik,
-                nisn : nisn,
-                pekerjaan : pekerjaan,
-                jurusan : jurusan,
-                kelas : kelas,
-                pendidikan : pendidikan,
-                jk : jk,
-                asset_value : assets_data_id,
-                asset_id : assets_val,
-                rumah_id : rumah_val,
-                rumah_data : rumah_data_id,
-                berkas_prestasi : berkas_prestasi.name,
-                berkas_surat : berkas_surat.name,
-                nama_depan : nama_depan,
-                nama_belakang : nama_belakang,
-                nama_orangtua_depan : nama_orangtua_depan,
-                nama_orangtua_belakang : nama_orangtua_belakang,
-                c1 : c1,
-                c2 : c2,
-                c3 : c3,
-                c4 : c4,
-                c5 : c5
-            },
+            data: formData,
+            contentType: false,
+            processData: false,
             success: function (response) {
                 swal({
                     title: "Berhasil",

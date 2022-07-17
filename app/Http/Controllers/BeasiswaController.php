@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Models\Rumah;
 use App\Models\Assets;
@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Models\Penilaian;
 use App\Models\PenilaianDetail;
 use App\Models\Siswa_Prestasi;
+
 use Str;
 
 use DB;
@@ -75,33 +76,33 @@ class BeasiswaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
+    {
+        // return $request->prestasis;
 
-        // return $request;
-        // if ($request->file('berkas_surat') != null) {
+        if ($request->file('berkas_surat') != null) {
             
-        //     $fileTypeOrtu = $request->berkas_surat->getClientOriginalExtension();
+            $fileTypeOrtu = $request->berkas_surat->getClientOriginalExtension();
             
-        //     if ($fileTypeOrtu != 'pdf') {
-        //         return "File harus pdf";
-        //     }
+            if ($fileTypeOrtu != 'pdf') {
+                return "File harus pdf";
+            }
             
-        //     $namaBerkasOrtu = $request->file('berkas_surat')->getClientOriginalName();
-        //     $request->berkas_surat->move(public_path('pdf') , $namaBerkasOrtu);
-        // }
-        // if ($request->file('berkas_prestasi') != null) {
+            $namaBerkasOrtu = $request->file('berkas_surat')->getClientOriginalName();
+            $request->berkas_surat->move(public_path('pdf') , $namaBerkasOrtu);
+        }
 
-        //     $fileType = $request->berkas_prestasi->getClientOriginalExtension();
+        if ($request->file('berkas_prestasi') != null) {
 
-        //     if ($fileType != 'pdf') {
-        //         return "File harus pdf";
-        //     }
+            $fileType = $request->berkas_prestasi->getClientOriginalExtension();
+
+            if ($fileType != 'pdf') {
+                return "File harus pdf";
+            }
     
-        //     $namaBerkas = $request->file('berkas_prestasi')->getClientOriginalName();
-        //     $request->berkas_prestasi->move(public_path('pdf') , $namaBerkas);
+            $namaBerkas = $request->file('berkas_prestasi')->getClientOriginalName();
+            $request->berkas_prestasi->move(public_path('pdf') , $namaBerkas);
 
-        // }
-
+        }
         
          // //2. simpan ke tabel user orang tua
          $userOrtu = User::create([
@@ -126,7 +127,7 @@ class BeasiswaController extends Controller
             "nik" => $request->nik,
             "pendidikan" => $request->pendidikan,
             "pekerjaan" => $request->pekerjaan,
-            "berkas_surat" => "berkas_surat.pdf"
+            "berkas_surat" => $namaBerkasOrtu
         ]);
 
         
@@ -138,9 +139,15 @@ class BeasiswaController extends Controller
             "jk" => $request->jk,
             "jurusan" => $request->jurusan,
             "kelas" => $request->kelas,
-            "berkas_prestasi" => "berkas_prestasi.pdf"
+            "berkas_prestasi" => $namaBerkas
         ]);
 
+         // 4. simpan data prestasi sesuai clone ajax
+         Siswa_Prestasi::create([
+             "siswa_id" => $siswa->id,
+             "prestasi" => $request->prestasis
+         ]);
+        
         $dataPenilaian = Penilaian::create([
             "siswa_id" => $siswa->user_id,
             "penghasilan_id" => $request->penghasilan_id,
@@ -161,85 +168,6 @@ class BeasiswaController extends Controller
             "value_rumah" => $request->rumah_data,
         ]);
 
-        // 4. simpan data prestasi sesuai clone ajax
-        if ( count( $request->all() ) > 8 ) {
-            $jumlah = count( $request->all() ) - 8 ;
-
-            for ($i=0; $i < $jumlah - 1 ; $i++) { 
-                if ( $i == 0 ) {
-                    
-                    $sw_pres = Siswa_Prestasi::create([
-                        "siswa_id" => $siswa->id,
-                        "prestasi" => $request->prestasi
-                    ]);
-
-                } elseif ( $i == 1 ) {
-
-                    $sw_pres = Siswa_Prestasi::create([
-                        "siswa_id" => $siswa->id,
-                        "prestasi" => $request->prestasi1
-                    ]);
-
-                } elseif ( $i == 2 ) {
-
-                    $sw_pres = Siswa_Prestasi::create([
-                        "siswa_id" => $siswa->id,
-                        "prestasi" => $request->prestasi2
-                    ]);
-
-                } elseif ( $i == 3 ) {
-
-                    $sw_pres = Siswa_Prestasi::create([
-                        "siswa_id" => $siswa->id,
-                        "prestasi" => $request->prestasi3
-                    ]);
-
-                } elseif ( $i == 4 ) {
-
-                    $sw_pres = Siswa_Prestasi::create([
-                        "siswa_id" => $siswa->id,
-                        "prestasi" => $request->prestasi4
-                    ]);
-
-                } elseif ( $i == 5 ) {
-
-                    $sw_pres = Siswa_Prestasi::create([
-                        "siswa_id" => $siswa->id,
-                        "prestasi" => $request->prestasi5
-                    ]);
-
-                } elseif ( $i == 6 ) {
-
-                    $sw_pres = Siswa_Prestasi::create([
-                        "siswa_id" => $siswa->id,
-                        "prestasi" => $request->prestasi6
-                    ]);
-
-                } elseif ( $i == 7 ) {
-
-                    $sw_pres = Siswa_Prestasi::create([
-                        "siswa_id" => $siswa->id,
-                        "prestasi" => $request->prestasi7
-                    ]);
-
-                } elseif ( $i == 8 ) {
-
-                    $sw_pres = Siswa_Prestasi::create([
-                        "siswa_id" => $siswa->id,
-                        "prestasi" => $request->prestasi8
-                    ]);
-
-                } elseif ( $i == 9 ) {
-
-                    $sw_pres = Siswa_Prestasi::create([
-                        "siswa_id" => $siswa->id,
-                        "prestasi" => $request->prestasi9
-                    ]);
-
-                }
-            }
-        }
-        
         return response()->json([
             "message" =>  "data berhasil disimpan", 
         ]);

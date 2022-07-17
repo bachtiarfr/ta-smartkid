@@ -62,22 +62,18 @@ class SiswaController extends Controller
      */
     public function store( Request $request )
     {
-
         if ($request->file('berkas_prestasi') != null) {
-
+            
             $fileType = $request->berkas_prestasi->getClientOriginalExtension();
-
+            
             if ($fileType != 'pdf') {
                 return "File harus pdf";
             }
-    
-            $namaBerkas = rand( pow(10, 3 -1) , pow(10 , 3) -1 ) . '_' . $request->file('berkas_prestasi')->getClientOriginalName();
-            $request->berkas_prestasi->move(public_path('images') , $namaBerkas);
+            
+            $namaBerkas = $request->file('berkas_prestasi')->getClientOriginalName();
+            $request->berkas_prestasi->move(public_path('pdf') , $namaBerkas);
 
         }
-        
-        $namaBerkas = rand( pow(10, 3 -1) , pow(10 , 3) -1 ) . '_' . ' ';
-
 
         // //1. simpan ke tabel user
         $user = User::create([

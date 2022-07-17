@@ -78,7 +78,7 @@ class PenilaianController extends Controller
                 ->join('users AS us' , 'sw.user_id' , '=' , 'us.id')
                 ->join('orang_tuas AS ortu' , 'sw.ortu_id' , '=' , 'ortu.user_id')
                 ->get();
-                
+                // dd($penilaian);
         // cari max value dari setiap kriteria
         $nValue = [
             "minC1" => floatval(DB::table("penilaians")->min("c1")),

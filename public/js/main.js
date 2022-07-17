@@ -52,7 +52,7 @@
         isi = `
             <div class="col-md-9 form-inline p-0" id="dv_prestasi">
                 <div class="form-group d-flex mb-3">
-                    <input type="text" name="prestasi${no}" id="prestasi${no}" class="form-control">
+                    <input type="text" name="prestasi${no}" id="prestasi${no}" class="form-control prestasi">
                     <div class="btn btn-danger ml-2 btnDelete">
                         <i class="fas fa-times"></i>
                     </div>
