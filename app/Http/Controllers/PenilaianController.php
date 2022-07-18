@@ -72,13 +72,14 @@ class PenilaianController extends Controller
 
     public function hitungpenilaian (  )
     {
-        $penilaian = DB::table('penilaians AS pnl')
+        $dataPenilaian = DB::table('penilaians AS pnl')
                 ->select('sw.nisn', 'sw.kelas', 'pnl.id' , 'us.nama_depan', 'us.nama_belakang', 'sw.berkas_prestasi', 'ortu.berkas_surat', 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5')
                 ->join('siswas AS sw' , 'pnl.siswa_id' , '=' , 'sw.user_id')
                 ->join('users AS us' , 'sw.user_id' , '=' , 'us.id')
                 ->join('orang_tuas AS ortu' , 'sw.ortu_id' , '=' , 'ortu.user_id')
                 ->get();
                 // dd($penilaian);
+
         // cari max value dari setiap kriteria
         $nValue = [
             "minC1" => floatval(DB::table("penilaians")->min("c1")),
@@ -89,7 +90,7 @@ class PenilaianController extends Controller
         ];
 
         // proses normalisasi
-        foreach ($penilaian as $dataNilai) {
+        foreach ($dataPenilaian as $dataNilai) {
             if ($nValue["minC1"] == 0) {
                 $dataNilai->c1 = 1;
             } 
@@ -109,6 +110,8 @@ class PenilaianController extends Controller
             if ($nValue["minC5"] == 0) {
                 $dataNilai->c5 = 1;
             } 
+
+            // dd($dataNilai->c1);
             
             $dataNormalisasi[] = [
                 "nama" => $dataNilai->nama_depan . ' ' . $dataNilai->nama_belakang,
@@ -142,8 +145,16 @@ class PenilaianController extends Controller
                 "w" => (round(($v["r1"]*0.25), 2)) + (round(($v["r2"]*0.20), 2)) + (round(($v["r3"]*0.15), 2)) + (round(($v["r4"]*0.15), 2)) + (round(($v["r5"]*0.30), 2))
             ];
         }
-
         // dd($dataPerangkingan);
+
+        $penilaian = DB::table('penilaians AS pnl')
+            ->select('sw.nisn', 'sw.kelas', 'pnl.id' , 'us.nama_depan', 'us.nama_belakang', 'sw.berkas_prestasi', 'ortu.berkas_surat', 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5')
+            ->join('siswas AS sw' , 'pnl.siswa_id' , '=' , 'sw.user_id')
+            ->join('users AS us' , 'sw.user_id' , '=' , 'us.id')
+            ->join('orang_tuas AS ortu' , 'sw.ortu_id' , '=' , 'ortu.user_id')
+            ->get();
+        // dd($penilaian);
+
         return view('admin.penilaian.hitung' , compact('penilaian', 'dataNormalisasi', 'dataPerangkingan'));
     }
 
