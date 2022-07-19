@@ -47,8 +47,7 @@
         <div class="row">
             <div class="header" style="text-align: center">
                 <div class="kop-image">
-                    <img src="{{ storage_path('app/public/smaja.png') }}" alt="">
-                    <img src="{{ public_path("storage/smaja.png") }}" alt="">
+                    {{-- <img src="https://ppdb.smkmaarifkotamungkid.sch.id/img/smaja.png" alt=""> --}}
                 </div>
                 <div class="main-text">
                     <p style="margin: 0">LEMBAGA PENDIDIKAN MA'ARIF NU KAB.MAGELANG</p>
@@ -60,6 +59,8 @@
                         KIMIA INDUSTRI
                     </p>
                 </div>
+                <i>JL. LETNAN TUKIYAT KOTA MUNGKID MAGELANG 56511 / FAX (0293) 788802</i>
+               <br><br>
             </div>
             <hr>
             <div class="col-md-12">
@@ -67,24 +68,24 @@
                     <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <table id="tblhasil" style="border: 1px solid #000; border-collapse: collapse; margin: auto; margin-top: 60px">
+                            <table id="tblhasil" style="border: 1px solid #000; border-collapse: collapse; margin: auto; margin-top: 20px">
                                 <thead>
                                     <tr>
-                                        <td style="border: 1px solid #000">NISN</td>
-                                        <td style="border: 1px solid #000"> Nama Siswa </td>
-                                        <td style="border: 1px solid #000"> Score </td>
-                                        <td style="border: 1px solid #000"> Periode </td>
-                                        <td style="border: 1px solid #000"> Keterangan </td>
+                                        <td style="border: 1px solid #000; padding: 5px 10px">NISN</td>
+                                        <td style="border: 1px solid #000; padding: 5px 10px"> Nama Siswa </td>
+                                        <td style="border: 1px solid #000; padding: 5px 10px"> Score </td>
+                                        <td style="border: 1px solid #000; padding: 5px 10px"> Periode </td>
+                                        <td style="border: 1px solid #000; padding: 5px 10px"> Keterangan </td>
                                     </tr>
                                 </thead>
                                 <tbody id="v-hasil">
                                     @foreach ($dataPerangkingan as $data)
                                     <tr class="item-list" data-value="{{ $data["w"] }}" style="border-bottom: 1px solid #000">
-                                        <td style="border: 1px solid #000">{{ $data["nisn"] }}</td>
-                                        <td style="border: 1px solid #000"> {{ $data["nama"] }} </td>
-                                        <td style="border: 1px solid #000"> {{ $data["w"] }} </td>
-                                        <td style="border: 1px solid #000"> {{ $data["periode"] }} </td>
-                                        <td class="hasil" style="border: 1px solid #000"> Rekomendasi </td>
+                                        <td style="border: 1px solid #000; padding: 5px 10px">{{ $data["nisn"] }}</td>
+                                        <td style="border: 1px solid #000; padding: 5px 10px"> {{ $data["nama"] }} </td>
+                                        <td style="border: 1px solid #000; padding: 5px 10px"> {{ $data["w"] }} </td>
+                                        <td style="border: 1px solid #000; padding: 5px 10px"> {{ $data["periode"] }} </td>
+                                        <td class="hasil" style="border: 1px solid #000; padding: 5px 10px"> Rekomendasi </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
