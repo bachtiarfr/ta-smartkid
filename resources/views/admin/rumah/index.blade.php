@@ -10,7 +10,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <table callpadding="0" cellspacing="0" bordered="0" class="dataTable" id="example">
+            <table callpadding="0" cellspacing="0" bordered="0" class="table" id="example">
                 <thead>
                     <tr>
                         <th> Keterangan Tempat Tinggal </th>
@@ -53,11 +53,11 @@
                         console.log(val);
                          baris += `
                             <tr>
-                                <td> ${val.keterangan} </td>
-                                <td> ${val.key} </td>
-                                <td> ${val.value} </td>
-                                <td>
-                                    
+                                <td style="vertical-align: middle"> ${val.keterangan} </td>
+                                <td style="vertical-align: middle"> ${val.key} </td>
+                                <td style="vertical-align: middle"> ${val.value} </td>
+                                <td style="vertical-align: middle">
+                                    <button class="btn btn-success">Edit</button>
                                 </td>
                          `;
                     });

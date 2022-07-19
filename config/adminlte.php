@@ -447,6 +447,17 @@ return [
             ],
         ],
 
+        [
+            'text'    => 'Penerima Beasiswa',
+            'icon'    => 'fas fa-graduation-cap',
+            'submenu' => [
+                [
+                    'text'    => 'Tampil',
+                    'url'     => 'admin/penerima-beasiswa/',
+                ],
+            ],
+        ],
+
 
         ['header' => 'labels'],
         [

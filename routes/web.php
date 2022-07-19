@@ -129,6 +129,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('admin/penilaian' , PenilaianController::class );
     Route::post('admin/acc-beasiswa' , [PenilaianController::class, 'accBeasiswa'] );
     Route::get('admin/penilaian', [PenilaianController::class, 'index'])->name('penilaian.index');
+    Route::get('admin/penerima-beasiswa', [PenilaianController::class, 'penerimaBeasiswa'])->name('penerima.index');
+    Route::get('admin/print-data-beasiswa', [PenilaianController::class, 'printPDF'])->name('printPDF');
     Route::get('admin/hitungpenilaian', [PenilaianController::class, 'hitungpenilaian'])->name('penilaian.hitung');
 });
 

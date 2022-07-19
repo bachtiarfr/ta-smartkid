@@ -464,3 +464,7 @@
     border: 1px solid #06BBCC;
     color: #06BBCC !important;
 }
+
+.sudahAcc {
+    background: grey;
+}

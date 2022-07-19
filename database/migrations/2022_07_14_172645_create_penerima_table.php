@@ -15,7 +15,7 @@ class CreatePenerimaTable extends Migration
     {
         Schema::create('penerimas', function (Blueprint $table) {
             $table->id();
-            $table->string("nama_penerima");
+            $table->unsignedBigInteger('siswa_id');
             $table->timestamps();
         });
     }

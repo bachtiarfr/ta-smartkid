@@ -4,6 +4,7 @@
 
 @section('content_header')
     <h1>Dashboard</h1>
+    <a href="/admin/print-data-beasiswa" class="btn btn-danger">Print</a>
 @stop
 
 @section('content')
@@ -18,91 +19,12 @@
     }
 </style>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header alert-success">
-                    Perhitungan 
-                </div>
-                <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-bordered table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <td> Nama Siswa </td>
-                                    <td> C1 </td>
-                                    <td> C2 </td>
-                                    <td> C3 </td>
-                                    <td> C4 </td>
-                                    <td> C5 </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($penilaian as $pnl)
-                                    <tr>
-                                        <td> {{ $pnl->nama_depan . ' ' . $pnl->nama_belakang }} </td>
-                                        <td> {{ $pnl->c1 }} </td>
-                                        <td> {{ $pnl->c2 }} </td>
-                                        <td> {{ $pnl->c3 }} </td>
-                                        <td> {{ $pnl->c4 }} </td>
-                                        <td> {{ $pnl->c5 }} </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div> 
-                </div>
-            </div>
-        </div>
-    </div>
     
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header alert-success">
-                    Proses Normalisasi 
-                </div>
-                <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <table id="tblnormalisasi" class="table table-bordered table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <td> Nama Siswa </td>
-                                    <td> C1 </td>
-                                    <td> C2 </td>
-                                    <td> C3 </td>
-                                    <td> C4 </td>
-                                    <td> C5 </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($dataNormalisasi as $n)
-                                    <tr>
-                                        <td> {{ $n["nama"] }} </td>
-                                        <td> {{ $n["r1"] }} </td>
-                                        <td> {{ $n["r2"] }} </td>
-                                        <td> {{ $n["r3"] }} </td>
-                                        <td> {{ $n["r4"] }} </td>
-                                        <td> {{ $n["r5"] }} </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div> 
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header alert-success">
-                    Perkalian Bobot dan Hasil 
+                    Hasil Pengumuman
                 </div>
                 <div class="card-body">
                 <div class="row">
@@ -114,10 +36,7 @@
                                     <td> Nama Siswa </td>
                                     <td> Kelas </td>
                                     <td> Score </td>
-                                    <td> Keterangan </td>
                                     <td> Periode </td>
-                                    <td> Berkas </td>
-                                    <td> Aksi </td>
                                 </tr>
                             </thead>
                             <tbody id="v-content">
@@ -127,23 +46,7 @@
                                     <td> {{ $data["nama"] }} </td>
                                     <td> {{ $data["kelas"] }} </td>
                                     <td> {{ $data["w"] }} </td>
-                                    <td class="hasil"> Rekomendasi </td>
                                     <td class="hasil"> {{ $data["periode"] }} </td>
-                                    <td> 
-                                        <div class="berkasPrestasi">
-                                            <a target="_blank" href="{{ url('/pdf/'. $data["berkas_prestasi"] )}}">{{ $data["berkas_prestasi"] }}</a>
-                                        </div>
-                                        <div class="berkasBukti">
-                                            <a target="_blank" href="{{ url('/pdf/'. $data["berkas_surat"] )}}">{{ $data["berkas_surat"] }}</a>
-                                        </div>
-                                    </td>
-                                    <td> 
-                                        @if ($data["status"] == 1)
-                                        <button class="btn btn-info sudahAcc" data-siswa-id="{{ $data['siswa_id'] }}" disabled>sudah diacc</button> 
-                                            @else
-                                            <button class="btn btn-info btnAcc" data-siswa-id="{{ $data['siswa_id'] }}">acc</button> 
-                                        @endif
-                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

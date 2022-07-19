@@ -32,6 +32,10 @@
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    
+    <script src = "http://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js" defer ></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 
 <body>
@@ -139,15 +143,21 @@
                             <table id="tblhasil" class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>
+                                        <td>NISN</td>
                                         <td> Nama Siswa </td>
-                                        <td> Hasil Pengumuman </td>
+                                        <td> Score </td>
+                                        <td> Periode </td>
+                                        <td> Keterangan </td>
                                     </tr>
                                 </thead>
                                 <tbody id="v-hasil">
-                                    @foreach ($dataPenerima as $data)
-                                    <tr class="item-list">
-                                        <td> {{ $data->nama_penerima }} </td>
-                                        <td class="hasil"> Diterima </td>
+                                    @foreach ($dataPerangkingan as $data)
+                                    <tr class="item-list" data-value="{{ $data["w"] }}">
+                                        <td>{{ $data["nisn"] }}</td>
+                                        <td> {{ $data["nama"] }} </td>
+                                        <td> {{ $data["w"] }} </td>
+                                        <td> {{ $data["periode"] }} </td>
+                                        <td class="hasil"> Rekomendasi </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -258,12 +268,12 @@
     <script src="{{ ('js/main.js') }}"></script>
     
 @section('js')
+@stop
 <script>
     let isi = '';
     let no = 1;
-    console.log('daftar beasiswa js');
     $(function () {
-
+        $('table').DataTable();
         // reordering table (highest W to lower)
         var div = $('#v-hasil');
         var listitems = $(".item-list").get();
@@ -275,11 +285,10 @@
         $.each(listitems, function (idx, itm) { 
             div.append(itm);
         });
-        
-        $('#v-hasil tr:first-child .hasil').each(function() {
-            $(this).text("Rekomendasi")
-        });
 
+        $('#v-hasil tr:nth-child(n+11) .hasil').each(function() {
+            $(this).text("Tidak")
+        });
 
         // kondisi jika diklik dengan jquery click
         $('#btnAddPrestasi').click(function (e) { 
@@ -396,7 +405,6 @@
       });
     });
 </script>
-@stop
 </body>
 
 </html>
