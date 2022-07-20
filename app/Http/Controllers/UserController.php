@@ -18,13 +18,14 @@ class UserController extends Controller
      */
     public function index( Request $request )
     {
-        $data = User::orderBy('id','DESC')->paginate(5);
+        $data = DB::table("users")
+            ->select("users.id", "users.nama_depan", "users.nama_belakang", "users.email", "roles.name as role")
+            ->join("roles", "users.role_id", "roles.id")
+            ->get();
 
         // return response()->json( $data );
 
-        return view('admin.user.index',compact('data') )
-
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        return view('admin.user.index',compact('data') );
     }
 
     /**
@@ -34,7 +35,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
+        $roles = Role::pluck('name','id')->all();
 
         return view('admin.user.create',compact('roles'));
     }
@@ -47,19 +48,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $this->validate($request, [
-            'name' => 'required',
+            'nama_depan' => 'required',
+            'nama_belakang' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
-            'roles' => 'required'
         ]);
     
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
-    
         $user = User::create($input);
-
-        $user->assignRole($request->input('roles'));
     
         return redirect()->route('user.index')
                         ->with('success','User created successfully');

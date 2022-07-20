@@ -19,10 +19,6 @@ class PermissionTableSeeder extends Seeder
            'role-create',
            'role-edit',
            'role-delete',
-           'ortu-list',
-           'ortu-create',
-           'ortu-edit',
-           'ortu-delete'
         ];
      
         foreach ($permissions as $permission) {

@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     /*
@@ -249,6 +248,21 @@ return [
         ['header' => 'Data Master'],
         
         [
+            'text'    => 'Menu User',
+            'icon'    => 'fas fa-fw fa-user',
+            'submenu' => [
+                [
+                    'text' => 'Tampil',
+                    'url'  => 'admin/user',
+                ],
+                [
+                    'text'    => 'Tambah',
+                    'url'     => 'admin/user/create',
+                    'can'     => 'isAdmin'
+                ],
+            ],
+        ],
+        [
             'text'    => 'Orang Tua',
             'icon'    => 'fas fa-fw fa-user',
             'submenu' => [
@@ -259,24 +273,10 @@ return [
                 [
                     'text'    => 'Tambah',
                     'url'     => 'admin/orangtua/create',
+                    'can'     => 'isAdmin'
                 ],
             ],
         ],
-
-        // [
-        //     'text'    => 'Kondisi Rumah',
-        //     'icon'    => 'fas fa-fw fa-home',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'Tampil',
-        //             'url'  => 'admin/kondisi',
-        //         ],
-        //         [
-        //             'text'    => 'Tambah',
-        //             'url'     => 'admin/kondisi/create',
-        //         ],
-        //     ],
-        // ],
 
         [
             'text'    => 'Siswa',
@@ -289,52 +289,10 @@ return [
                 [
                     'text'    => 'Tambah',
                     'url'     => 'admin/siswa/create',
+                    'can'     => 'isAdmin'
                 ],
             ],
         ],
-
-        // [
-        //     'text'    => 'Jenis Beasiswa',
-        //     'icon'    => 'fa fa-graduation-cap',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'Tampil',
-        //             'url'  => 'admin/beasiswa',
-        //         ],
-        //     ],
-
-            
-        // ],
-
-        // [
-        //     'text'    => 'Periode Beasiswa',
-        //     'icon'    => 'fas fa-hourglass-half',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'Tampil',
-        //             'url'  => 'admin/periode',
-        //         ],
-        //         [
-        //             'text'    => 'Tambah',
-        //             'url'     => 'admin/periode/create',
-        //         ],
-        //     ],
-        // ],
-
-        // [
-        //     'text'    => 'Pendaftaran',
-        //     'icon'    => 'fa fa-tasks',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'Tampil',
-        //             'url'  => 'admin/pendaftar',
-        //         ],
-        //         [
-        //             'text'    => 'Tambah',
-        //             'url'     => 'admin/pendaftar/create',
-        //         ],
-        //     ],
-        // ],
 
         [
             'text'    => 'Penghasilan',
@@ -347,6 +305,7 @@ return [
                 [
                     'text'    => 'Tambah',
                     'url'     => 'admin/penghasilan/create',
+                    'can'     => 'isAdmin'
                 ],
             ],
         ],
@@ -363,6 +322,7 @@ return [
                 [
                     'text'    => 'Tambah',
                     'url'     => 'admin/tanggungan/create',
+                    'can'     => 'isAdmin'
                 ],
             ],
         ],
@@ -378,6 +338,7 @@ return [
                 [
                     'text'    => 'Tambah',
                     'url'     => 'admin/asuransi/create',
+                    'can'     => 'isAdmin'
                 ],
             ],
         ],
@@ -394,6 +355,7 @@ return [
                 [
                     'text'    => 'Tambah',
                     'url'     => 'admin/assets/create',
+                    'can'     => 'isAdmin'
                 ],
             ],
         ],
@@ -424,6 +386,7 @@ return [
                 [
                     'text'    => 'Tambah',
                     'url'     => 'admin/rumah/create',
+                    'can'     => 'isAdmin'
                 ],
             ],
         ],
@@ -439,6 +402,7 @@ return [
                 [
                     'text'    => 'Tambah',
                     'url'     => 'admin/penilaian/create',
+                    'can'     => 'isAdmin'
                 ],
                 [
                     'text'    => 'Perhitungan',

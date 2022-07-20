@@ -21,7 +21,16 @@ class OrangTuaSeeder extends Seeder
             "nama_depan" => "ryan",
             "nama_belakang" => "jaya",
             "email" => "ryan@gmail.com",
-            "password" => bcrypt('rahasia123')
+            "password" => bcrypt('rahasia123'),
+            "role_id" => 1,
+        ]);
+
+        $user = User::create([
+            "nama_depan" => "user",
+            "nama_belakang" => "pengawas",
+            "email" => "pengawas@gmail.com",
+            "password" => bcrypt('rahasia123'),
+            "role_id" => 2,
         ]);
 
         $role = Role::create(['name' => 'admin']);

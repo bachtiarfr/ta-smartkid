@@ -73,13 +73,19 @@ class SiswaController extends Controller
             $namaBerkas = $request->file('berkas_prestasi')->getClientOriginalName();
             $request->berkas_prestasi->move(public_path('pdf') , $namaBerkas);
 
+        } else {
+            $namaBerkas = '';
         }
-
+        
+        if (User::where('email', '=', $request->nama_depan . "@gmail.com")->count() > 0) {
+            // user found
+            $email = $request->nama_depan . rand(1,50) . "@gmail.com";
+        }
         // //1. simpan ke tabel user
         $user = User::create([
             "nama_depan" => $request->nama_depan,
             "nama_belakang" => $request->nama_belakang,
-            "email" => Str::lower($request->nama_depan . "@gmail.com"),
+            "email" => Str::lower($email),
             "password" => bcrypt("rahasia123")
         ]);
 

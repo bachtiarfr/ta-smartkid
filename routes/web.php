@@ -69,6 +69,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('admin/beasiswa' , JenisBeasiswaController::class );
     Route::get('admin/getBeasiswa' , [JenisBeasiswaController::class , 'getBeasiswa'] );
 
+    // Route  user
+    Route::resource('admin/user' , UserController::class );
+    Route::get('admin/user/{id}' , [UserController::class , 'hapusUser' ]);
+
     // Route  siswa
     Route::resource('admin/siswa' , SiswaController::class );
     Route::get('admin/hapussiswa/{id}' , [SiswaController::class , 'hapussiswa' ]);

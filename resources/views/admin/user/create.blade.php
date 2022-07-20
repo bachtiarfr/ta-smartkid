@@ -1,5 +1,10 @@
-@extends('layouts.app')
+@extends('adminlte::page')
 
+@section('title', 'Dashboard')
+
+@section('content_header')
+    <h1>Dashboard</h1>
+@stop
 
 @section('content')
 <div class="row">
@@ -31,8 +36,14 @@
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
-            <strong>Name:</strong>
-            {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+            <strong>Nama Belakang:</strong>
+            {!! Form::text('nama_depan', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Nama Belakang:</strong>
+            {!! Form::text('nama_belakang', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
@@ -56,7 +67,7 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>Role:</strong>
-            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
+            {!! Form::select('role_id', $roles,[], array('class' => 'form-control','multiple')) !!}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">

@@ -34,19 +34,11 @@
         <td>{{ $ort->pekerjaan }}</td>
         <td>
             <form action="{{ route('orangtua.destroy',$ort->id ) }}" method="POST">
-                    <a href="#"> <i class="fa fa-eye" style="font-size:24px"></i> </a>
-                @can('ortu-edit')
-                    <a class="btn btn-warning" href="{{ URL::to('admin/ubahortu/' . $ort->id ) }}"> Ubah </a>
-                    <i class="fa fa-pencil" style="font-size:24px"></i>
-                @endcan
-
+                <a class="btn btn-warning" href="{{ URL::to('admin/ubahortu/' . $ort->id ) }}"> Ubah </a>
 
                 @csrf
                 @method('DELETE')
-                @can('ortu-delete')
-                    <a data-id="{{ $ort->id }}" id="btndelete" class="btn btn-danger" href="#"> Hapus </a>
-                    <i class="fa fa-trash-o" style="font-size:24px"> </i>
-                @endcan
+                <a data-id="{{ $ort->id }}" id="btndelete" class="btn btn-danger" href="#"> Hapus </a>
             </form>
         </td>
     </tr>

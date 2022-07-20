@@ -13,12 +13,12 @@
                 @csrf
                 @method("put")
                 
-                <label> Nama Orang Tua</label>
-                <select name="user_id" class="form-control">
-                    @foreach ($user as $usr)
-                        <option {{ $ortu->user_id == $usr->id ? "selected" : "" }} value="{{ $usr->id }}"> {{ $usr->name }} </option>
-                    @endforeach
-                </select>
+                <label> Nama Depan</label>
+                <input type="hidden" name="user_id" value="{{ $ortu->id }}">
+                <input type="text" name="nama_depan" class="form-control" value="{{ $ortu->nama_depan }}">
+                
+                <label> Nama Belakang</label>
+                <input type="text" name="nama_belakang" class="form-control" value="{{ $ortu->nama_belakang }}">
 
                 <label> Status </label>
                 <select name="status" class="form-control">
@@ -42,9 +42,6 @@
 
                 <label> Pekerjaan </label>
                 <input type="text" name="pekerjaan" class="form-control" value="{{ $ortu->pekerjaan }}">
-
-                <label> Penghasilan </label>
-                <input type="text" name="penghasilan" class="form-control" value="{{ $ortu->penghasilan }}">
 
                 <input type="submit" value="simpan" name="simpan" class="btn btn-success">
             </form>

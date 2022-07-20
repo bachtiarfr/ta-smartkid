@@ -117,7 +117,9 @@
                                     <td> Keterangan </td>
                                     <td> Periode </td>
                                     <td> Berkas </td>
-                                    <td> Aksi </td>
+                                    @if (Auth::user()->role_id == 1)
+                                        <td> Aksi </td>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody id="v-content">
@@ -137,13 +139,15 @@
                                             <a target="_blank" href="{{ url('/pdf/'. $data["berkas_surat"] )}}">{{ $data["berkas_surat"] }}</a>
                                         </div>
                                     </td>
-                                    <td> 
-                                        @if ($data["status"] == 1)
-                                        <button class="btn btn-info sudahAcc" data-siswa-id="{{ $data['siswa_id'] }}" disabled>sudah diacc</button> 
-                                            @else
-                                            <button class="btn btn-info btnAcc" data-siswa-id="{{ $data['siswa_id'] }}">acc</button> 
-                                        @endif
-                                    </td>
+                                    @if (Auth::user()->role_id == 1)
+                                        <td> 
+                                            @if ($data["status"] == 1)
+                                            <button class="btn btn-info sudahAcc" data-siswa-id="{{ $data['siswa_id'] }}" disabled>sudah diacc</button> 
+                                                @else
+                                                <button class="btn btn-info btnAcc" data-siswa-id="{{ $data['siswa_id'] }}">acc</button> 
+                                            @endif
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>

@@ -127,7 +127,7 @@ class OrangTuaController extends Controller
             'user_id' => 'required',
             'nik' => 'required',
         ]);
-    
+        
         $ortu = OrangTua::find($id);
 
         $ortu->user_id = $request->user_id;
@@ -135,9 +135,14 @@ class OrangTuaController extends Controller
         $ortu->nik = $request->nik;
         $ortu->pendidikan = $request->pendidikan;
         $ortu->pekerjaan = $request->pekerjaan;
-        $ortu->penghasilan = $request->penghasilan;
         $ortu->save();
-    
+
+        $user = DB::table('users')
+            ->where("id", $request->user_id)
+            ->update([
+                "nama_depan" => $request->nama_depan,
+                "nama_belakang" => $request->nama_belakang
+            ]);
         return redirect()->route('orangtua.index')
                         ->with('success','berhasil ubah data orang tua');
     }
@@ -168,7 +173,12 @@ class OrangTuaController extends Controller
 
     public function ubahortu( $id )
     {
-        $ortu = OrangTua::where('id' , '=' , $id)->first();
+        $ortu = DB::table('orang_tuas as ot')
+            ->select("ot.id as id", "us.nama_depan", "us.nama_belakang", "ot.status", "ot.nik", "ot.pendidikan", "ot.pekerjaan")
+            ->join("users as us", "ot.user_id", "=", "us.id")
+            ->where("ot.id", "=", $id)
+            ->first();
+        // $ortu = OrangTua::where('id' , '=' , $id)->first();
         $user = User::all();
 
         return view('admin.ortu.edit' , compact('user' , 'ortu') );

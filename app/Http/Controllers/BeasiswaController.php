@@ -200,11 +200,21 @@ class BeasiswaController extends Controller
 
         }
         
+        if (User::where('email', '=', $request->nama_orangtua_depan . "@gmail.com")->count() > 0) {
+            // user found
+            $emailOrtu = $request->nama_orangtua_depan . rand(1,50) . "@gmail.com";
+        }
+
+        if (User::where('email', '=', $request->nama_depan . "@gmail.com")->count() > 0) {
+            // user found
+            $emailSiswa = $request->nama_depan . rand(1,50) . "@gmail.com";
+        }
+
          // //2. simpan ke tabel user orang tua
          $userOrtu = User::create([
             "nama_depan" => $request->nama_orangtua_depan,
             "nama_belakang" => $request->nama_orangtua_belakang,
-            "email" => Str::lower($request->nama_orangtua_depan . "@gmail.com"),
+            "email" => Str::lower($emailOrtu),
             "password" => bcrypt("rahasia123")
         ]);
 
@@ -212,7 +222,7 @@ class BeasiswaController extends Controller
         $user = User::create([
             "nama_depan" => $request->nama_depan,
             "nama_belakang" => $request->nama_belakang,
-            "email" => Str::lower($request->nama_depan . "@gmail.com"),
+            "email" => Str::lower($emailSiswa),
             "password" => bcrypt("rahasia123")
         ]);
         
