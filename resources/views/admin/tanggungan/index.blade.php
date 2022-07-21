@@ -18,30 +18,30 @@
             <th> No </th>
             <th> Tanggungan Anak Sekolah </th>
             <th> Bobot / Nilai </th>
+            @if (Auth::user()->role_id == 1)
             <th>Action</th>
+            @endif
         </tr>
         @foreach ($tanggungan as $tgn)
         <tr>
             <td>{{ ++$i }}</td>
             <td>{{ $tgn->jumlah }}</td>
             <td>{{ $tgn->nilai }}</td>
+            @if (Auth::user()->role_id == 1)
             <td>
                 <form action="{{ route('orangtua.destroy',$tgn->id ) }}" method="POST">
                         {{-- <a href="#"> <i class="fa fa-eye" style="font-size:24px"></i> </a> --}}
-                    @can('ortu-edit')
                         <a class="btn btn-warning" href="{{ URL::to('admin/ubahtanggungan/' . $tgn->id ) }}"> Ubah </a>
                         {{-- <i class="fa fa-pencil" style="font-size:24px"></i> --}}
-                    @endcan
 
 
                     @csrf
                     @method('DELETE')
-                    @can('ortu-delete')
                         <a data-id="{{ $tgn->id }}" id="btndelete" class="btn btn-danger" href="#"> Hapus </a>
                         {{-- <i class="fa fa-trash-o" style="font-size:24px"> </i> --}}
-                    @endcan
                 </form>
             </td>
+            @endif
         </tr>
         @endforeach
         </table>

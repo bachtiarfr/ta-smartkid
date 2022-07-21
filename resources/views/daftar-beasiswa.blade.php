@@ -454,7 +454,7 @@
 <script>
   $(function () {
       console.log('beasiswa daftar');
-      $.ajaxSetup({
+    $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }

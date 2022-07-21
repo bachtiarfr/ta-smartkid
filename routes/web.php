@@ -48,6 +48,7 @@ Route::get('/daftar-beasiswa', [App\Http\Controllers\BeasiswaController::class, 
 
 Route::resource('/daftar-beasiswa/post', BeasiswaController::class);
 Route::get('/hasil-pengumuman', [App\Http\Controllers\BeasiswaController::class, 'hasilPengumuman']);
+Route::post('/hasil-pengumuman-by-periode', [App\Http\Controllers\BeasiswaController::class, 'hasilPengumumanByPeriode']);
 Route::post('/upload-pdf', [App\Http\Controllers\BeasiswaController::class, 'uploadPdf']);
 
 

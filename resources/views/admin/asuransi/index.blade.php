@@ -18,30 +18,28 @@
             <th> No </th>
             <th> Jenis Asuransi </th>
             <th> Bobot / Nilai </th>
+            @if (Auth::user()->role_id == 1)
             <th>Action</th>
+            @endif
         </tr>
         @foreach ($asuransi as $asr)
         <tr>
             <td>{{ ++$i }}</td>
             <td>{{ $asr->nama }}</td>
             <td>{{ $asr->nilai }}</td>
+            @if (Auth::user()->role_id == 1)
             <td>
                 <form action="{{ route('orangtua.destroy',$asr->id ) }}" method="POST">
-                        {{-- <a href="#"> <i class="fa fa-eye" style="font-size:24px"></i> </a> --}}
-                    @can('ortu-edit')
-                        <a class="btn btn-warning" href="{{ URL::to('admin/ubahasuransi/' . $asr->id ) }}"> Ubah </a>
-                        {{-- <i class="fa fa-pencil" style="font-size:24px"></i> --}}
-                    @endcan
-
-
+                    {{-- <a href="#"> <i class="fa fa-eye" style="font-size:24px"></i> </a> --}}
+                    <a class="btn btn-warning" href="{{ URL::to('admin/ubahasuransi/' . $asr->id ) }}"> Ubah </a>
+                    {{-- <i class="fa fa-pencil" style="font-size:24px"></i> --}}
+                        
                     @csrf
                     @method('DELETE')
-                    @can('ortu-delete')
-                        <a data-id="{{ $asr->id }}" id="btndelete" class="btn btn-danger" href="#"> Hapus </a>
-                        {{-- <i class="fa fa-trash-o" style="font-size:24px"> </i> --}}
-                    @endcan
+                    <a data-id="{{ $asr->id }}" id="btndelete" class="btn btn-danger" href="#"> Hapus </a>
                 </form>
             </td>
+            @endif
         </tr>
         @endforeach
         </table>

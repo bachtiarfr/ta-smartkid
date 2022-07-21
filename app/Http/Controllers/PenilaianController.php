@@ -68,7 +68,8 @@ class PenilaianController extends Controller
     public function accBeasiswa(Request $request) 
     {
         return DB::table('penerimas')->insert([
-            'siswa_id'=> $request->dataSiswaID
+            'siswa_id'=> $request->dataSiswaID,
+            'created_at' => \Carbon\Carbon::now()->format("Y-m-d")
         ]);
     }
 
@@ -80,7 +81,15 @@ class PenilaianController extends Controller
                 ->join('users AS us' , 'sw.user_id' , '=' , 'us.id')
                 ->join('orang_tuas AS ortu' , 'sw.ortu_id' , '=' , 'ortu.user_id')
                 ->get();
-                // dd($dataPenilaian);
+
+        $dataPeriod = DB::table('penilaians')
+                ->select("created_at")
+                ->get();
+
+        foreach ($dataPeriod as $key => $p) {
+            $periode[] = \Carbon\Carbon::parse($p->created_at)->format("Y");
+        }
+        $periode = array_unique($periode);
 
         // cari max value dari setiap kriteria
         $nValue = [
@@ -91,9 +100,7 @@ class PenilaianController extends Controller
             "minC5" => floatval(DB::table("penilaians")->min("c5")),
         ];
 
-        $dataPenerima = DB::table("penerimas")
-            ->select("siswa_id")
-            ->get();
+        $dataPenerima = DB::table("penerimas")->select("siswa_id")->get();
         // proses normalisasi
         foreach ($dataPenilaian as $dataNilai) {
             if ($nValue["minC1"] == 0) {
@@ -134,7 +141,7 @@ class PenilaianController extends Controller
                 "r4" => round($dataNilai->c4 / $nValue["maxC4"], 2), 
                 "r5" => round($nValue["minC5"] / $dataNilai->c5, 2),
                 "status" => $dataStatus,
-                "periode" => \Carbon\Carbon::parse($dataNilai->created_at)->format('Y-m-d'),
+                "periode" => \Carbon\Carbon::parse($dataNilai->created_at)->format('Y'),
                 "berkas_prestasi" => $dataNilai->berkas_prestasi,
                 "berkas_surat" => $dataNilai->berkas_surat
             ];
@@ -161,7 +168,6 @@ class PenilaianController extends Controller
                 "w" => (round(($v["r1"]*0.25), 2)) + (round(($v["r2"]*0.20), 2)) + (round(($v["r3"]*0.15), 2)) + (round(($v["r4"]*0.15), 2)) + (round(($v["r5"]*0.30), 2))
             ];
         }
-        // dd($dataPerangkingan);
 
         $penilaian = DB::table('penilaians AS pnl')
             ->select('sw.nisn', 'sw.kelas', 'pnl.id' , 'us.nama_depan', 'us.nama_belakang', 'sw.berkas_prestasi', 'ortu.berkas_surat', 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5')
@@ -169,9 +175,8 @@ class PenilaianController extends Controller
             ->join('users AS us' , 'sw.user_id' , '=' , 'us.id')
             ->join('orang_tuas AS ortu' , 'sw.ortu_id' , '=' , 'ortu.user_id')
             ->get();
-        // dd($penilaian);
 
-        return view('admin.penilaian.hitung' , compact('penilaian', 'dataNormalisasi', 'dataPerangkingan'));
+        return view('admin.penilaian.hitung' , compact('penilaian', "periode", 'dataNormalisasi', 'dataPerangkingan', 'dataPeriod'));
     }
 
     public function penerimaBeasiswa()
@@ -237,7 +242,7 @@ class PenilaianController extends Controller
                 "r4" => round($dataNilai->c4 / $nValue["maxC4"], 2), 
                 "r5" => round($nValue["minC5"] / $dataNilai->c5, 2),
                 "status" => $dataStatus,
-                "periode" => \Carbon\Carbon::parse($dataNilai->created_at)->format('Y-m-d'),
+                "periode" => \Carbon\Carbon::parse($dataNilai->created_at)->format('Y-m'),
                 "berkas_prestasi" => $dataNilai->berkas_prestasi,
                 "berkas_surat" => $dataNilai->berkas_surat
             ];

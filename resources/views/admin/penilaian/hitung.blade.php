@@ -107,6 +107,13 @@
                 <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
+                        Filter berdasarkan periode:
+                        <select class="form-select mb-5" id="periode" aria-label="Default select example">
+                            <option value="all">Lihat semua</option>
+                            @foreach ($periode as $p)
+                                <option value="{{ $p }}">{{ $p }}</option>
+                            @endforeach
+                        </select>
                         <table id="tblhasil" class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
@@ -130,7 +137,7 @@
                                     <td> {{ $data["kelas"] }} </td>
                                     <td> {{ $data["w"] }} </td>
                                     <td class="hasil"> Rekomendasi </td>
-                                    <td class="hasil"> {{ $data["periode"] }} </td>
+                                    <td class="periodePenerimaan"> {{ $data["periode"] }} </td>
                                     <td> 
                                         <div class="berkasPrestasi">
                                             <a target="_blank" href="{{ url('/pdf/'. $data["berkas_prestasi"] )}}">{{ $data["berkas_prestasi"] }}</a>
@@ -163,6 +170,21 @@
 @section('js')
     <script>
         $(function () {
+
+            var app = {
+                tampil: function(){
+                    let periode = $(this).val();
+                    console.log(periode);
+                    $('td.periodePenerimaan:not(:contains("' + periode + '"))').parent().hide();        
+                    $('td.periodePenerimaan:contains("' + periode + '")').parent().show();
+    
+                    if (periode == 'all') {
+                        $('td:contains("Rekomendasi")').parent().show();
+                    }
+    
+                }
+            }
+            $(document).on("change", "#periode", app.tampil)
 
             $('table').DataTable();
             // reordering table (highest W to lower)

@@ -18,30 +18,29 @@
             <th> No </th>
             <th> List Penghasilan </th>
             <th> Bobot / Nilai </th>
+            @if (Auth::user()->role_id == 1)
             <th>Action</th>
+            @endif
         </tr>
         @foreach ($penghasilan as $p)
         <tr>
             <td>{{ ++$i }}</td>
             <td>{{ $p->penghasilan }}</td>
             <td>{{ $p->bobot }}</td>
+            @if (Auth::user()->role_id == 1)
             <td>
                 <form action="{{ route('orangtua.destroy',$p->id ) }}" method="POST">
-                        {{-- <a href="#"> <i class="fa fa-eye" style="font-size:24px"></i> </a> --}}
-                    @can('ortu-edit')
-                        <a class="btn btn-warning" href="{{ URL::to('admin/ubahpenghasilan/' . $p->id ) }}"> Ubah </a>
-                        {{-- <i class="fa fa-pencil" style="font-size:24px"></i> --}}
-                    @endcan
-
+                    {{-- <a href="#"> <i class="fa fa-eye" style="font-size:24px"></i> </a> --}}
+                    <a class="btn btn-warning" href="{{ URL::to('admin/ubahpenghasilan/' . $p->id ) }}"> Ubah </a>
+                    {{-- <i class="fa fa-pencil" style="font-size:24px"></i> --}}
 
                     @csrf
                     @method('DELETE')
-                    @can('ortu-delete')
                         <a data-id="{{ $p->id }}" id="btndelete" class="btn btn-danger" href="#"> <i class="fa fa-trash-o" style="font-size:24px"> </i> </a>
                         {{-- <i class="fa fa-trash-o" style="font-size:24px"> </i> --}}
-                    @endcan
                 </form>
             </td>
+            @endif
         </tr>
         @endforeach
         </table>
