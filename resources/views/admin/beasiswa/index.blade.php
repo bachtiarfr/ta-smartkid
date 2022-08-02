@@ -135,7 +135,7 @@
                 serverSide: true,
                 autoWidth: false,
                 pageLength: 5,
-                ajax : '{{ URL::to('http://127.0.0.1:8000/admin/getBeasiswa') }}',
+                ajax : '{{ URL::to('/admin/getBeasiswa') }}',
                 columns : [
                     { data : 'id', name : 'id'},
                     { data : 'nama_beasiswa' , name : 'nama_beasiswa' },
@@ -158,7 +158,7 @@
 
                 $.ajax({
                     type: "GET",
-                    url: "http://127.0.0.1:8000/admin/beasiswa/" + id,
+                    url: "/admin/beasiswa/" + id,
                     dataType: "JSON",
                     success: function (response) {
                         console.log( response );
@@ -192,7 +192,7 @@
 
                             $.ajax({
                                 type: "DELETE",
-                                url: "http://127.0.0.1:8000/admin/beasiswa/" + id,
+                                url: "/admin/beasiswa/" + id,
                                 dataType: "JSON",
                                 success: function (response) {
 
@@ -232,7 +232,7 @@
 
                 $.ajax({
                     type: "PUT",
-                    url: "http://127.0.0.1:8000/admin/beasiswa/" + $.trim(id),
+                    url: "/admin/beasiswa/" + $.trim(id),
                     data: {
                         "nama_beasiswa" : $("#txtnama_beasiswa").val(),
                         "user_id" : {{ Auth::user()->id }}
@@ -265,7 +265,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "{{ URL::to('http://127.0.0.1:8000/admin/beasiswa') }}",
+                    url: "{{ URL::to('/admin/beasiswa') }}",
                     data: {
                         nama_beasiswa: $('#nama_beasiswa').val(),
                         user_id: 1

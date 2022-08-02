@@ -59,7 +59,7 @@ class RumahSeeder extends Seeder
         $rumah_detail = RumahDetail::create([
             'rumah_id' => $rumah->id,
             'key' => '> 400 m2',
-            'value' => '0'
+            'value' => '5'
         ]);
 
         //3. jenis atau kondisi bangunan
@@ -82,7 +82,7 @@ class RumahSeeder extends Seeder
         $rumah_detail = RumahDetail::create([
             'rumah_id' => $rumah->id,
             'key' => 'Kayu Kualitas Tinggi',
-            'value' => '0'
+            'value' => '5'
         ]);
 
         $rumah_detail = RumahDetail::create([

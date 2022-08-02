@@ -234,6 +234,10 @@ return [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
         ],
+        [
+            'type'         => 'user',
+            'topnav_right' => true,
+        ],
 
         // Sidebar items:
         [
@@ -296,7 +300,7 @@ return [
 
         [
             'text'    => 'Penghasilan',
-            'icon'    => 'fa fa-btc',
+            'icon'    => 'fas fa-money',
             'submenu' => [
                 [
                     'text' => 'Tampil',
@@ -391,9 +395,11 @@ return [
             ],
         ],
 
+        
+        ['header' => 'Pendaftaran & Perhitungan'],
         [
             'text'    => 'Penilaian',
-            'icon'    => 'fas fa-score',
+            'icon'    => 'fas fa-list',
             'submenu' => [
                 // [
                 //     'text' => 'Tampil',
@@ -411,6 +417,7 @@ return [
             ],
         ],
 
+        ['header' => 'Hasil'],
         [
             'text'    => 'Penerima Beasiswa',
             'icon'    => 'fas fa-graduation-cap',

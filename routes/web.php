@@ -48,7 +48,6 @@ Route::get('/daftar-beasiswa', [App\Http\Controllers\BeasiswaController::class, 
 
 Route::resource('/daftar-beasiswa/post', BeasiswaController::class);
 Route::get('/hasil-pengumuman', [App\Http\Controllers\BeasiswaController::class, 'hasilPengumuman']);
-Route::post('/hasil-pengumuman-by-periode', [App\Http\Controllers\BeasiswaController::class, 'hasilPengumumanByPeriode']);
 Route::post('/upload-pdf', [App\Http\Controllers\BeasiswaController::class, 'uploadPdf']);
 
 
@@ -94,6 +93,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('admin/simpanasstes' , [AssetsDetailController::class , 'simpanasstes' ]);
     Route::post('admin/simpanassetsdetail/{id}' , [AssetsDetailController::class , 'simpanassetsdetail' ]);
     Route::get('admin/editassets/{id}', [AssetsDetailController::class, 'showedit']);
+    Route::get('admin/hapusassets/{id}', [AssetsDetailController::class, 'destroy']);
     Route::get('admin/ubahassets/{id}', [AssetsDetailController::class, 'ubahassets']);
     Route::get('admin/ubahassetsdetail/{id}', [AssetsDetailController::class, 'ubahassetsdetail']);
 
@@ -126,6 +126,10 @@ Route::group(['middleware' => ['auth']], function() {
     // Route rumah / kondisi
     Route::get('admin/rumah', [RumahDetailController::class, 'index'])->name('rumah.index');
     Route::get('admin/getrumah' , [RumahDetailController::class , 'getrumah']);
+    Route::get('admin/editrumah/{id}', [RumahDetailController::class, 'showedit']);
+    Route::get('admin/hapusrumah/{id}', [RumahDetailController::class, 'destroy']);
+    Route::get('admin/ubahrumah/{id}', [RumahDetailController::class, 'ubahrumah']);
+    Route::get('admin/ubahrumahdetail/{id}', [RumahDetailController::class, 'ubahrumahdetail']);
     Route::get('admin/rumah/create' , [RumahDetailController::class , 'create' ]);
     Route::post('admin/simpanrumah' , [RumahDetailController::class , 'simpanrumah' ]);
     Route::post('admin/simpanrumahdetail/{id}' , [RumahDetailController::class , 'simpanrumahdetail' ]);
@@ -135,7 +139,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('admin/acc-beasiswa' , [PenilaianController::class, 'accBeasiswa'] );
     Route::get('admin/penilaian', [PenilaianController::class, 'index'])->name('penilaian.index');
     Route::get('admin/penerima-beasiswa', [PenilaianController::class, 'penerimaBeasiswa'])->name('penerima.index');
-    Route::get('admin/print-data-beasiswa', [PenilaianController::class, 'printPDF'])->name('printPDF');
+    Route::get('admin/print-data-beasiswa/genap', [PenilaianController::class, 'printPdfGenap'])->name('printPdfGenap');
+    Route::get('admin/print-data-beasiswa/ganjil', [PenilaianController::class, 'printPdfGanjil'])->name('printPdfGanjil');
     Route::get('admin/hitungpenilaian', [PenilaianController::class, 'hitungpenilaian'])->name('penilaian.hitung');
 });
 

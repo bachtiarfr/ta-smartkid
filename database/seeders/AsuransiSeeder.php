@@ -16,7 +16,7 @@ class AsuransiSeeder extends Seeder
     {
         $asuransi = Asuransi::create([
             'nama' => 'Asuransi Kesehatan Swasta',
-            'nilai' => 0
+            'nilai' => 5
         ]);
 
         $asuransi = Asuransi::create([

@@ -22,7 +22,7 @@ class AssetsSeeder extends Seeder
         $asset_detail = AssetsDetail::create([
             'assets_id' => $asset->id,
             'key' => 'Memiliki',
-            'value' => '0'
+            'value' => '5'
         ]);
         
         $asset_detail = AssetsDetail::create([
@@ -56,7 +56,7 @@ class AssetsSeeder extends Seeder
         $asset_detail = AssetsDetail::create([
             'assets_id' => $asset->id,
             'key' => 'Memiliki > 5',
-            'value' => '0'
+            'value' => '5'
         ]);
 
         $asset = Assets::create([
@@ -66,7 +66,7 @@ class AssetsSeeder extends Seeder
         $asset_detail = AssetsDetail::create([
             'assets_id' => $asset->id,
             'key' => 'Memiliki 2 - 3 bidang tanah / sawah',
-            'value' => '0'
+            'value' => '5'
         ]);
         
         $asset_detail = AssetsDetail::create([

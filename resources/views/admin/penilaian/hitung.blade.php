@@ -11,6 +11,11 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        .nav-link.dropdown-toggle::before {
+            content: "Logout" !important;
+        }
+    </style>
 <script src="{{ ('js/main.js') }}"></script>
 <style>
     .sudahAcc {
@@ -149,9 +154,9 @@
                                     @if (Auth::user()->role_id == 1)
                                         <td> 
                                             @if ($data["status"] == 1)
-                                            <button class="btn btn-info sudahAcc" data-siswa-id="{{ $data['siswa_id'] }}" disabled>sudah diacc</button> 
+                                            <button class="btn btn-info sudahAcc" data-penilaian-id="{{ $data['penilaian_id'] }}" disabled>sudah diacc</button> 
                                                 @else
-                                                <button class="btn btn-info btnAcc" data-siswa-id="{{ $data['siswa_id'] }}">acc</button> 
+                                                <button class="btn btn-info btnAcc" data-penilaian-id="{{ $data['penilaian_id'] }}">acc</button> 
                                             @endif
                                         </td>
                                     @endif
@@ -335,7 +340,7 @@
                 }
             });
             $(document).on("click", ".btnAcc", function(){
-                let dataSiswaID = $(this).attr("data-siswa-id")
+                let dataSiswaID = $(this).attr("data-penilaian-id")
                 //simpan ke tabel penilaian
                 $.ajax({
                     type: "POST",

@@ -24,6 +24,11 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        .nav-link.dropdown-toggle::before {
+            content: "Logout" !important;
+        }
+    </style>
 @stop
 
 @section('js')

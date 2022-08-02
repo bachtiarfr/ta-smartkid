@@ -87,7 +87,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "http://127.0.0.1:8000/admin/simpanrumah",
+                    url: "/admin/simpanrumah",
                     data: {
                         "keterangan" : keterangan
                     },
@@ -104,7 +104,7 @@
             function simpan_rumah_detail( id ) {
                 $.ajax({
                     type: "POST",
-                    url: "http://127.0.0.1:8000/admin/simpanrumahdetail/" + id ,
+                    url: "/admin/simpanrumahdetail/" + id ,
                     data: {
                         isi_det
                     },

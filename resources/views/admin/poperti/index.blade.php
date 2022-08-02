@@ -8,6 +8,18 @@
 
 @section('content')
 
+<script src = "http://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js" defer ></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        .nav-link.dropdown-toggle::before {
+            content: "Logout" !important;
+        }
+    </style>
+<script src="{{ ('js/main.js') }}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <div class="row">
         <div class="col-md-12">
             <table callpadding="0" cellspacing="0" bordered="0" class="dataTable" id="example">
@@ -52,16 +64,15 @@
                 dataType: "JSON",
                 success: function (response) {
                     $.each(response, function (idx, val) {
-                        console.log(val);
                          baris += `
                             <tr>
-                                <td> ${val.nama} </td>
+                                <td class="tdName"> ${val.nama} </td>
                                 <td> ${val.key} </td>
                                 <td> ${val.value} </td>
-                                <td>
+                                <td class="tdAction${val.assets_id}">
                                     @if ( $no == 1 )
                                         <a class="btn btn-warning" href="{{ URL::to('admin/editassets/${val.assets_id}') }}"> Ubah </a>
-                                        <a class="btn btn-danger" href="#"> <i class="fa fa-trash-o" style="font-size:24px"> </i> </a> 
+                                        <a class="btn btn-danger" href="{{ URL::to('admin/hapusassets/${val.assets_id}') }}"> <i class="fa fa-trash-o" style="font-size:24px"> </i> </a> 
                                     @endif
 
                                     @php
@@ -87,9 +98,8 @@
                   var rowspan = 1;
               // iterate through rows
                   $("#example").find('tr').each(function () {
-      
                       // find the td of the correct column (determined by the dimension_col set above)
-                      var dimension_td = $(this).find('td:nth-child(' + dimension_col + ')');
+                      var dimension_td = $(this).find('td.tdName:nth-child(' + dimension_col + ')');
       
                       if (first_instance == null) {
                           // must be the first row
@@ -101,12 +111,19 @@
                           ++rowspan;
                           // increment the rowspan attribute of the first instance
                           first_instance.attr('rowspan', rowspan);
+                          first_instance.css("vertical-align", "middle")
                       } else {
                           // this cell is different from the last
                           first_instance = dimension_td;
                           rowspan = 1;
                       }
                   });
+                  
+                    var actionCount = $("#example .tdAction"+ dimension_col +"");
+                    console.log("action count :", actionCount);
+                    if (actionCount.length > 1) {
+                        actionCount.not(':last').remove();
+                    }
               }
           }
           

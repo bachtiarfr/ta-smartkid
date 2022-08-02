@@ -62,6 +62,7 @@ class SiswaController extends Controller
      */
     public function store( Request $request )
     {
+        // dd($request);
         if ($request->file('berkas_prestasi') != null) {
             
             $fileType = $request->berkas_prestasi->getClientOriginalExtension();
@@ -81,6 +82,7 @@ class SiswaController extends Controller
             // user found
             $email = $request->nama_depan . rand(1,50) . "@gmail.com";
         }
+        $email = $request->nama_depan . "@gmail.com";
         // //1. simpan ke tabel user
         $user = User::create([
             "nama_depan" => $request->nama_depan,

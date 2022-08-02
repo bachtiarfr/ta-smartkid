@@ -18,9 +18,9 @@ class OrangTuaSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            "nama_depan" => "ryan",
+            "nama_depan" => "rokhim",
             "nama_belakang" => "jaya",
-            "email" => "ryan@gmail.com",
+            "email" => "rokhim@gmail.com",
             "password" => bcrypt('rahasia123'),
             "role_id" => 1,
         ]);
@@ -33,7 +33,7 @@ class OrangTuaSeeder extends Seeder
             "role_id" => 2,
         ]);
 
-        $role = Role::create(['name' => 'admin']);
+        $role = Role::create(['name' => 'petugas']);
      
         $permissions = Permission::pluck('id','id')->all();
    

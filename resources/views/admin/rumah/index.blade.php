@@ -8,9 +8,21 @@
 
 @section('content')
 
+<script src = "http://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js" defer ></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        .nav-link.dropdown-toggle::before {
+            content: "Logout" !important;
+        }
+    </style>
+    
+<script src="{{ ('js/main.js') }}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <div class="row">
         <div class="col-md-12">
-            <table callpadding="0" cellspacing="0" bordered="0" class="table" id="example">
+            <table callpadding="0" cellspacing="0" bordered="0" class="dataTable" id="example">
                 <thead>
                     <tr>
                         <th> Keterangan Tempat Tinggal </th>
@@ -43,6 +55,7 @@
     <script type="text/javascript">
         $(function () {
             let baris = '';
+            {{ $no = 1;  }}
 
             $.ajax({
                 type: "GET",
@@ -53,11 +66,19 @@
                         console.log(val);
                          baris += `
                             <tr>
-                                <td style="vertical-align: middle"> ${val.keterangan} </td>
+                                <td style="vertical-align: middle" class="tdName"> ${val.keterangan} </td>
                                 <td style="vertical-align: middle"> ${val.key} </td>
                                 <td style="vertical-align: middle"> ${val.value} </td>
-                                <td style="vertical-align: middle">
-                                    <button class="btn btn-success">Edit</button>
+                                <td class="tdAction${val.rumah_id}">
+                                    @if ( $no == 1 )
+                                        <a class="btn btn-warning" href="{{ URL::to('admin/editrumah/${val.rumah_id}') }}"> Ubah </a>
+                                        <a class="btn btn-danger" href="{{ URL::to('admin/hapusrumah/${val.rumah_id}') }}"> <i class="fa fa-trash-o" style="font-size:24px"> </i> </a> 
+                                    @endif
+
+                                    @php
+                                        $no++
+                                    @endphp
+                                    
                                 </td>
                          `;
                     });
@@ -77,9 +98,8 @@
                   var rowspan = 1;
               // iterate through rows
                   $("#example").find('tr').each(function () {
-      
                       // find the td of the correct column (determined by the dimension_col set above)
-                      var dimension_td = $(this).find('td:nth-child(' + dimension_col + ')');
+                      var dimension_td = $(this).find('td.tdName:nth-child(' + dimension_col + ')');
       
                       if (first_instance == null) {
                           // must be the first row
@@ -91,12 +111,19 @@
                           ++rowspan;
                           // increment the rowspan attribute of the first instance
                           first_instance.attr('rowspan', rowspan);
+                          first_instance.css("vertical-align", "middle")
                       } else {
                           // this cell is different from the last
                           first_instance = dimension_td;
                           rowspan = 1;
                       }
                   });
+                  
+                    var actionCount = $("#example .tdAction"+ dimension_col +"");
+                    console.log("action count :", actionCount);
+                    if (actionCount.length > 1) {
+                        actionCount.not(':last').remove();
+                    }
               }
           }
           

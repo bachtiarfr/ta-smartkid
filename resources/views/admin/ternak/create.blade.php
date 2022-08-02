@@ -87,7 +87,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "http://127.0.0.1:8000/admin/simpanternak",
+                    url: "/admin/simpanternak",
                     data: {
                         "nama" : nama
                     },
@@ -104,7 +104,7 @@
             function simpan_ternak_detail( id ) {
                 $.ajax({
                     type: "POST",
-                    url: "http://127.0.0.1:8000/admin/simpanternakdetail/" + id ,
+                    url: "/admin/simpanternakdetail/" + id ,
                     data: {
                         isi_det
                     },

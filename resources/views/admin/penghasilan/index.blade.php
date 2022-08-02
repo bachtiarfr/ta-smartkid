@@ -69,7 +69,7 @@
                     })
                     .then((willDelete) => {
                     if (willDelete) {
-                        window.location.replace("http://127.0.0.1:8000/admin/hapuspenghasilan/" + id );
+                        window.location.replace("/admin/hapuspenghasilan/" + id );
                     } 
                 });
             });

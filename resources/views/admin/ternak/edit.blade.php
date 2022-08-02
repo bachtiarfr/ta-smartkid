@@ -106,7 +106,7 @@
 
                 $.ajax({
                     type: "GET",
-                    url: "http://127.0.0.1:8000/admin/ubahternak/" + ternak_id ,
+                    url: "/admin/ubahternak/" + ternak_id ,
                     data: {
                         "nama" : nama
                     },
@@ -121,7 +121,7 @@
             function simpan_ternak_detail( id ) {
                 $.ajax({
                     type: "GET",
-                    url: "http://127.0.0.1:8000/admin/ubahternakdetail/" + id ,
+                    url: "/admin/ubahternakdetail/" + id ,
                     data: {
                         isi_det
                     },

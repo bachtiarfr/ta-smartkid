@@ -4,7 +4,24 @@
 
 @section('content_header')
     <h1>Dashboard</h1>
-    <a href="/admin/print-data-beasiswa" class="btn btn-danger">Print</a>
+    <div class="dropdown">
+        <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Print PDF
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="/admin/print-data-beasiswa/genap">Print Periode Semester Genap</a>
+          <a class="dropdown-item" href="/admin/print-data-beasiswa/ganjil">Print Periode Semester Ganjil</a>
+        </div>
+    </div>
+    Filter berdasarkan periode:
+    <select class="form-select mb-5" id="periode" aria-label="Default select example">
+        <option value="all">Lihat semua</option>
+        @if (count($periode) > 0)
+        @foreach ($periode as $p)
+            <option value="{{ $p }}">{{ $p }}</option>
+        @endforeach
+        @endif
+    </select>
 @stop
 
 @section('content')
@@ -12,6 +29,11 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        .nav-link.dropdown-toggle::before {
+            content: "Logout" !important;
+        }
+    </style>
 <script src="{{ ('js/main.js') }}"></script>
 <style>
     .sudahAcc {
@@ -20,43 +42,45 @@
 </style>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header alert-success">
-                    Hasil Pengumuman
-                </div>
-                <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <table id="tblhasil" class="table table-bordered table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <td> NISN </td>
-                                    <td> Nama Siswa </td>
-                                    <td> Kelas </td>
-                                    <td> Score </td>
-                                    <td> Periode </td>
-                                </tr>
-                            </thead>
-                            <tbody id="v-content">
-                                @foreach ($dataPerangkingan as $data)
-                                <tr class="item-list" data-value="{{ $data["w"] }}">
-                                    <td> {{ $data["nisn"] }} </td>
-                                    <td> {{ $data["nama"] }} </td>
-                                    <td> {{ $data["kelas"] }} </td>
-                                    <td> {{ $data["w"] }} </td>
-                                    <td class="hasil"> {{ $data["periode"] }} </td>
-                                </tr>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header alert-success">
+                Hasil Pengumuman
+            </div>
+            <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="tblhasil" class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <td> NISN </td>
+                                <td> Nama Siswa </td>
+                                <td> Kelas </td>
+                                <td> Score </td>
+                                <td> Periode </td>
+                            </tr>
+                        </thead>
+                        <tbody id="v-hasil">
+                            @if (count($periode) > 0)
+                            @foreach ($dataPerangkingan as $data)
+                            <tr class="item-list" data-value="{{ $data["w"] }}">
+                                <td> {{ $data["nisn"] }} </td>
+                                <td> {{ $data["nama"] }} </td>
+                                <td> {{ $data["kelas"] }} </td>
+                                <td> {{ $data["w"] }} </td>
+                                <td class="periodePenerimaan"> {{ $data["periode"] }} </td>
+                            </tr>
                             @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div> 
+                            @endif
+                        </tbody>
+                    </table>
                 </div>
+            </div> 
             </div>
         </div>
     </div>
+</div>
 
 @stop
 @section('js')
@@ -79,6 +103,20 @@
             $('#v-content tr:nth-child(n+11) .hasil').each(function() {
                 $(this).text("Tidak")
             });
+
+            var app = {
+                tampil: function(){
+                    let periode = $(this).val();
+                    $('td.periodePenerimaan:not(:contains("' + periode + '"))').parent().hide();        
+                    $('td.periodePenerimaan:contains("' + periode + '")').parent().show();
+    
+                    if (periode == 'all') {
+                        $('td:contains("/")').parent().show();
+                    }
+    
+                }
+            }
+            $(document).on("change", "#periode", app.tampil)
 
             normalisasi();
 

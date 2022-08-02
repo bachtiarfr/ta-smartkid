@@ -87,7 +87,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "http://127.0.0.1:8000/admin/simpanasstes",
+                    url: "/admin/simpanasstes",
                     data: {
                         "nama" : nama
                     },
@@ -104,7 +104,7 @@
             function simpan_assets_detail( id ) {
                 $.ajax({
                     type: "POST",
-                    url: "http://127.0.0.1:8000/admin/simpanassetsdetail/" + id ,
+                    url: "/admin/simpanassetsdetail/" + id ,
                     data: {
                         isi_det
                     },

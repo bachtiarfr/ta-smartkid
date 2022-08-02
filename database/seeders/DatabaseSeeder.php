@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             AsuransiSeeder::class,
             TanggunganSeeder::class,
             PenghasilanSeeder::class,
+            RoleSeeder::class,
         ]);
     }
 }

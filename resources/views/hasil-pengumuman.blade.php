@@ -136,9 +136,11 @@
                 Filter berdasarkan periode:
                 <select class="form-select mb-5" id="periode" aria-label="Default select example">
                     <option value="all">Lihat semua</option>
+                    @if (count($dataPerangkingan) > 0)
                     @foreach ($periode as $p)
                         <option value="{{ $p }}">{{ $p }}</option>
                     @endforeach
+                    @endif
                 </select>
                 <div class="card">
                     <div class="card-header alert-success">

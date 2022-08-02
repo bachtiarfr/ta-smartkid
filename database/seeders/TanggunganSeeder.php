@@ -16,11 +16,6 @@ class TanggunganSeeder extends Seeder
     public function run()
     {
         $tanggungan = TanggunganAnak::create([
-            'jumlah' => '0',
-            'nilai' => 0
-        ]);
-
-        $tanggungan = TanggunganAnak::create([
             'jumlah' => '1 Anak',
             'nilai' => 50
         ]);

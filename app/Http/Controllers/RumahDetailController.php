@@ -30,8 +30,10 @@ class RumahDetailController extends Controller
                 ->groupBy('rmh.keterangan')
                 ->groupBy('rmd.key')
                 ->groupBy('rmd.value')
+                ->orderBy('rmd.rumah_id' , 'asc')
                 ->orderBy('rmh.keterangan' , 'asc')
                 ->get();
+        // dd($data);
 
         return response()->json($data);
     }
@@ -85,9 +87,34 @@ class RumahDetailController extends Controller
      * @param  \App\Models\RumahDetail  $rumahDetail
      * @return \Illuminate\Http\Response
      */
-    public function show(RumahDetail $rumahDetail)
+
+    public function showedit ( $id )
     {
-        //
+        $rumahDetail = DB::table('rumah_details AS asd')
+                ->join('rumahs AS as' , 'asd.rumah_id' , '=' , 'as.id')
+                ->where('as.id' , '=' , $id)
+                ->select('asd.id' , 'asd.rumah_id' , 'as.keterangan' , 'asd.key' , 'asd.value')
+                ->groupBy('asd.id')
+                ->groupBy('asd.rumah_id')
+                ->groupBy('as.keterangan')
+                ->groupBy('asd.key')
+                ->groupBy('asd.value')
+                ->orderBy('as.keterangan' , 'asc')
+                ->get();
+        
+        $rumah_id = DB::table('rumahs AS as')
+                ->join('rumah_details AS asd' , 'asd.rumah_id' , '=' , 'as.id')
+                ->where('as.id' , '=' , $id)
+                ->select('asd.rumah_id')
+                ->first();
+        
+        $rumah = DB::table('rumahs AS as')
+                ->join('rumah_details AS asd' , 'asd.rumah_id' , '=' , 'as.id')
+                ->where('as.id' , '=' , $id)
+                ->select('as.keterangan')
+                ->first();
+
+        return view ('admin.rumah.edit' , compact( 'rumahDetail' , 'rumah' , 'rumah_id') );
     }
 
     /**
@@ -119,8 +146,33 @@ class RumahDetailController extends Controller
      * @param  \App\Models\RumahDetail  $rumahDetail
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RumahDetail $rumahDetail)
+    public function destroy(RumahDetail $rumahDetail, $id)
     {
-        //
+        DB::table("rumah")->where("id", $id)->delete();
+        DB::table("rumah_detail")->where("rumah_id", $id)->delete();
+    }
+    
+    public function ubahrumah( Request $request, $id)
+    {
+        $rumah = Rumah::find( $id );
+        $rumah->keterangan = $request->rumah;
+        $rumah->save();
+
+        return response()->json( $rumah->id );
+    }
+
+    public function ubahrumahdetail( Request $request , $id )
+    {
+        $rumah_detail = RumahDetail::where('rumah_id' , '=' , $id )->delete();
+
+        for ($i=0; $i < count( $request['isi_det'] ) ; $i++) { 
+            $assets_det = RumahDetail::create([
+                "rumah_id" => $id ,
+                "key" => $request['isi_det'][$i]['key'] ,
+                "value" => $request['isi_det'][$i]['value'] 
+            ]);
+        }
+
+        return response()->json( "berhasil disimpan" );
     }
 }

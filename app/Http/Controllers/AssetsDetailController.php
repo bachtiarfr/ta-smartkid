@@ -38,6 +38,7 @@ class AssetsDetailController extends Controller
 
     public function simpanasstes( Request $request )
     {
+        // return $request;
         //1. simpan ke tabel assets
         $assets = Assets::create([
             "nama" => $request->nama
@@ -48,6 +49,7 @@ class AssetsDetailController extends Controller
 
     public function simpanassetsdetail( Request $request , $id )
     {
+        // return $id;
         //2. simpan ke tabel ternak detail
         for ($i=0; $i < count( $request['isi_det'] ) ; $i++) { 
             $ternak_det = AssetsDetail::create([
@@ -174,8 +176,9 @@ class AssetsDetailController extends Controller
      * @param  \App\Models\AssetsDetail  $assetsDetail
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AssetsDetail $assetsDetail)
+    public function destroy(AssetsDetail $assetsDetail, $id)
     {
-        //
+        DB::table("assets")->where("id", $id)->delete();
+        DB::table("assets_details")->where("assets_id", $id)->delete();
     }
 }

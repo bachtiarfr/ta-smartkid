@@ -27,8 +27,8 @@ class OrangTuaController extends Controller
     {
         // $ortu = OrangTua::latest()->paginate(5);
         $ortu = DB::table('orang_tuas AS or')
-                ->join('users AS us' , 'or.user_id' , '=' , 'us.id')
                 ->select('or.id' , 'us.nama_depan', 'us.nama_belakang' , 'or.nik' , 'or.status' , 'or.pendidikan' , 'or.pekerjaan' )
+                ->join('users AS us' , 'or.user_id' , '=' , 'us.id')
                 ->paginate(10);
 
         // return response()->json( $ortu );
@@ -157,8 +157,7 @@ class OrangTuaController extends Controller
     {
         $product->delete();
     
-        return redirect()->route('orangtua.index')
-                        ->with('success','Product deleted successfully');
+        return redirect()->route('orangtua.index')->with('success','Product deleted successfully');
     }
 
 
@@ -167,8 +166,7 @@ class OrangTuaController extends Controller
         $ortu = OrangTua::find($id);
         $ortu->delete();
 
-        return redirect()->route('orangtua.index')
-                        ->with('success','berhasil hapus data orang tua');
+        return redirect()->route('orangtua.index')->with('success','berhasil hapus data orang tua');
     }
 
     public function ubahortu( $id )

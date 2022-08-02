@@ -7,6 +7,7 @@
 @stop
 
 @section('content')
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <div class="padding">
         <div class="row">
             <div class="col-sm-8">
@@ -91,8 +92,9 @@
                 let nama        = $('#nama').val();
                 let assets_id   = $('#assets_id').val();
 
+                let dvbobot     = $("#dvbobot");
                 let inputan     = $("#dvbobot input[type=text]");
-                
+                console.log("length :", dvbobot.length);
 
                 for (let i = 0; i < inputan.length - 1; i += 2 ) {
                     // const element = array[i];
@@ -106,13 +108,18 @@
 
                 $.ajax({
                     type: "GET",
-                    url: "http://127.0.0.1:8000/admin/ubahassets/" + assets_id ,
+                    url: "/admin/ubahassets/" + assets_id ,
                     data: {
                         "nama" : nama
                     },
                     success: function ( res ) {
                         //2. simpan ke tabel assets detail
                         simpan_assets_detail( res );
+                        swal({
+                            title: "Berhasil",
+                            text: res,
+                            icon: "success",
+                        });
                     }
                 });
             });
@@ -121,12 +128,20 @@
             function simpan_assets_detail( id ) {
                 $.ajax({
                     type: "GET",
-                    url: "http://127.0.0.1:8000/admin/ubahassetsdetail/" + id ,
+                    url: "/admin/ubahassetsdetail/" + id ,
                     data: {
                         isi_det
                     },
                     success: function ( res ) {
                         console.log(res);
+                        swal({
+                            title: "Berhasil",
+                            text: res,
+                            icon: "success",
+                        }).then(function() {
+                            window.history.back();
+                            location.reload(); 
+                        });
                     }
                 });
             }

@@ -49,6 +49,11 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+        .nav-link.dropdown-toggle::before {
+            content: "Logout" !important;
+        }
+    </style>
 @stop
 
 @section('js')
@@ -68,7 +73,7 @@
                     })
                     .then((willDelete) => {
                     if (willDelete) {
-                        window.location.replace("http://127.0.0.1:8000/admin/hapusasuransi/" + id );
+                        window.location.replace("/admin/hapusasuransi/" + id );
                     } 
                 });
             });

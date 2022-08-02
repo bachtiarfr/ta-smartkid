@@ -58,20 +58,31 @@ class BeasiswaController extends Controller
     {
        
         $dataPenilaian = DB::table('penilaians AS pnl')
-                ->select('sw.nisn', 'sw.kelas', 'pnl.id', 'pn.created_at' , 'pn.siswa_id', 'pnl.siswa_id', 'us.nama_depan', 'us.nama_belakang', 'sw.berkas_prestasi', 'ortu.berkas_surat', 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5')
+                ->select('sw.nisn', 'sw.kelas', 'pnl.id', 'pnl.created_at' , 'pn.penilaian_id', 'pnl.siswa_id', 'us.nama_depan', 'us.nama_belakang', 'sw.berkas_prestasi', 'ortu.berkas_surat', 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5')
                 ->join('siswas AS sw' , 'pnl.siswa_id' , '=' , 'sw.user_id')
                 ->join('users AS us' , 'sw.user_id' , '=' , 'us.id')
                 ->join('orang_tuas AS ortu' , 'sw.ortu_id' , '=' , 'ortu.user_id')
-                ->join('penerimas as pn', 'pnl.siswa_id', 'pn.siswa_id')
+                ->join('penerimas as pn', 'pnl.id', 'pn.penilaian_id')
                 ->get();
-                // dd($dataPenilaian);
-                
-        $dataPeriod = DB::table('penerimas')
+            // dd($dataPenilaian);
+        if (count($dataPenilaian) < 1) {
+            $dataPerangkingan = [];
+            return view('hasil-pengumuman', compact("dataPerangkingan"));
+        }
+        $dataPeriod = DB::table('penilaians')
                 ->select("created_at")
                 ->get();
-                foreach ($dataPeriod as $key => $p) {
-                    $periode[] = \Carbon\Carbon::parse($p->created_at)->format("Y");
-                }
+
+        foreach ($dataPeriod as $key => $p) {
+            $periodeMonth = (int)\Carbon\Carbon::parse($p->created_at)->format('m');
+            // dd($periodeMonth);
+            if ( $periodeMonth %2 == 0) {
+                $periodeName = "Genap";
+            } else {
+                $periodeName = "Ganjil";
+            }
+            $periode[] = \Carbon\Carbon::parse($p->created_at)->format("Y") . '/' . $periodeName;
+        }
         $periode = array_unique($periode);
 
         // cari max value dari setiap kriteria
@@ -84,7 +95,7 @@ class BeasiswaController extends Controller
         ];
 
         $dataPenerima = DB::table("penerimas")
-            ->select("siswa_id")
+            ->select("penilaian_id")
             ->get();
         // proses normalisasi
         foreach ($dataPenilaian as $dataNilai) {
@@ -111,14 +122,23 @@ class BeasiswaController extends Controller
             // dd($dataNilai->c1);
             $dataStatus = 0;
             foreach ($dataPenerima as $key => $penerima) {
-                if ($dataNilai->siswa_id == $penerima->siswa_id) {
+                if ($dataNilai->id == $penerima->penilaian_id) {
                     $dataStatus = 1;
                 }
-            }            
+            }           
+
+            $periodeMonth = (int)\Carbon\Carbon::parse($dataNilai->created_at)->format('m');
+            // dd($periodeMonth);
+            if ( $periodeMonth %2 == 0) {
+                $periodeName = "Genap";
+            } else {
+                $periodeName = "Ganjil";
+            }
+
             $dataNormalisasi[] = [
                 "nama" => $dataNilai->nama_depan . ' ' . $dataNilai->nama_belakang,
                 "nisn" => $dataNilai->nisn,
-                "siswa_id" => $dataNilai->siswa_id,
+                "penilaian_id" => $dataNilai->penilaian_id,
                 "kelas" => $dataNilai->kelas,
                 "r1" => round($nValue["minC1"] / $dataNilai->c1, 2), 
                 "r2" => round($nValue["minC2"] / $dataNilai->c2, 2), 
@@ -126,7 +146,7 @@ class BeasiswaController extends Controller
                 "r4" => round($dataNilai->c4 / $nValue["maxC4"], 2), 
                 "r5" => round($nValue["minC5"] / $dataNilai->c5, 2),
                 "status" => $dataStatus,
-                "periode" => \Carbon\Carbon::parse($dataNilai->created_at)->format('Y'),
+                "periode" => \Carbon\Carbon::parse($dataNilai->created_at)->format('Y') . '/' . $periodeName,
                 "berkas_prestasi" => $dataNilai->berkas_prestasi,
                 "berkas_surat" => $dataNilai->berkas_surat
             ];
@@ -140,7 +160,7 @@ class BeasiswaController extends Controller
                 "nama" => $v["nama"],
                 "nisn" => $v["nisn"],
                 "kelas" => $v["kelas"],
-                "siswa_id" => $v["siswa_id"],
+                "penilaian_id" => $v["penilaian_id"],
                 "v1" => round(($v["r1"]*0.25), 2),
                 "v2" => round(($v["r2"]*0.20), 2),
                 "v3" => round(($v["r3"]*0.15), 2),
@@ -165,121 +185,6 @@ class BeasiswaController extends Controller
         return view('hasil-pengumuman', compact('penilaian', 'periode', 'dataNormalisasi', 'dataPerangkingan'));
     }
 
-    public function hasilPengumumanByPeriode(Request $period)
-    {
-        // return $period;
-        $post = Penerima::get();
-        $dataPenilaian = DB::table('penilaians AS pnl')
-                ->select('sw.nisn', 'sw.kelas', 'pnl.id' , Carbon\Carbon::createFromFormat('Y-m-d', 'pn.created_at')->format('Y-m-d') , 'pn.siswa_id', 'pnl.siswa_id', 'us.nama_depan', 'us.nama_belakang', 'sw.berkas_prestasi', 'ortu.berkas_surat', 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5', 'pnl.created_at')
-                ->join('siswas AS sw' , 'pnl.siswa_id' , '=' , 'sw.user_id')
-                ->join('users AS us' , 'sw.user_id' , '=' , 'us.id')
-                ->join('orang_tuas AS ortu' , 'sw.ortu_id' , '=' , 'ortu.user_id')
-                ->join('penerimas as pn', 'pnl.siswa_id', 'pn.siswa_id')
-                // ->where('pn.created_at', $period)
-                ->get();
-        return $dataPenilaian;
-                
-        $dataPeriod = DB::table('penilaians')
-                ->select("created_at")
-                ->get();
-
-        foreach ($dataPeriod as $key => $p) {
-            $periode[] = \Carbon\Carbon::parse($p->created_at)->format("Y");
-        }
-        $periode = array_unique($periode);
-
-        // cari max value dari setiap kriteria
-        $nValue = [
-            "minC1" => floatval(DB::table("penilaians")->min("c1")),
-            "minC2" => floatval(DB::table("penilaians")->min("c2")),
-            "minC3" => floatval(DB::table("penilaians")->min("c3")),
-            "maxC4" => floatval(DB::table("penilaians")->max("c4")),
-            "minC5" => floatval(DB::table("penilaians")->min("c5")),
-        ];
-
-        $dataPenerima = DB::table("penerimas")
-            ->select("siswa_id")
-            ->get();
-        // proses normalisasi
-        foreach ($dataPenilaian as $dataNilai) {
-            if ($nValue["minC1"] == 0) {
-                $dataNilai->c1 = 1;
-            } 
-            
-            if ($nValue["minC2"] == 0) {
-                $dataNilai->c2 = 1;
-            } 
-    
-            if ($nValue["minC3"] == 0) {
-                $dataNilai->c3 = 1;
-            } 
-            
-            if ($dataNilai->c4 == 0) {
-                $nValue["maxC4"] = 1;
-            } 
-            
-            if ($nValue["minC5"] == 0) {
-                $dataNilai->c5 = 1;
-            } 
-
-            // dd($dataNilai->c1);
-            $dataStatus = 0;
-            foreach ($dataPenerima as $key => $penerima) {
-                if ($dataNilai->siswa_id == $penerima->siswa_id) {
-                    $dataStatus = 1;
-                }
-            }            
-            $dataNormalisasi[] = [
-                "nama" => $dataNilai->nama_depan . ' ' . $dataNilai->nama_belakang,
-                "nisn" => $dataNilai->nisn,
-                "siswa_id" => $dataNilai->siswa_id,
-                "kelas" => $dataNilai->kelas,
-                "r1" => round($nValue["minC1"] / $dataNilai->c1, 2), 
-                "r2" => round($nValue["minC2"] / $dataNilai->c2, 2), 
-                "r3" => round($nValue["minC3"] / $dataNilai->c3, 2), 
-                "r4" => round($dataNilai->c4 / $nValue["maxC4"], 2), 
-                "r5" => round($nValue["minC5"] / $dataNilai->c5, 2),
-                "status" => $dataStatus,
-                "periode" => \Carbon\Carbon::parse($dataNilai->created_at)->format('Y-m-d'),
-                "berkas_prestasi" => $dataNilai->berkas_prestasi,
-                "berkas_surat" => $dataNilai->berkas_surat
-            ];
-        }
-
-        // dd($dataNormalisasi);
-
-        // nilai normalisasi dikali dengan bobot
-        foreach ($dataNormalisasi as $key => $v) {
-            if ($v["periode"] == $period) {
-                $dataPerangkingan[] = [
-                    "nama" => $v["nama"],
-                    "nisn" => $v["nisn"],
-                    "kelas" => $v["kelas"],
-                    "siswa_id" => $v["siswa_id"],
-                    "v1" => round(($v["r1"]*0.25), 2),
-                    "v2" => round(($v["r2"]*0.20), 2),
-                    "v3" => round(($v["r3"]*0.15), 2),
-                    "v4" => round(($v["r4"]*0.30), 2),
-                    "v5" => round(($v["r5"]*0.10), 2),
-                    "berkas_prestasi" => $v['berkas_prestasi'],
-                    "berkas_surat" => $v['berkas_surat'],
-                    "periode" => $v["periode"],
-                    "status" => $v["status"],
-                    "w" => (round(($v["r1"]*0.25), 2)) + (round(($v["r2"]*0.20), 2)) + (round(($v["r3"]*0.15), 2)) + (round(($v["r4"]*0.15), 2)) + (round(($v["r5"]*0.30), 2))
-                ];
-            }
-        }
-        dd($dataPerangkingan);
-
-        $penilaian = DB::table('penilaians AS pnl')
-            ->select('sw.nisn', 'sw.kelas', 'pnl.id' , 'us.nama_depan', 'us.nama_belakang', 'sw.berkas_prestasi', 'ortu.berkas_surat', 'pnl.c1' , 'pnl.c2' , 'pnl.c3' , 'pnl.c4' , 'pnl.c5')
-            ->join('siswas AS sw' , 'pnl.siswa_id' , '=' , 'sw.user_id')
-            ->join('users AS us' , 'sw.user_id' , '=' , 'us.id')
-            ->join('orang_tuas AS ortu' , 'sw.ortu_id' , '=' , 'ortu.user_id')
-            ->get();
-
-        return view('hasil-pengumuman', compact('penilaian', 'periode', 'dataNormalisasi', 'dataPerangkingan'));
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -298,7 +203,14 @@ class BeasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->prestasis;
+        $month = (int)\Carbon\Carbon::now()->format("m");
+        if ($month %2 == 0) {
+            $month = "Genap";
+        } else {
+            $month = "Ganjil";
+        }
+
+        $periode = \Carbon\Carbon::now()->format("Y") . "/" . $month;
 
         if ($request->file('berkas_surat') != null) {
             
@@ -310,6 +222,8 @@ class BeasiswaController extends Controller
             
             $namaBerkasOrtu = $request->file('berkas_surat')->getClientOriginalName();
             $request->berkas_surat->move(public_path('pdf') , $namaBerkasOrtu);
+        } else {
+            $namaBerkasOrtu = '';
         }
 
         if ($request->file('berkas_prestasi') != null) {
@@ -322,17 +236,22 @@ class BeasiswaController extends Controller
     
             $namaBerkas = $request->file('berkas_prestasi')->getClientOriginalName();
             $request->berkas_prestasi->move(public_path('pdf') , $namaBerkas);
-
+        } else {
+            $namaBerkas = '';
         }
         
         if (User::where('email', '=', $request->nama_orangtua_depan . "@gmail.com")->count() > 0) {
             // user found
             $emailOrtu = $request->nama_orangtua_depan . rand(1,50) . "@gmail.com";
+        } else {
+            $emailOrtu = $request->nama_orangtua_depan . "@gmail.com";
         }
 
         if (User::where('email', '=', $request->nama_depan . "@gmail.com")->count() > 0) {
             // user found
             $emailSiswa = $request->nama_depan . rand(1,50) . "@gmail.com";
+        } else {
+            $emailSiswa = $request->nama_depan . "@gmail.com";
         }
 
          // //2. simpan ke tabel user orang tua
@@ -388,7 +307,8 @@ class BeasiswaController extends Controller
             "c2" => $request->c2,
             "c3" => $request->c3,
             "c4" => $request->c4,
-            "c5" => $request->c5
+            "c5" => $request->c5,
+            "created_at" => $periode
         ]); 
 
         PenilaianDetail::create([

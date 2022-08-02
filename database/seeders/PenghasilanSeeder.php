@@ -31,7 +31,7 @@ class PenghasilanSeeder extends Seeder
 
         $penghasilan = Penghasilan::create([
             'penghasilan' => '> 10.000.00',
-            'bobot' => 0
+            'bobot' => 5
         ]);
     }
 }
