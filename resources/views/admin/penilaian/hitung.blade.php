@@ -186,12 +186,20 @@
                     if (periode == 'all') {
                         $('td:contains("Rekomendasi")').parent().show();
                     }
+ 
+                    var spans = $("#v-content tr:contains(Genap) .hasil");
+
+                    for(var i = 0; i < 10; i++) {
+                        spans[i].innerHTML = "Rekomendasi";
+                    }
     
                 }
             }
             $(document).on("change", "#periode", app.tampil)
 
-            $('table').DataTable();
+            $('table').DataTable({
+                paging: false,
+            });
             // reordering table (highest W to lower)
             var div = $('#v-content');
             var listitems = $(".item-list").get();

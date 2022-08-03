@@ -61,7 +61,7 @@
                                 <td> Periode </td>
                             </tr>
                         </thead>
-                        <tbody id="v-hasil">
+                        <tbody id="v-content">
                             @if (count($periode) > 0)
                             @foreach ($dataPerangkingan as $data)
                             <tr class="item-list" data-value="{{ $data["w"] }}">

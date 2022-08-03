@@ -18,7 +18,7 @@
                     </div>
 
                     @foreach ($rumah_id as $as)
-                        <input type="text" name="rumah_id" value="{{ $as }}" id="rumah_id" class="form-control">
+                        <input type="text" name="rumah_id" value="{{ $as }}" id="rumah_id" class="form-control" hidden>
                     @endforeach
 
                     @foreach ($rumah as $nam)
@@ -32,7 +32,9 @@
                         </div>
                     @endforeach
 
-                    {{ $no = 1;  }}
+                    @php
+                       $no = 1; 
+                    @endphp
 
                     @foreach ($rumahDetail as $ast)
                         <div class="row" id="dvbobot">
